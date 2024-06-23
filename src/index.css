@@ -1,13 +1,75 @@
-body {
+:root {
+  --yellow-200: #9a7400;
+  --yellow-100: #fff7df;
+
+  --purple-300: #7b3fff;
+  --purple-200: #d3cdff;
+  --purple-100: #f4f2ff;
+
+  --brightness-500: #09090a;
+  --brightness-400: #a5a9b8;
+  --brightness-300: #e1e4f0;
+  --brightness-200: #f5f6fa;
+  --brightness-100: #ffffff;
+
+  --overlay: rgba(9, 9, 10, 0.4);
+}
+
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
+
+  box-sizing: border-box;
+
+  font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: -0.16px;
+  line-height: 1.4;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+input,
+button,
+textarea {
+  all: unset;
+}
+
+img {
+  vertical-align: middle;
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+}
+
+react-loading-skeleton {
+  margin-top: 8px !important;
+}
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transform: scale(1.1);
+  transition: all 100ms ease;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+  transform: scale(1.1);
 }
