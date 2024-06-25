@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as LogoSVG } from '../assets/logo_24.svg';
 import { ReactComponent as SearchSVG } from '../assets/search_20.svg';
-import { ReactComponent as QueueSVG } from '../assets/queue_20.svg';
+import { ReactComponent as ArchiveSVG } from '../assets/archive_18.svg';
 import { useEffect, useRef, useState } from 'react';
 import ReactModal from 'react-modal';
 import { useRecoilState } from 'recoil';
@@ -294,7 +294,7 @@ export function Header({ submission }: { submission?: boolean }) {
           </ContentGroup>
           <ContentGroup>
             <IconButton onClick={() => navigate('/submission')}>
-              <QueueSVG />
+              <ArchiveSVG />
             </IconButton>
             <Button $border onClick={() => setIsActive(true)}>
               <p>Contribute</p>
