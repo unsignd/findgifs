@@ -221,6 +221,7 @@ const NotFoundImage = styled.img`
 
 const NotFoundText = styled.p`
   font-size: 14px;
+  text-align: center;
 
   color: var(--brightness-400);
 `;
@@ -330,7 +331,7 @@ export function Modal() {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [selection, setSelection] = useState<string>();
   const [resetStatus, reset] = useState<boolean>(true);
-  const [randomNumber] = useState<number>(Math.floor(Math.random() * 13));
+  const [randomNumber] = useState<number>(Math.floor(Math.random() * 4));
 
   const [, setIsActive] = useRecoilState(modalActiveState);
   const [isPrompted, setIsPrompted] = useRecoilState(modalIsPromptedState);
@@ -413,35 +414,85 @@ export function Modal() {
             <Skeleton width={200} height={'100%'} />
             <Skeleton width={160} height={'100%'} />
           </SkeletonWrapper>
-          {gifs === undefined ? undefined : gifs.length === 0 ? (
-            <NotFoundWrapper>
-              <NotFoundImageGroup>
-                <NotFoundImage
-                  src={require(`../assets/albums/${randomNumber}.png`)}
-                  draggable="false"
-                />
-              </NotFoundImageGroup>
-              <NotFoundText>
-                No results, but here's a dope album :)
-              </NotFoundText>
-            </NotFoundWrapper>
-          ) : (
-            gifs.map((gif, index) => (
-              <ImageWrapper
-                key={index}
-                $visible={isLoaded}
-                onClick={() => {
-                  setSelection(selection === gif ? undefined : gif);
-                }}
-              >
-                <CheckMarkWrapper $visible={selection === gif}>
-                  <CheckSVG />
-                </CheckMarkWrapper>
-                <SelectionOverlay $visible={selection === gif} />
-                <Image src={gif} />
-              </ImageWrapper>
-            ))
-          )}
+          {gifs === undefined
+            ? undefined
+            : gifs.length === 0
+            ? {
+                0: (
+                  <NotFoundWrapper>
+                    <NotFoundImageGroup>
+                      <NotFoundImage
+                        src={
+                          'https://upload.wikimedia.org/wikipedia/en/a/a1/Descendents_-_Milo_Goes_to_College_cover.jpg'
+                        }
+                        draggable="false"
+                      />
+                    </NotFoundImageGroup>
+                    <NotFoundText>
+                      "Where did you go wrong this time?"
+                    </NotFoundText>
+                  </NotFoundWrapper>
+                ),
+                1: (
+                  <NotFoundWrapper>
+                    <NotFoundImageGroup>
+                      <NotFoundImage
+                        src={
+                          'https://upload.wikimedia.org/wikipedia/en/b/b0/Green_Day_-_Nimrod_cover.jpg'
+                        }
+                        draggable="false"
+                      />
+                    </NotFoundImageGroup>
+                    <NotFoundText>
+                      "I've got some scattered pictures lying on my bedroom
+                      floor"
+                    </NotFoundText>
+                  </NotFoundWrapper>
+                ),
+                2: (
+                  <NotFoundWrapper>
+                    <NotFoundImageGroup>
+                      <NotFoundImage
+                        src={
+                          'https://upload.wikimedia.org/wikipedia/en/e/e5/In_Utero_%28Nirvana%29_album_cover.jpg'
+                        }
+                        draggable="false"
+                      />
+                    </NotFoundImageGroup>
+                    <NotFoundText>
+                      "The day is gone, but I'm having fun"
+                    </NotFoundText>
+                  </NotFoundWrapper>
+                ),
+                3: (
+                  <NotFoundWrapper>
+                    <NotFoundImageGroup>
+                      <NotFoundImage
+                        src={
+                          'https://upload.wikimedia.org/wikipedia/en/5/55/Radioheadthebends.png'
+                        }
+                        draggable="false"
+                      />
+                    </NotFoundImageGroup>
+                    <NotFoundText>"I just don't know anymore"</NotFoundText>
+                  </NotFoundWrapper>
+                ),
+              }[randomNumber]
+            : gifs.map((gif, index) => (
+                <ImageWrapper
+                  key={index}
+                  $visible={isLoaded}
+                  onClick={() => {
+                    setSelection(selection === gif ? undefined : gif);
+                  }}
+                >
+                  <CheckMarkWrapper $visible={selection === gif}>
+                    <CheckSVG />
+                  </CheckMarkWrapper>
+                  <SelectionOverlay $visible={selection === gif} />
+                  <Image src={gif} />
+                </ImageWrapper>
+              ))}
         </ImageGroup>
       </SelectGroup>
       {/* <TagGroup>
