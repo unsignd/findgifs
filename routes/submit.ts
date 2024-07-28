@@ -16,6 +16,53 @@ router.post('/submit', async (req: Request, res: Response) => {
     return;
   }
 
+  if (
+    (
+      await Gif.aggregate(
+        [
+          {
+            $project: {
+              createdBy: {
+                $objectToArray: '$createdBy',
+              },
+            },
+          },
+          {
+            $unwind: '$createdBy',
+          },
+          {
+            $match: {
+              'createdBy.v': {
+                $gt:
+                  parseInt(new Date().getTime().toString().slice(0, -3)) -
+                  86400,
+              },
+            },
+          },
+          {
+            $group: {
+              _id: '$createdBy.k',
+              count: { $sum: 1 },
+            },
+          },
+          {
+            $match: {
+              _id: ip,
+              count: { $gt: 5 },
+            },
+          },
+        ],
+        { allowDiskUse: true }
+      )
+    ).length > 2
+  ) {
+    res.status(404).send({
+      error: 'Shut up',
+    });
+
+    return;
+  }
+
   const document = await Gif.findOne({
     url,
   });
@@ -25,8 +72,10 @@ router.post('/submit', async (req: Request, res: Response) => {
       name: [name],
       url,
       createdAt: parseInt(new Date().getTime().toString().slice(0, -3)),
-      createdBy: [ip],
-      upvote: [],
+      createdBy: {
+        [ip]: parseInt(new Date().getTime().toString().slice(0, -3)),
+      },
+      upvote: {},
       isVerified: false,
     });
   } else if (!document.name.includes(name)) {
@@ -36,9 +85,12 @@ router.post('/submit', async (req: Request, res: Response) => {
         name: [...document.name, name].sort(
           (a, b) => a.length - b.length || a.localeCompare(b)
         ),
-        createdBy: document.createdBy.includes(ip)
+        createdBy: Object.keys(document.createdBy!).includes(ip)
           ? document.createdBy
-          : [...document.createdBy, ip],
+          : {
+              ...document.createdBy,
+              [ip]: parseInt(new Date().getTime().toString().slice(0, -3)),
+            },
       }
     );
   }
