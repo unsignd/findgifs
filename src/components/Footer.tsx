@@ -62,7 +62,7 @@ export function Footer() {
           <Link to={'https://github.com/unsignd/findgifs'}>
             <LinkText>Github</LinkText>
           </Link>
-          <Link to={'https://instagram.com/find.gifs'}>
+          <Link to={'https://instagram.com/_findgifs'}>
             <LinkText>Instagram</LinkText>
           </Link>
         </LinkGroup>

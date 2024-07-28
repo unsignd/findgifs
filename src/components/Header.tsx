@@ -257,7 +257,7 @@ export function Header({ submission }: { submission?: boolean }) {
                 <p>Submission List</p>
               </Button>
               <Button>
-                <Link to={'https://instagram.com/find.gifs'}>
+                <Link to={'https://instagram.com/_findgifs'}>
                   <p>Official Instagram</p>
                 </Link>
               </Button>
