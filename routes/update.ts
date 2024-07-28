@@ -7,7 +7,7 @@ router.put('/update/upvote', async (req: Request, res: Response) => {
   const url = req.body.url;
   const ip = req.ip ? req.ip.replaceAll('.', '') : undefined;
 
-  if (url === undefined) {
+  if (url === undefined || ip === undefined) {
     res.status(400).send({
       error: 'Your request is invalid.',
     });

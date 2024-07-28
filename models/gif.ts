@@ -4,6 +4,7 @@ const gifSchema = new Schema({
   name: [String],
   url: String,
   createdAt: Number,
+  createdBy: [String],
   upvote: {
     type: Map,
     of: Number,

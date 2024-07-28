@@ -6,8 +6,9 @@ const router = express.Router();
 router.post('/submit', async (req: Request, res: Response) => {
   const name = req.body.name;
   const url = req.body.url;
+  const ip = req.ip ? req.ip.replaceAll('.', '') : undefined;
 
-  if (name === undefined || url === undefined) {
+  if (name === undefined || url === undefined || ip === undefined) {
     res.status(400).send({
       error: 'Your request is invalid.',
     });
@@ -24,6 +25,7 @@ router.post('/submit', async (req: Request, res: Response) => {
       name: [name],
       url,
       createdAt: parseInt(new Date().getTime().toString().slice(0, -3)),
+      createdBy: [ip],
       upvote: [],
       isVerified: false,
     });
@@ -34,6 +36,9 @@ router.post('/submit', async (req: Request, res: Response) => {
         name: [...document.name, name].sort(
           (a, b) => a.length - b.length || a.localeCompare(b)
         ),
+        createdBy: document.createdBy.includes(ip)
+          ? document.createdBy
+          : [...document.createdBy, ip],
       }
     );
   }
