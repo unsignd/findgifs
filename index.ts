@@ -15,21 +15,15 @@ const port = process.env.PORT || 8000;
 
 const allowedOrigins = [process.env.URL || 'http://localhost:3000'];
 
-const corsOptions: cors.CorsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Your request is not allowed by CORS.'));
-    }
-  },
-};
-
 connect();
 
 app.set('trust proxy', true);
 
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: process.env.URL || 'http://localhost:3000',
+  })
+);
 app.use(json());
 app.use(seaerchRouter);
 app.use(submitRouter);
