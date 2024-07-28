@@ -45,19 +45,13 @@ router.post('/submit', async (req: Request, res: Response) => {
               count: { $sum: 1 },
             },
           },
-          {
-            $match: {
-              _id: ip,
-              count: { $gt: 5 },
-            },
-          },
         ],
         { allowDiskUse: true }
       )
-    ).length > 2
+    )[0].count > 30
   ) {
-    res.status(404).send({
-      error: 'Shut up',
+    res.status(429).send({
+      error: 'Too many requests',
     });
 
     return;
