@@ -13,8 +13,6 @@ dotenv.config();
 const app: Application = express();
 const port = process.env.PORT || 8000;
 
-const allowedOrigins = [process.env.URL || 'http://localhost:3000'];
-
 connect();
 
 app.set('trust proxy', true);
