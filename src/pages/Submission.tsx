@@ -5,7 +5,7 @@ export function Submission() {
   return (
     <div>
       <SubmissionBanner />
-      <Body submission />
+      <Body />
     </div>
   );
 }

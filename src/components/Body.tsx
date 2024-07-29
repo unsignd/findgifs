@@ -10,6 +10,7 @@ import { useRecoilState } from 'recoil';
 import { api } from '../configs/axios';
 import { SubmissionItem } from './SubmissionItem';
 import useWindowDimensions from '../hooks/useWindowDimensions';
+import { useLocation } from 'react-router-dom';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -69,7 +70,8 @@ const NotFoundText = styled.p`
   color: var(--brightness-400);
 `;
 
-export function Body({ submission }: { submission?: boolean }) {
+export function Body() {
+  const { pathname } = useLocation();
   const { width } = useWindowDimensions();
 
   const [isReady, setIsReady] = useState<boolean>(false);
@@ -83,10 +85,14 @@ export function Body({ submission }: { submission?: boolean }) {
     setGifList([]);
     setLoadedContents(0);
 
-    api.get(`/load/${submission ? 'unverified' : 'verified'}`).then((res) => {
-      setGifList(res.data.data);
-      setIsReady(true);
-    });
+    console.log(pathname);
+
+    api
+      .get(`/load/${pathname === '/submission' ? 'unverified' : 'verified'}`)
+      .then((res) => {
+        setGifList(res.data.data);
+        setIsReady(true);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -112,7 +118,7 @@ export function Body({ submission }: { submission?: boolean }) {
             <NotFoundText>
               {gifList.length === 0
                 ? `No ${
-                    submission ? 'submissions' : 'GIFs'
+                    pathname === '/submission' ? 'submissions' : 'GIFs'
                   } have been submitted yet.\nWhat if you give it a try? ⛏️😙`
                 : 'No GIFs containing the search term were found.'}
             </NotFoundText>
@@ -127,7 +133,7 @@ export function Body({ submission }: { submission?: boolean }) {
                   .length !== 0
             )
             .map((gif, index) =>
-              submission ? (
+              pathname === '/submission' ? (
                 <SubmissionItem
                   key={index}
                   media={gif.url}

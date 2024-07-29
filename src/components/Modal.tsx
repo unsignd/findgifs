@@ -6,9 +6,14 @@ import { ReactComponent as CheckSVG } from '../assets/check_20.svg';
 // import { ReactComponent as TagSVG } from '../assets/tag_20.svg';
 import { useEffect, useRef, useState } from 'react';
 import { api } from '../configs/axios';
-import { modalActiveState, modalIsPromptedState } from '../modules/atoms';
+import {
+  gifListState,
+  modalActiveState,
+  modalIsPromptedState,
+} from '../modules/atoms';
 import { useRecoilState } from 'recoil';
 import Skeleton from 'react-loading-skeleton';
+import { useLocation } from 'react-router-dom';
 
 const Wrapper = styled.div`
   width: 500px;
@@ -326,6 +331,8 @@ const SubmitButton = styled.button<{
 `;
 
 export function Modal() {
+  const { pathname } = useLocation();
+
   const [searchQuery, setSearchQuery] = useState<string>();
   const [gifs, setGifs] = useState<string[]>();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -333,6 +340,7 @@ export function Modal() {
   const [resetStatus, reset] = useState<boolean>(true);
   const [randomNumber] = useState<number>(Math.floor(Math.random() * 4));
 
+  const [, setGifList] = useRecoilState(gifListState);
   const [, setIsActive] = useRecoilState(modalActiveState);
   const [isPrompted, setIsPrompted] = useRecoilState(modalIsPromptedState);
 
@@ -517,6 +525,18 @@ export function Modal() {
               name: searchQuery,
               url: selection,
             });
+
+            console.log('aaa');
+
+            await api
+              .get(
+                `/load/${
+                  pathname === '/submission' ? 'unverified' : 'verified'
+                }`
+              )
+              .then((res) => {
+                setGifList(res.data.data);
+              });
 
             setIsActive(false);
           }}
