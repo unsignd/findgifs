@@ -4,11 +4,11 @@ import { Gif } from '../models/gif';
 const router = express.Router();
 
 router.get('/load/verified', async (_: Request, res: Response) => {
-  const document = await Gif.find({
+  const documents = await Gif.find({
     isVerified: true,
   }).lean();
 
-  if (document === null) {
+  if (documents === null) {
     res.status(404).send({
       error: 'Fail to load GIFs.',
     });
@@ -17,7 +17,7 @@ router.get('/load/verified', async (_: Request, res: Response) => {
   }
 
   res.send({
-    data: document
+    data: documents
       .filter(
         (gif) =>
           gif.createdAt! + 2592000 >
@@ -44,11 +44,11 @@ router.get('/load/verified', async (_: Request, res: Response) => {
 router.get('/load/unverified', async (req: Request, res: Response) => {
   const ip = req.ip ? req.ip.replaceAll('.', '') : undefined;
 
-  const document = await Gif.find({
+  const documents = await Gif.find({
     isVerified: false,
   }).lean();
 
-  if (document === null) {
+  if (documents === null) {
     res.status(404).send({
       error: 'Fail to load GIFs.',
     });
@@ -57,7 +57,7 @@ router.get('/load/unverified', async (req: Request, res: Response) => {
   }
 
   res.send({
-    data: document
+    data: documents
       .filter(
         (gif) =>
           gif.createdAt! + 2592000 >
