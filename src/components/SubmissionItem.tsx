@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as UpvoteSVG } from '../assets/upvote_20.svg';
 import { useRecoilState } from 'recoil';
-import { gifListState, loadedContentState } from '../modules/atoms';
+import { loadedContentState } from '../modules/atoms';
 import { api } from '../configs/axios';
 
 const Wrapper = styled.div<{
@@ -121,7 +121,6 @@ export function SubmissionItem({
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [upvoted, setUpvoted] = useState<boolean>(isUpvoted);
 
-  const [gifList, setGifList] = useRecoilState(gifListState);
   const [loadedContents, setLoadedContents] =
     useRecoilState(loadedContentState);
 
@@ -153,21 +152,14 @@ export function SubmissionItem({
               if (!upvoted) {
                 setUpvoted(true);
 
-                api
-                  .put(`/update/upvote`, {
-                    url: media,
-                  })
-                  .then((res) =>
-                    setGifList([
-                      ...gifList.filter((gif) => gif.url !== media),
-                      res.data.data,
-                    ])
-                  );
+                api.put(`/update/upvote`, {
+                  url: media,
+                });
               }
             }}
           >
             <UpvoteSVG />
-            <p>{upvote}</p>
+            <p>{!isUpvoted && upvoted ? upvote + 1 : upvote}</p>
           </ItemButton>
         </ItemButtonGroup>
       </ItemBottomGroup>
