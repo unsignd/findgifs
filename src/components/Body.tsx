@@ -85,8 +85,6 @@ export function Body() {
     setGifList([]);
     setLoadedContents(0);
 
-    console.log(pathname);
-
     api
       .get(`/load/${pathname === '/submission' ? 'unverified' : 'verified'}`)
       .then((res) => {
@@ -142,7 +140,7 @@ export function Body() {
                       name.includes(searchQuery ?? '')
                     )[0]
                   }
-                  upvote={Object.keys(gif.upvote).length}
+                  upvote={gif.upvote}
                   isUpvoted={gif.isUpvoted!}
                 />
               ) : (

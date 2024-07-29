@@ -1,10 +1,6 @@
 export type gifType = {
   name: string[];
   url: string;
-  createdAt: number;
-  upvote: {
-    [ip: string]: number;
-  };
+  upvote: number;
   isUpvoted?: boolean;
-  isVerified: boolean;
 };
