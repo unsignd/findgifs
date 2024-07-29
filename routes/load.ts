@@ -19,14 +19,19 @@ router.get('/load/verified', async (_: Request, res: Response) => {
   res.send({
     data: documents
       .filter(
-        (gif) =>
-          gif.createdAt! + 2592000 >
-          parseInt(new Date().getTime().toString().slice(0, -3))
+        (document) =>
+          document.createdAt! + 2592000 >
+            parseInt(new Date().getTime().toString().slice(0, -3)) ||
+          document.upvote.filter(
+            (upvote) =>
+              (upvote.date ?? 0) + 604800 >
+              parseInt(new Date().getTime().toString().slice(0, -3))
+          ).length !== 0
       )
-      .map((gif) => ({
-        name: gif.name,
-        url: gif.url,
-        upvote: gif.upvote.filter(
+      .map((document) => ({
+        name: document.name,
+        url: document.url,
+        upvote: document.upvote.filter(
           (upvote) =>
             (upvote.date ?? 0) + 604800 >
             parseInt(new Date().getTime().toString().slice(0, -3))
@@ -62,20 +67,20 @@ router.get('/load/unverified', async (req: Request, res: Response) => {
   res.send({
     data: documents
       .filter(
-        (gif) =>
-          gif.createdAt! + 2592000 >
+        (document) =>
+          document.createdAt! + 2592000 >
           parseInt(new Date().getTime().toString().slice(0, -3))
       )
-      .map((gif) => ({
-        name: gif.name,
-        url: gif.url,
-        upvote: gif.upvote.filter(
+      .map((document) => ({
+        name: document.name,
+        url: document.url,
+        upvote: document.upvote.filter(
           (upvote) =>
             (upvote.date ?? 0) + 604800 >
             parseInt(new Date().getTime().toString().slice(0, -3))
         ).length,
         isUpvoted:
-          gif.upvote.filter(
+          document.upvote.filter(
             (upvote) =>
               (upvote.date ?? 0) + 604800 >
                 parseInt(new Date().getTime().toString().slice(0, -3)) &&

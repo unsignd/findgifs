@@ -59,7 +59,13 @@ router.post('/submit', async (req: Request, res: Response) => {
     });
   } else if (
     document.createdAt! + 2592000 <=
-    parseInt(new Date().getTime().toString().slice(0, -3))
+      parseInt(new Date().getTime().toString().slice(0, -3)) &&
+    (!document.isVerified ||
+      document.upvote.filter(
+        (upvote) =>
+          (upvote.date ?? 0) + 604800 >
+          parseInt(new Date().getTime().toString().slice(0, -3))
+      ).length === 0)
   ) {
     await Gif.updateOne(
       { url },
@@ -75,6 +81,7 @@ router.post('/submit', async (req: Request, res: Response) => {
             date: parseInt(new Date().getTime().toString().slice(0, -3)),
           },
         ],
+        isVerified: false,
       }
     );
   } else if (!document.name.includes(name)) {
