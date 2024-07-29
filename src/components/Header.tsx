@@ -24,7 +24,8 @@ const Wrapper = styled.div<{
 
   position: fixed;
 
-  margin-top: ${(props) => (props.$scrolledAmount ? -60 : 0)}px;
+  margin-top: ${(props) =>
+    props.$scrolledAmount && props.$scrolledAmount >= 140 ? -60 : 0}px;
 
   background-color: var(--brightness-100);
   border-bottom: 1px solid var(--brightness-200);
