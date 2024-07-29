@@ -41,11 +41,7 @@ router.put('/update/upvote', async (req: Request, res: Response) => {
 
   await document!.save();
 
-  res.send({
-    data: await Gif.findOne({
-      url,
-    }),
-  });
+  res.send();
 });
 
 export { router as updateRouter };
