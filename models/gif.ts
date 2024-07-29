@@ -4,14 +4,18 @@ const gifSchema = new Schema({
   name: [String],
   url: String,
   createdAt: Number,
-  createdBy: {
-    type: Map,
-    of: Number,
-  },
-  upvote: {
-    type: Map,
-    of: Number,
-  },
+  createdBy: [
+    {
+      ip: String,
+      date: Number,
+    },
+  ],
+  upvote: [
+    {
+      ip: String,
+      date: Number,
+    },
+  ],
   isVerified: Boolean,
 });
 

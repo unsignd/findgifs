@@ -19,25 +19,11 @@ router.post('/submit', async (req: Request, res: Response) => {
   const documents = await Gif.aggregate(
     [
       {
-        $project: {
-          createdBy: {
-            $objectToArray: '$createdBy',
-          },
-        },
-      },
-      {
         $unwind: '$createdBy',
       },
       {
-        $match: {
-          'createdBy.v': {
-            $gt: parseInt(new Date().getTime().toString().slice(0, -3)) - 86400,
-          },
-        },
-      },
-      {
         $group: {
-          _id: '$createdBy.k',
+          _id: '$createdBy.ip',
           count: { $sum: 1 },
         },
       },
@@ -62,12 +48,35 @@ router.post('/submit', async (req: Request, res: Response) => {
       name: [name],
       url,
       createdAt: parseInt(new Date().getTime().toString().slice(0, -3)),
-      createdBy: {
-        [ip]: parseInt(new Date().getTime().toString().slice(0, -3)),
-      },
-      upvote: {},
+      createdBy: [
+        {
+          ip,
+          date: parseInt(new Date().getTime().toString().slice(0, -3)),
+        },
+      ],
+      upvote: [],
       isVerified: false,
     });
+  } else if (
+    document.createdAt! + 2592000 <=
+    parseInt(new Date().getTime().toString().slice(0, -3))
+  ) {
+    await Gif.updateOne(
+      { url },
+      {
+        name: [...document.name, name].sort(
+          (a, b) => a.length - b.length || a.localeCompare(b)
+        ),
+        createdAt: parseInt(new Date().getTime().toString().slice(0, -3)),
+        createdBy: [
+          ...document.createdBy,
+          {
+            ip,
+            date: parseInt(new Date().getTime().toString().slice(0, -3)),
+          },
+        ],
+      }
+    );
   } else if (!document.name.includes(name)) {
     await Gif.updateOne(
       { url },
@@ -75,12 +84,13 @@ router.post('/submit', async (req: Request, res: Response) => {
         name: [...document.name, name].sort(
           (a, b) => a.length - b.length || a.localeCompare(b)
         ),
-        createdBy: Object.keys(document.createdBy!).includes(ip)
-          ? document.createdBy
-          : {
-              ...document.createdBy,
-              [ip]: parseInt(new Date().getTime().toString().slice(0, -3)),
-            },
+        createdBy: [
+          ...document.createdBy,
+          {
+            ip,
+            date: parseInt(new Date().getTime().toString().slice(0, -3)),
+          },
+        ],
       }
     );
   }

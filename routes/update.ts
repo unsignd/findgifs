@@ -27,16 +27,18 @@ router.put('/update/upvote', async (req: Request, res: Response) => {
     return;
   }
 
+  const upvotes = document!.upvote?.filter((upvote) => upvote.ip === ip);
+
   if (
     ip &&
-    (document!.upvote?.get(ip) === undefined ||
-      document!.upvote.get(ip)! + 604800 <=
+    (upvotes.length === 0 ||
+      (upvotes[upvotes.length - 1].date ?? 0) + 604800 <=
         parseInt(new Date().getTime().toString().slice(0, -3)))
   ) {
-    document!.upvote?.set(
+    document!.upvote.push({
       ip,
-      parseInt(new Date().getTime().toString().slice(0, -3))
-    );
+      date: parseInt(new Date().getTime().toString().slice(0, -3)),
+    });
   }
 
   await document!.save();
