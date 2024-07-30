@@ -4,9 +4,9 @@ import { Gif } from '../models/gif';
 const router = express.Router();
 
 router.get('/load/verified', async (req: Request, res: Response) => {
-  const start = parseInt(req.query.start as string);
+  const skip = parseInt(req.query.skip as string);
 
-  if (Number.isNaN(start)) {
+  if (Number.isNaN(skip)) {
     res.status(400).send({
       error: 'Your request is invalid.',
     });
@@ -17,7 +17,7 @@ router.get('/load/verified', async (req: Request, res: Response) => {
   const documents = await Gif.find({
     isVerified: true,
   })
-    .skip(start)
+    .skip(skip)
     .limit(30)
     .lean();
 
@@ -56,11 +56,11 @@ router.get('/load/verified', async (req: Request, res: Response) => {
 
 router.get('/load/unverified', async (req: Request, res: Response) => {
   const ip = req.ip ? req.ip.replaceAll('.', '') : undefined;
-  const start = parseInt(req.query.start as string);
+  const skip = parseInt(req.query.skip as string);
 
-  console.log(start);
+  console.log(skip);
 
-  if (ip === undefined || Number.isNaN(start)) {
+  if (ip === undefined || Number.isNaN(skip)) {
     res.status(400).send({
       error: 'Your request is invalid.',
     });
@@ -71,7 +71,7 @@ router.get('/load/unverified', async (req: Request, res: Response) => {
   const documents = await Gif.find({
     isVerified: false,
   })
-    .skip(start)
+    .skip(skip)
     .limit(30)
     .lean();
 
