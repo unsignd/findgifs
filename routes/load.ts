@@ -3,10 +3,23 @@ import { Gif } from '../models/gif';
 
 const router = express.Router();
 
-router.get('/load/verified', async (_: Request, res: Response) => {
+router.get('/load/verified', async (req: Request, res: Response) => {
+  const start = parseInt(req.query.start as string);
+
+  if (Number.isNaN(start)) {
+    res.status(400).send({
+      error: 'Your request is invalid.',
+    });
+
+    return;
+  }
+
   const documents = await Gif.find({
     isVerified: true,
-  }).lean();
+  })
+    .skip(start)
+    .limit(30)
+    .lean();
 
   if (documents === null) {
     res.status(404).send({
@@ -43,8 +56,11 @@ router.get('/load/verified', async (_: Request, res: Response) => {
 
 router.get('/load/unverified', async (req: Request, res: Response) => {
   const ip = req.ip ? req.ip.replaceAll('.', '') : undefined;
+  const start = parseInt(req.query.start as string);
 
-  if (ip === undefined) {
+  console.log(start);
+
+  if (ip === undefined || Number.isNaN(start)) {
     res.status(400).send({
       error: 'Your request is invalid.',
     });
@@ -54,7 +70,10 @@ router.get('/load/unverified', async (req: Request, res: Response) => {
 
   const documents = await Gif.find({
     isVerified: false,
-  }).lean();
+  })
+    .skip(start)
+    .limit(30)
+    .lean();
 
   if (documents === null) {
     res.status(404).send({
