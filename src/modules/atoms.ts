@@ -6,6 +6,11 @@ const gifListState = atom<gifType[]>({
   default: [],
 });
 
+const loadCountState = atom<number>({
+  key: 'loadCountState',
+  default: 0,
+});
+
 const modalActiveState = atom<boolean>({
   key: 'modalActiveState',
   default: false,
@@ -28,6 +33,7 @@ const searchQueryState = atom<string | null>({
 
 export {
   gifListState,
+  loadCountState,
   modalActiveState,
   modalIsPromptedState,
   loadedContentState,

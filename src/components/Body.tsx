@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import {
   gifListState,
   loadedContentState,
+  loadCountState,
   searchQueryState,
 } from '../modules/atoms';
 import { useRecoilState } from 'recoil';
@@ -77,24 +78,35 @@ export function Body() {
   const [isReady, setIsReady] = useState<boolean>(false);
 
   const [gifList, setGifList] = useRecoilState(gifListState);
+  const [loadCount] = useRecoilState(loadCountState);
   const [loadedContents, setLoadedContents] =
     useRecoilState(loadedContentState);
   const [searchQuery] = useRecoilState(searchQueryState);
 
   useEffect(() => {
-    setGifList([]);
-    setLoadedContents(0);
+    const fetchData = async () => {
+      setGifList([]);
+      setLoadedContents(0);
 
-    api
-      .get(
-        `/load/${
-          pathname === '/submission' ? 'unverified' : 'verified'
-        }?start=0`
-      )
-      .then((res) => {
-        setGifList(res.data.data);
-        setIsReady(true);
-      });
+      const data = [];
+
+      for (let index = 0; index <= loadCount; index++) {
+        data.push(
+          ...(
+            await api.get(
+              `/load/${
+                pathname === '/submission' ? 'unverified' : 'verified'
+              }?skip=${index * 30}`
+            )
+          ).data.data
+        );
+      }
+
+      setGifList((await Promise.all(data)).flat());
+      setIsReady(true);
+    };
+
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

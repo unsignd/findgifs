@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { api } from '../configs/axios';
 import {
   gifListState,
+  loadCountState,
   modalActiveState,
   modalIsPromptedState,
 } from '../modules/atoms';
@@ -341,6 +342,7 @@ export function Modal() {
   const [randomNumber] = useState<number>(Math.floor(Math.random() * 4));
 
   const [, setGifList] = useRecoilState(gifListState);
+  const [loadCount] = useRecoilState(loadCountState);
   const [, setIsActive] = useRecoilState(modalActiveState);
   const [isPrompted, setIsPrompted] = useRecoilState(modalIsPromptedState);
 
@@ -526,17 +528,25 @@ export function Modal() {
               url: selection,
             });
 
-            console.log('aaa');
+            const fetchData = async () => {
+              const data = [];
 
-            await api
-              .get(
-                `/load/${
-                  pathname === '/submission' ? 'unverified' : 'verified'
-                }?start=0`
-              )
-              .then((res) => {
-                setGifList(res.data.data);
-              });
+              for (let index = 0; index <= loadCount; index++) {
+                data.push(
+                  ...(
+                    await api.get(
+                      `/load/${
+                        pathname === '/submission' ? 'unverified' : 'verified'
+                      }?skip=${index * 30}`
+                    )
+                  ).data.data
+                );
+              }
+
+              setGifList((await Promise.all(data)).flat());
+            };
+
+            fetchData();
 
             setIsActive(false);
           }}
