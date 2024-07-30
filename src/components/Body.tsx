@@ -86,7 +86,11 @@ export function Body() {
     setLoadedContents(0);
 
     api
-      .get(`/load/${pathname === '/submission' ? 'unverified' : 'verified'}`)
+      .get(
+        `/load/${
+          pathname === '/submission' ? 'unverified' : 'verified'
+        }?start=0`
+      )
       .then((res) => {
         setGifList(res.data.data);
         setIsReady(true);
