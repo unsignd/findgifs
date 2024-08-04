@@ -91,15 +91,16 @@ export function Body() {
       const data = [];
 
       for (let index = 0; index <= loadCount; index++) {
-        data.push(
-          ...(
-            await api.get(
-              `/load/${
-                pathname === '/submission' ? 'unverified' : 'verified'
-              }?skip=${index * 30}`
-            )
-          ).data.data
-        );
+        const gifs = await api
+          .get(
+            `/load/${
+              pathname === '/submission' ? 'unverified' : 'verified'
+            }?skip=${index * 30}`
+          )
+          .then((res) => res.data)
+          .catch((err) => []);
+
+        data.push(...(gifs.data ?? []));
       }
 
       setGifList((await Promise.all(data)).flat());
