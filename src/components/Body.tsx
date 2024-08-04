@@ -13,6 +13,7 @@ import { SubmissionItem } from './SubmissionItem';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import { useLocation } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
+import AdSenseBanner from './AdsenseBanner';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -185,6 +186,7 @@ export function Body() {
           </NotFoundWrapper>
         ) : (
           <InnerWrapper $isMobile={width <= 1040}>
+            <AdSenseBanner />
             {gifList
               .filter(
                 (gif) =>
