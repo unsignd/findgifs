@@ -91,11 +91,9 @@ export function Body() {
       setGifList([]);
       setLoadedContents(0);
 
-      const data = [];
-
       const gifSize = await api
         .get(`/size/${pathname === '/submission' ? 'unverified' : 'verified'}`)
-        .then((res) => res.data);
+        .then((res) => res.data.data);
 
       const gifs = await api
         .get(
@@ -103,13 +101,11 @@ export function Body() {
             pathname === '/submission' ? 'unverified' : 'verified'
           }?skip=0`
         )
-        .then((res) => res.data)
+        .then((res) => res.data.data)
         .catch(() => []);
 
-      console.log(gifs.data);
-
       setSize(gifSize);
-      setGifList(gifs.data);
+      setGifList(gifs);
       setIsReady(true);
     };
 
@@ -136,14 +132,14 @@ export function Body() {
                 pathname === '/submission' ? 'unverified' : 'verified'
               }?skip=${(loadCount + 1) * 30}`
             )
-            .then((res) => res.data)
+            .then((res) => res.data.data)
             .catch(() => []))
         );
 
-        setGifList((await Promise.all(data)).flat());
+        setGifList([...gifList, ...(await Promise.all(data)).flat()]);
         setLoadCount(loadCount + 1);
       }}
-      hasMore={size ? size - loadCount * 30 >= 0 : true}
+      hasMore={size ? size - gifList.length > 0 : false}
       loader={
         <div className="loader" key={0}>
           Loading ...
