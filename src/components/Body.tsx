@@ -186,7 +186,6 @@ export function Body() {
           </NotFoundWrapper>
         ) : (
           <InnerWrapper $isMobile={width <= 1040}>
-            <AdSenseBanner />
             {gifList
               .filter(
                 (gif) =>
