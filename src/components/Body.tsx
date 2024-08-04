@@ -6,6 +6,7 @@ import {
   loadedContentState,
   loadCountState,
   searchQueryState,
+  gifSizeState,
 } from '../modules/atoms';
 import { useRecoilState } from 'recoil';
 import { api } from '../configs/axios';
@@ -96,12 +97,11 @@ export function Body() {
   const [isReady, setIsReady] = useState<boolean>(false);
 
   const [gifList, setGifList] = useRecoilState(gifListState);
+  const [gifSize, setGifSize] = useRecoilState(gifSizeState);
   const [loadCount, setLoadCount] = useRecoilState(loadCountState);
   const [loadedContents, setLoadedContents] =
     useRecoilState(loadedContentState);
   const [searchQuery] = useRecoilState(searchQueryState);
-
-  const [size, setSize] = useState<number>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -121,7 +121,7 @@ export function Body() {
         .then((res) => res.data.data)
         .catch(() => []);
 
-      setSize(gifSize);
+      setGifSize(gifSize);
       setGifList(gifs);
       setIsReady(true);
     };
@@ -156,7 +156,7 @@ export function Body() {
         setGifList([...gifList, ...(await Promise.all(data)).flat()]);
         setLoadCount(loadCount + 1);
       }}
-      hasMore={size ? size - gifList.length > 0 : false}
+      hasMore={gifSize ? gifSize - gifList.length > 0 : false}
       loader={
         <LoadingWrapper>
           <LoadingText>Loading GIFs... Hold up! 🙂‍↔️</LoadingText>
