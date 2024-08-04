@@ -59,12 +59,20 @@ export function Footer() {
       <ContentGroup $isMobile={width <= 1040}>
         <Text>© 2024 FindGIFs</Text>
         <LinkGroup>
-          <Link to={'https://github.com/unsignd/findgifs'}>
+          <a
+            href="https://github.com/unsignd/findgifs"
+            target="_blank"
+            rel="noreferrer"
+          >
             <LinkText>Github</LinkText>
-          </Link>
-          <Link to={'https://instagram.com/_findgifs'}>
+          </a>
+          <a
+            href="https://instagram.com/_findgifs"
+            target="_blank"
+            rel="noreferrer"
+          >
             <LinkText>Instagram</LinkText>
-          </Link>
+          </a>
         </LinkGroup>
       </ContentGroup>
     </Wrapper>

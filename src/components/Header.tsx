@@ -258,9 +258,13 @@ export function Header({ submission }: { submission?: boolean }) {
                 <p>Submission List</p>
               </Button>
               <Button>
-                <Link to={'https://instagram.com/_findgifs'}>
+                <a
+                  href="https://instagram.com/_findgifs"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <p>Official Instagram</p>
-                </Link>
+                </a>
               </Button>
             </ButtonGroup>
             <Button $border onClick={() => setIsActive(true)}>
