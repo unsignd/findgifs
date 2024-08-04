@@ -72,6 +72,22 @@ const NotFoundText = styled.p`
   color: var(--brightness-400);
 `;
 
+const LoadingWrapper = styled.div`
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+`;
+
+const LoadingText = styled.p`
+  text-align: center;
+
+  color: var(--brightness-400);
+`;
+
 export function Body() {
   const { pathname } = useLocation();
   const { width } = useWindowDimensions();
@@ -141,9 +157,9 @@ export function Body() {
       }}
       hasMore={size ? size - gifList.length > 0 : false}
       loader={
-        <div className="loader" key={0}>
-          Loading ...
-        </div>
+        <LoadingWrapper>
+          <LoadingText>Loading GIFs... Hold up! 🙂‍↔️</LoadingText>
+        </LoadingWrapper>
       }
     >
       <Wrapper>
