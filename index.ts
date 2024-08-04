@@ -7,6 +7,7 @@ import { connect } from './configs/database';
 import { submitRouter } from './routes/submit';
 import { getRouter } from './routes/load';
 import { updateRouter } from './routes/update';
+import { sizeRouther } from './routes/size';
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use(seaerchRouter);
 app.use(submitRouter);
 app.use(getRouter);
 app.use(updateRouter);
+app.use(sizeRouther);
 
 app.get('/', (_, res: Response) => {
   res.send('Welcome to the FindGIFs API!');

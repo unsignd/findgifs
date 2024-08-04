@@ -33,6 +33,7 @@ router.get('/load/verified', async (req: Request, res: Response) => {
     res.status(404).send({
       error: 'Fail to load GIFs.',
     });
+
     return;
   }
 
@@ -52,7 +53,6 @@ router.get('/load/verified', async (req: Request, res: Response) => {
 
   res.send({
     data: filteredData,
-    size: filteredData.length,
   });
 });
 
@@ -84,6 +84,7 @@ router.get('/load/unverified', async (req: Request, res: Response) => {
     res.status(404).send({
       error: 'Fail to load GIFs.',
     });
+
     return;
   }
 
@@ -103,14 +104,8 @@ router.get('/load/unverified', async (req: Request, res: Response) => {
 
   filteredData.sort((a, b) => b.upvote - a.upvote);
 
-  const totalSize = await Gif.countDocuments({
-    isVerified: false,
-    createdAt: { $gt: oneMonthAgo },
-  });
-
   res.send({
     data: filteredData,
-    size: totalSize,
   });
 });
 
