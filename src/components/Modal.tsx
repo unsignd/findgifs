@@ -15,6 +15,7 @@ import {
 import { useRecoilState } from 'recoil';
 import Skeleton from 'react-loading-skeleton';
 import { useLocation } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Wrapper = styled.div`
   width: 500px;
@@ -523,28 +524,35 @@ export function Modal() {
 
             if (!selection) return;
 
-            await api.post('/submit', {
-              name: searchQuery,
-              url: selection,
-            });
+            await api
+              .post('/submit', {
+                name: searchQuery,
+                url: selection,
+              })
+              .then(() => {
+                const fetchData = async () => {
+                  const gifSize = await api
+                    .get('/size/unverified')
+                    .then((res) => res.data.data);
 
-            const fetchData = async () => {
-              const gifSize = await api
-                .get('/size/unverified')
-                .then((res) => res.data.data);
+                  const gifs = await api
+                    .get('/load/unverified?skip=0')
+                    .then((res) => res.data.data)
+                    .catch(() => []);
 
-              const gifs = await api
-                .get('/load/unverified?skip=0')
-                .then((res) => res.data.data)
-                .catch(() => []);
+                  setGifSize(gifSize);
+                  setGifList(gifs);
+                };
 
-              setGifSize(gifSize);
-              setGifList(gifs);
-            };
+                if (pathname === '/submission') {
+                  fetchData();
+                }
 
-            if (pathname === '/submission') {
-              fetchData();
-            }
+                toast.success('Your GIF has been submitted successfully!');
+              })
+              .catch(() => {
+                toast.error('An error occurred while submitting the GIF.');
+              });
 
             setIsActive(false);
           }}

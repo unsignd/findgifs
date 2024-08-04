@@ -10,6 +10,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Submission } from './pages/Submission';
 import { Footer } from './components/Footer';
 import styled from 'styled-components';
+import { Toaster } from 'react-hot-toast';
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -55,6 +56,7 @@ root.render(
       highlightColor="#ebedf5"
     >
       <RouterProvider router={router} />
+      <Toaster />
     </SkeletonTheme>
   </RecoilRoot>
 );
