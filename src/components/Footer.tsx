@@ -57,7 +57,7 @@ export function Footer() {
   return (
     <Wrapper>
       <ContentGroup $isMobile={width <= 1040}>
-        <Text>© 2024 FindGIFs</Text>
+        <Text>© {new Date().getFullYear()} FindGIFs</Text>
         <LinkGroup>
           <a
             href="https://github.com/unsignd/findgifs"
