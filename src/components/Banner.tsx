@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import { useRecoilState } from 'recoil';
 import { gifListState } from '../modules/atoms';
+import { useEffect, useState } from 'react';
+import { api } from '../configs/axios';
 
 const Wrapper = styled.div<{
   $isMobile?: boolean;
@@ -103,14 +105,21 @@ const Heading = styled.h1<{
 export function Banner() {
   const { width } = useWindowDimensions();
 
-  const [gifList] = useRecoilState(gifListState);
+  const [size, setSize] = useState<number>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setSize(await api.get(`/size`).then((res) => res.data.data));
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Wrapper $isMobile={width <= 1040}>
       <TextGroup>
         <Subheading $isMobile={width <= 1040}>
-          Get {gifList.length === 0 ? undefined : `${gifList.length}+`} trending
-          Giphy GIFs all for free
+          Get {size} trending Giphy GIFs all for free
         </Subheading>
         <Heading $isMobile={width <= 1040}>
           Easy-to-use GIF finder,{'\n'}contributed by users all around the
