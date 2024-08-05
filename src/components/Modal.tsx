@@ -9,6 +9,7 @@ import { api } from '../configs/axios';
 import {
   gifListState,
   gifSizeState,
+  loadCountState,
   modalActiveState,
   modalIsPromptedState,
 } from '../modules/atoms';
@@ -344,6 +345,7 @@ export function Modal() {
 
   const [, setGifList] = useRecoilState(gifListState);
   const [, setGifSize] = useRecoilState(gifSizeState);
+  const [, setLoadCount] = useRecoilState(loadCountState);
   const [, setIsActive] = useRecoilState(modalActiveState);
   const [isPrompted, setIsPrompted] = useRecoilState(modalIsPromptedState);
 
@@ -542,6 +544,7 @@ export function Modal() {
 
                   setGifSize(gifSize);
                   setGifList(gifs);
+                  setLoadCount(0);
                 };
 
                 if (pathname === '/submission') {

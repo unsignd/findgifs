@@ -106,6 +106,8 @@ export function Body() {
   useEffect(() => {
     const fetchData = async () => {
       setGifList([]);
+      setGifSize(undefined);
+      setLoadCount(0);
       setLoadedContents(0);
 
       const gifSize = await api

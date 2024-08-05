@@ -6,7 +6,7 @@ const gifListState = atom<gifType[]>({
   default: [],
 });
 
-const gifSizeState = atom<number>({
+const gifSizeState = atom<undefined | number>({
   key: 'gifSizeState',
   default: undefined,
 });
