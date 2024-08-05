@@ -89,7 +89,17 @@ router.get('/load/unverified', async (req: Request, res: Response) => {
   const oneWeekAgo = currentTime - 604800;
 
   const documents = await Gif.aggregate([
-    { $match: { isVerified: false, createdAt: { $gt: oneMonthAgo } } },
+    {
+      $match: {
+        isVerified: false,
+        $or: [
+          {
+            createdAt: { $gt: oneMonthAgo },
+          },
+          { 'upvote.date': { $gt: oneWeekAgo } },
+        ],
+      },
+    },
     { $unwind: { path: '$upvote', preserveNullAndEmptyArrays: true } },
     {
       $match: {
