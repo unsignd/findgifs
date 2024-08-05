@@ -119,7 +119,7 @@ export function Banner() {
     <Wrapper $isMobile={width <= 1040}>
       <TextGroup>
         <Subheading $isMobile={width <= 1040}>
-          Get {size} trending Giphy GIFs all for free
+          Get {size} trending Instagram GIFs all for free
         </Subheading>
         <Heading $isMobile={width <= 1040}>
           Easy-to-use GIF finder,{'\n'}contributed by users all around the
