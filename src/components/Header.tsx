@@ -11,9 +11,10 @@ import {
   searchQueryState,
 } from '../modules/atoms';
 import { Modal } from './Modal';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import useWindowNavigation from '../hooks/useWindowNavigation';
+import toast from 'react-hot-toast';
 
 const Wrapper = styled.div<{
   $isMobile?: boolean;

@@ -1,5 +1,10 @@
 :root {
-  --yellow-200: #9a7400;
+  --red-300: #dc2b1b;
+  --red-200: #ffc3b7;
+  --red-100: #fff3f0;
+
+  --yellow-300: #9a7400;
+  --yellow-200: #efd59c;
   --yellow-100: #fff7df;
 
   --purple-300: #7b3fff;
@@ -72,4 +77,8 @@ react-loading-skeleton {
 .ReactModal__Overlay--before-close {
   opacity: 0;
   transform: scale(1.1);
+}
+
+.go685806154 {
+  display: none !important;
 }

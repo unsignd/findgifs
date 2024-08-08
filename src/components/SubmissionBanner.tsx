@@ -19,7 +19,7 @@ const Wrapper = styled.div<{
 const Text = styled.p`
   padding: 10.5px 40px;
 
-  color: var(--yellow-200);
+  color: var(--yellow-300);
 `;
 
 export function SubmissionBanner() {
