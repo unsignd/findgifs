@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import useWindowDimensions from '../hooks/useWindowDimensions';
-import { useRecoilState } from 'recoil';
-import { gifListState } from '../modules/atoms';
 import { useEffect, useState } from 'react';
 import { api } from '../configs/axios';
+import toast from 'react-hot-toast';
 
 const Wrapper = styled.div<{
   $isMobile?: boolean;
@@ -109,7 +108,14 @@ export function Banner() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setSize(await api.get(`/size`).then((res) => res.data.data));
+      setSize(
+        await api
+          .get(`/size`)
+          .then((res) => res.data.data)
+          .catch(() =>
+            toast.error('An error occured while getting the size of GIFs.')
+          )
+      );
     };
 
     fetchData();

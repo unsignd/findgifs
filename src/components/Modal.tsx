@@ -342,6 +342,7 @@ export function Modal() {
   const [selection, setSelection] = useState<string>();
   const [resetStatus, reset] = useState<boolean>(true);
   const [randomNumber] = useState<number>(Math.floor(Math.random() * 4));
+  const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const [, setGifList] = useRecoilState(gifListState);
   const [, setGifSize] = useRecoilState(gifSizeState);
@@ -370,13 +371,16 @@ export function Modal() {
 
     const timer = setTimeout(() => {
       if (isPrompted) {
-        api.get(`/search?query=${searchQuery}`).then((res) => {
-          setGifs(res.data.data);
+        api
+          .get(`/search?query=${searchQuery}`)
+          .then((res) => {
+            setGifs(res.data.data);
 
-          setTimeout(() => {
-            setIsLoaded(true);
-          }, 400);
-        });
+            setTimeout(() => {
+              setIsLoaded(true);
+            }, 400);
+          })
+          .catch(() => toast.error('An error occured while searching GIFs.'));
       }
     }, 500);
 
@@ -520,11 +524,13 @@ export function Modal() {
       <Footer>
         <FooterText>Submissions will be displayed after reviews.</FooterText>
         <SubmitButton
-          $disabled={!selection}
+          $disabled={!selection || isClicked}
           onClick={async (event) => {
             event.preventDefault();
 
-            if (!selection) return;
+            if (!selection || isClicked) return;
+
+            setIsClicked(true);
 
             await api
               .post('/submit', {
@@ -535,7 +541,12 @@ export function Modal() {
                 const fetchData = async () => {
                   const gifSize = await api
                     .get('/size/unverified')
-                    .then((res) => res.data.data);
+                    .then((res) => res.data.data)
+                    .catch(() =>
+                      toast.error(
+                        'An error occured while getting the size of GIFs.'
+                      )
+                    );
 
                   const gifs = await api
                     .get('/load/unverified?skip=0')
@@ -551,13 +562,14 @@ export function Modal() {
                   fetchData();
                 }
 
-                toast.success('Your GIF has been submitted successfully!');
+                toast.success('GIF has been submitted successfully!');
               })
-              .catch(() => {
-                toast.error('An error occurred while submitting the GIF.');
-              });
+              .catch(() =>
+                toast.error('An error occured while submitting GIF.')
+              );
 
             setIsActive(false);
+            setIsClicked(false);
           }}
         >
           Submit

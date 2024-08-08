@@ -28,8 +28,8 @@ export function SubmissionBanner() {
   return (
     <Wrapper $isMobile={width <= 1040}>
       <Text>
-        Unverified submissions are displayed here. Upvote to influence review
-        priority.
+        Unverified submissions are displayed here. Upvote to influence GIFs'
+        priorities.
       </Text>
     </Wrapper>
   );

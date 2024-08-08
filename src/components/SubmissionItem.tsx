@@ -4,6 +4,7 @@ import { ReactComponent as UpvoteSVG } from '../assets/upvote_20.svg';
 import { useRecoilState } from 'recoil';
 import { loadedContentState } from '../modules/atoms';
 import { api } from '../configs/axios';
+import toast from 'react-hot-toast';
 
 const Wrapper = styled.div<{
   $isLoaded: boolean;
@@ -120,6 +121,7 @@ export function SubmissionItem({
 }) {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [upvoted, setUpvoted] = useState<boolean>(isUpvoted);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const [loadedContents, setLoadedContents] =
     useRecoilState(loadedContentState);
@@ -149,13 +151,19 @@ export function SubmissionItem({
           <ItemButton
             $isUpvoted={upvoted}
             onClick={() => {
-              if (!upvoted) {
-                setUpvoted(true);
+              if (upvoted || isClicked) return;
 
-                api.put(`/update/upvote`, {
+              setIsClicked(true);
+              setUpvoted(true);
+
+              api
+                .put(`/update/upvote`, {
                   url: media,
-                });
-              }
+                })
+                .then(() => setIsClicked(false))
+                .catch(() =>
+                  toast.error("An error occured while updating GIF's priority.")
+                );
             }}
           >
             <UpvoteSVG />

@@ -6,6 +6,7 @@ import { ReactComponent as ClipboardDoneSVG } from '../assets/clipboard_done_20.
 import { useRecoilState } from 'recoil';
 import { loadedContentState } from '../modules/atoms';
 import { api } from '../configs/axios';
+import toast from 'react-hot-toast';
 
 const Wrapper = styled.div<{
   $isLoaded: boolean;
@@ -143,6 +144,7 @@ export function Item({
 }) {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const [loadedContents, setLoadedContents] =
     useRecoilState(loadedContentState);
@@ -184,12 +186,23 @@ export function Item({
           <ItemButton
             onClick={() => {
               if (progress === 0) {
-                api.put(`/update/upvote`, {
-                  url: media,
-                });
-
                 navigator.clipboard.writeText(text);
+
+                if (isClicked) return;
+
+                setIsClicked(true);
                 setProgress(1);
+
+                api
+                  .put(`/update/upvote`, {
+                    url: media,
+                  })
+                  .then(() => setIsClicked(false))
+                  .catch(() =>
+                    toast.error(
+                      "An error occured while updating GIF's priority."
+                    )
+                  );
 
                 setTimeout(() => {
                   setProgress(2);

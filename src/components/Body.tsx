@@ -14,7 +14,7 @@ import { SubmissionItem } from './SubmissionItem';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import { useLocation } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
-import AdSenseBanner from './AdsenseBanner';
+import toast from 'react-hot-toast';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -112,7 +112,10 @@ export function Body() {
 
       const gifSize = await api
         .get(`/size/${pathname === '/submission' ? 'unverified' : 'verified'}`)
-        .then((res) => res.data.data);
+        .then((res) => res.data.data)
+        .catch(() =>
+          toast.error('An error occured while getting the size of GIFs.')
+        );
 
       const gifs = await api
         .get(
