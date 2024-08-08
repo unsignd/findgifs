@@ -60,6 +60,7 @@ root.render(
         toastOptions={{
           style: {
             height: '42px',
+            maxWidth: 'none',
 
             padding: '0 7.5px',
 
