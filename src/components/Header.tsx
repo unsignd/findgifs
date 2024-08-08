@@ -11,10 +11,9 @@ import {
   searchQueryState,
 } from '../modules/atoms';
 import { Modal } from './Modal';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import useWindowNavigation from '../hooks/useWindowNavigation';
-import toast from 'react-hot-toast';
 
 const Wrapper = styled.div<{
   $isMobile?: boolean;
@@ -164,7 +163,8 @@ const IconButton = styled.button`
   cursor: pointer;
 `;
 
-export function Header({ submission }: { submission?: boolean }) {
+export function Header() {
+  const { pathname } = useLocation();
   const { width } = useWindowDimensions();
   const { scrolledAmount } = useWindowNavigation();
 
@@ -231,7 +231,7 @@ export function Header({ submission }: { submission?: boolean }) {
               <SearchIcon />
               <SearchInput
                 placeholder={
-                  submission
+                  pathname === '/submission'
                     ? 'Filter all submissions...'
                     : 'Filter all GIFs...'
                 }
@@ -311,7 +311,9 @@ export function Header({ submission }: { submission?: boolean }) {
           <SearchIcon />
           <SearchInput
             placeholder={
-              submission ? 'Filter all submissions...' : 'Filter all GIFs...'
+              pathname === '/submission'
+                ? 'Filter all submissions...'
+                : 'Filter all GIFs...'
             }
             onChange={(event) =>
               setSearchQuery(

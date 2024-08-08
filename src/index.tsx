@@ -6,11 +6,12 @@ import { RecoilRoot } from 'recoil';
 import ReactModal from 'react-modal';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { SkeletonTheme } from 'react-loading-skeleton';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import { Submission } from './pages/Submission';
 import { Footer } from './components/Footer';
 import styled from 'styled-components';
 import { Toaster } from 'react-hot-toast';
+import { Error } from './pages/Error';
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -31,20 +32,27 @@ const router = createBrowserRouter([
     element: (
       <Wrapper>
         <Header />
-        <Landing />
+        <Outlet />
         <Footer />
       </Wrapper>
     ),
-  },
-  {
-    path: 'submission',
-    element: (
+    errorElement: (
       <Wrapper>
-        <Header submission />
-        <Submission />
+        <Header />
+        <Error />
         <Footer />
       </Wrapper>
     ),
+    children: [
+      {
+        path: '',
+        element: <Landing />,
+      },
+      {
+        path: 'submission',
+        element: <Submission />,
+      },
+    ],
   },
 ]);
 
