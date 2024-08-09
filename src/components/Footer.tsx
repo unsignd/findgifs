@@ -72,34 +72,11 @@ export function Footer() {
     <Wrapper>
       <ContentGroup $isMobile={width <= 1202}>
         {isFreaky ? (
-          <TextGroup>
-            <Text>© {new Date().getFullYear()} FindGIFs</Text>
-            <Text>·</Text>
-            <TextGroup>
-              <LinkText
-                onClick={() =>
-                  window.open('https://github.com/unsignd/findgifs', '_blank')
-                }
-              >
-                Github Repository
-              </LinkText>
-              <LinkText onClick={() => setEffectActive(!effectActive)}>
-                {effectActive ? 'Be Normal (lame)' : 'Go Freaky 😝'}
-              </LinkText>
-            </TextGroup>
-          </TextGroup>
+          <LinkText onClick={() => setEffectActive(!effectActive)}>
+            {effectActive ? 'Be Normal (lame)' : 'Go Freaky 😝'}
+          </LinkText>
         ) : (
-          <TextGroup>
-            <Text>© {new Date().getFullYear()} FindGIFs</Text>
-            <Text>·</Text>
-            <LinkText
-              onClick={() =>
-                window.open('https://github.com/unsignd/findgifs', '_blank')
-              }
-            >
-              Github Repository
-            </LinkText>
-          </TextGroup>
+          <Text>© {new Date().getFullYear()} FindGIFs</Text>
         )}
         <Watermark
           src={require('../assets/watermark.png')}
