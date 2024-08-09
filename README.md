@@ -25,7 +25,7 @@
 
 ## Special Thanks
 
-- [Giphy](https://giphy.com)
+- [giphy](https://giphy.com)
 - alpha wolf youtubers 😈🐺
 - the strokes
 - julian casablancas
