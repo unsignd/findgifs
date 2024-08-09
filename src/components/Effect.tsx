@@ -53,9 +53,5 @@ export function Effect() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [effectActive]);
 
-  useEffect(() => {
-    console.log(intense);
-  }, [intense]);
-
   return <Wrapper $active={effectActive} $intense={intense} />;
 }

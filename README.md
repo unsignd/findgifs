@@ -13,15 +13,18 @@
 <br/>
 
 ## Contributor
-* [@unsignd](https://github.com/unsignd): me, project developer 😙
-* [@zeroonedeveloper](https://github.com/zeroonedeveloper): configured backend docker setting
-* [@paring-chan](https://github.com/paring-chan): configured backend docker setting
-* [@minibox24](https://github.com/minibox24): configured backend docker setting
-* [@issac4892](https://github.com/issac4892): helped backend setup
-* [@choshinyoung](https://github.com/choshinyoung): did a super super super important task (i forgot)
+
+- [@unsignd](https://github.com/unsignd): me, developed the overall project 😙
+- [@zeroonedeveloper](https://github.com/zeroonedeveloper): configured backend docker setting
+- [@paring-chan](https://github.com/paring-chan): configured backend docker setting
+- [@minibox24](https://github.com/minibox24): configured backend docker setting
+- [@issac4892](https://github.com/issac4892): helped backend setup
+- [@choshinyoung](https://github.com/choshinyoung): did a super super super important task (i forgot)
 
 <br/>
 
 ## Special Thanks
-* sigma alpha wolf motivation youtubers 😈🐺: created skibidi videos used in the 404 page
-* the strokes: bad decisions is such a banger
+
+- [Giphy][https://giphy.com]:
+- sigma alpha wolf motivation youtubers 😈🐺: created skibidi videos used in the 404 page
+- the strokes: bad decisions is such a banger

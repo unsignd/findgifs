@@ -174,7 +174,7 @@ export function Body() {
               gif.name.filter((name) => name.includes(searchQuery ?? ''))
                 .length !== 0
           ).length === 0 ? (
-          <NotFoundWrapper $isMobile={width <= 1040}>
+          <NotFoundWrapper $isMobile={width <= 1202}>
             <NotFoundGroup>
               <NotFoundImage
                 src={require('../assets/404.png')}
@@ -190,7 +190,7 @@ export function Body() {
             </NotFoundGroup>
           </NotFoundWrapper>
         ) : (
-          <InnerWrapper $isMobile={width <= 1040}>
+          <InnerWrapper $isMobile={width <= 1202}>
             {gifList
               .filter(
                 (gif) =>

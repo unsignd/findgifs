@@ -37,12 +37,11 @@ const Text = styled.p`
   color: var(--brightness-400);
 `;
 
-const LinkGroup = styled.div`
-  display: flex;
-  gap: 20px;
+const Watermark = styled.img`
+  height: 16px;
 `;
 
-const LinkText = styled.p`
+const LinkText = styled.span`
   font-size: 14px;
 
   color: var(--brightness-400);
@@ -64,29 +63,18 @@ export function Footer() {
 
   return (
     <Wrapper>
-      <ContentGroup $isMobile={width <= 1040}>
-        <Text>© {new Date().getFullYear()} FindGIFs</Text>
-        <LinkGroup>
-          <a
-            href="https://github.com/unsignd/findgifs"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <LinkText>Github</LinkText>
-          </a>
-          <a
-            href="https://instagram.com/_findgifs"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <LinkText>Instagram</LinkText>
-          </a>
-          {isFreaky ? (
+      <ContentGroup $isMobile={width <= 1202}>
+        {isFreaky ? (
+          <Text>
+            © {new Date().getFullYear()} FindGIFs ·{' '}
             <LinkText onClick={() => setEffectActive(!effectActive)}>
               {effectActive ? 'Be Normal (lame)' : 'Go Freaky 😝'}
             </LinkText>
-          ) : undefined}
-        </LinkGroup>
+          </Text>
+        ) : (
+          <Text>© {new Date().getFullYear()} FindGIFs</Text>
+        )}
+        <Watermark src={require('../assets/watermark.png')} />
       </ContentGroup>
     </Wrapper>
   );

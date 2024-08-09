@@ -26,7 +26,7 @@ export function SubmissionBanner() {
   const { width } = useWindowDimensions();
 
   return (
-    <Wrapper $isMobile={width <= 1040}>
+    <Wrapper $isMobile={width <= 1202}>
       <Text>
         Unverified submissions are displayed here. Upvote to influence GIFs'
         priorities.

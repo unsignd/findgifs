@@ -122,12 +122,12 @@ export function Banner() {
   }, []);
 
   return (
-    <Wrapper $isMobile={width <= 1040}>
+    <Wrapper $isMobile={width <= 1202}>
       <TextGroup>
-        <Subheading $isMobile={width <= 1040}>
+        <Subheading $isMobile={width <= 1202}>
           Find {size} trending Instagram GIFs with one tap, all for free
         </Subheading>
-        <Heading $isMobile={width <= 1040}>
+        <Heading $isMobile={width <= 1202}>
           Easy-to-use Instagram GIF name finder,{'\n'}contributed by users all
           around the world.
         </Heading>

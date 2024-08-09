@@ -42,7 +42,7 @@ export function Error() {
   const [randomNumber] = useState<number>(Math.floor(Math.random() * 6));
 
   return (
-    <Wrapper $isMobile={width <= 1040}>
+    <Wrapper $isMobile={width <= 1202}>
       <NotFoundGroup>
         <iframe
           width="240"

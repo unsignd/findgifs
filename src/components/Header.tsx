@@ -214,7 +214,7 @@ export function Header() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive, isPrompted]);
 
-  if (width > 1040) {
+  if (width > 1202) {
     return (
       <Wrapper>
         <InnerWrapper>
@@ -265,6 +265,15 @@ export function Header() {
                   rel="noreferrer"
                 >
                   <p>Official Instagram</p>
+                </a>
+              </Button>
+              <Button>
+                <a
+                  href="https://github.com/unsignd/findgifs"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <p>Github Repository</p>
                 </a>
               </Button>
             </ButtonGroup>
