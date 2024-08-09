@@ -39,6 +39,8 @@ const Text = styled.p`
 
 const Watermark = styled.img`
   height: 16px;
+
+  cursor: pointer;
 `;
 
 const LinkText = styled.span`
@@ -74,7 +76,10 @@ export function Footer() {
         ) : (
           <Text>© {new Date().getFullYear()} FindGIFs</Text>
         )}
-        <Watermark src={require('../assets/watermark.png')} />
+        <Watermark
+          src={require('../assets/watermark.png')}
+          onClick={() => window.open('https://giphy.com', '_blank')}
+        />
       </ContentGroup>
     </Wrapper>
   );
