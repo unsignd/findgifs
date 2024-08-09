@@ -267,15 +267,6 @@ export function Header() {
                   <p>Official Instagram</p>
                 </a>
               </Button>
-              <Button>
-                <a
-                  href="https://github.com/unsignd/findgifs"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <p>Github Repository</p>
-                </a>
-              </Button>
             </ButtonGroup>
             <Button $border onClick={() => setIsActive(true)}>
               <p>Contribute</p>

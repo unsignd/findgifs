@@ -31,6 +31,11 @@ const ContentGroup = styled.div<{
   justify-content: space-between;
 `;
 
+const TextGroup = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
 const Text = styled.p`
   font-size: 14px;
 
@@ -67,14 +72,34 @@ export function Footer() {
     <Wrapper>
       <ContentGroup $isMobile={width <= 1202}>
         {isFreaky ? (
-          <Text>
-            © {new Date().getFullYear()} FindGIFs ·{' '}
-            <LinkText onClick={() => setEffectActive(!effectActive)}>
-              {effectActive ? 'Be Normal (lame)' : 'Go Freaky 😝'}
-            </LinkText>
-          </Text>
+          <TextGroup>
+            <Text>© {new Date().getFullYear()} FindGIFs</Text>
+            <Text>·</Text>
+            <TextGroup>
+              <LinkText
+                onClick={() =>
+                  window.open('https://github.com/unsignd/findgifs', '_blank')
+                }
+              >
+                Github Repository
+              </LinkText>
+              <LinkText onClick={() => setEffectActive(!effectActive)}>
+                {effectActive ? 'Be Normal (lame)' : 'Go Freaky 😝'}
+              </LinkText>
+            </TextGroup>
+          </TextGroup>
         ) : (
-          <Text>© {new Date().getFullYear()} FindGIFs</Text>
+          <TextGroup>
+            <Text>© {new Date().getFullYear()} FindGIFs</Text>
+            <Text>·</Text>
+            <LinkText
+              onClick={() =>
+                window.open('https://github.com/unsignd/findgifs', '_blank')
+              }
+            >
+              Github Repository
+            </LinkText>
+          </TextGroup>
         )}
         <Watermark
           src={require('../assets/watermark.png')}
