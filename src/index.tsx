@@ -12,6 +12,7 @@ import { Footer } from './components/Footer';
 import styled from 'styled-components';
 import { Toaster } from 'react-hot-toast';
 import { Error } from './pages/Error';
+import { Effect } from './components/Effect';
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
     path: '/',
     element: (
       <Wrapper>
+        <Effect />
         <Header />
         <Outlet />
         <Footer />
@@ -70,11 +72,11 @@ root.render(
             height: '42px',
             maxWidth: 'none',
 
-            padding: '0 7.5px',
+            padding: '0 2px',
 
             backgroundColor: 'var(--brightness-100)',
             border: '1px solid var(--brightness-300)',
-            borderRadius: '21px',
+            borderRadius: '6px',
           },
           success: {
             style: {

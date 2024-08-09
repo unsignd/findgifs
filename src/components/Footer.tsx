@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import useWindowDimensions from '../hooks/useWindowDimensions';
+import { useRecoilState } from 'recoil';
+import { effectActiveState } from '../modules/atoms';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -44,6 +46,8 @@ const LinkText = styled.p`
 
   color: var(--brightness-400);
 
+  cursor: pointer;
+
   &:hover {
     text-decoration: underline;
     text-decoration-color: var(--brightness-400);
@@ -52,6 +56,8 @@ const LinkText = styled.p`
 
 export function Footer() {
   const { width } = useWindowDimensions();
+
+  const [effectActive, setEffectActive] = useRecoilState(effectActiveState);
 
   return (
     <Wrapper>
@@ -72,6 +78,9 @@ export function Footer() {
           >
             <LinkText>Instagram</LinkText>
           </a>
+          <LinkText onClick={() => setEffectActive(!effectActive)}>
+            Toggle Blurry {effectActive ? '🥺' : '😝'}
+          </LinkText>
         </LinkGroup>
       </ContentGroup>
     </Wrapper>

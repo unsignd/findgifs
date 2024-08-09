@@ -25,10 +25,6 @@ const NotFoundGroup = styled.div`
   gap: 15px;
 `;
 
-const NotFoundImage = styled.iframe`
-  border: none;
-`;
-
 const NotFoundText = styled.p`
   text-align: center;
   white-space: pre;
@@ -70,8 +66,8 @@ export function Error() {
         />
         <NotFoundText>
           Hey dude u took the wrong way
-          {'\n'}u can <Link to="/">casually go back</Link> or watch the freaky
-          alpha wolf video above
+          {'\n'}u can <Link to="/">go back</Link> or watch the freaky alpha wolf
+          video above
         </NotFoundText>
       </NotFoundGroup>
     </Wrapper>

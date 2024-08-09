@@ -36,6 +36,11 @@ const searchQueryState = atom<string | null>({
   default: null,
 });
 
+const effectActiveState = atom<boolean>({
+  key: 'effectActiveState',
+  default: false,
+});
+
 export {
   gifListState,
   gifSizeState,
@@ -44,4 +49,5 @@ export {
   modalIsPromptedState,
   loadedContentState,
   searchQueryState,
+  effectActiveState,
 };
