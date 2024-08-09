@@ -8,7 +8,7 @@ const Wrapper = styled.div<{
   $isMobile?: boolean;
 }>`
   width: 100%;
-  height: 360px;
+  height: ${(props) => (props.$isMobile ? 400 : 360)}px;
 
   display: flex;
   align-items: center;

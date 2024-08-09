@@ -19,6 +19,8 @@ const Wrapper = styled.div<{
 const Text = styled.p`
   padding: 10.5px 40px;
 
+  text-align: center;
+
   color: var(--yellow-300);
 `;
 
