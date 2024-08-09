@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import { useRecoilState } from 'recoil';
 import { effectActiveState } from '../modules/atoms';
+import { useState } from 'react';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -57,6 +58,8 @@ const LinkText = styled.p`
 export function Footer() {
   const { width } = useWindowDimensions();
 
+  const [isFreaky] = useState<boolean>(Math.random() <= 0.1);
+
   const [effectActive, setEffectActive] = useRecoilState(effectActiveState);
 
   return (
@@ -78,9 +81,11 @@ export function Footer() {
           >
             <LinkText>Instagram</LinkText>
           </a>
-          <LinkText onClick={() => setEffectActive(!effectActive)}>
-            Toggle Blurry {effectActive ? '🥺' : '😝'}
-          </LinkText>
+          {isFreaky ? (
+            <LinkText onClick={() => setEffectActive(!effectActive)}>
+              {effectActive ? 'Be Normal (lame)' : 'Go Freaky 😝'}
+            </LinkText>
+          ) : undefined}
         </LinkGroup>
       </ContentGroup>
     </Wrapper>
