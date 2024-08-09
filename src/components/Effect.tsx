@@ -39,7 +39,7 @@ export function Effect() {
 
       setEvent(
         setInterval(() => {
-          setIntense((intense) => intense + 20);
+          setIntense((intense) => intense + 10);
         }, 100)
       );
     }

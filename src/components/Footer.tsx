@@ -58,7 +58,7 @@ const LinkText = styled.p`
 export function Footer() {
   const { width } = useWindowDimensions();
 
-  const [isFreaky] = useState<boolean>(Math.random() <= 0.1);
+  const [isFreaky] = useState<boolean>(Math.random() <= 0.01);
 
   const [effectActive, setEffectActive] = useRecoilState(effectActiveState);
 
