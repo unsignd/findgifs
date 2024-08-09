@@ -25,6 +25,7 @@
 
 ## Special Thanks
 
-- [Giphy][https://giphy.com]:
-- sigma alpha wolf motivation youtubers 😈🐺: created skibidi videos used in the 404 page
-- the strokes: bad decisions is such a banger
+- [Giphy](https://giphy.com)
+- alpha wolf youtubers 😈🐺
+- the strokes
+- julian casablancas
