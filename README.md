@@ -20,6 +20,8 @@
 * [@issac4892](https://github.com/issac4892): helped backend setup
 * [@choshinyoung](https://github.com/choshinyoung): did a super super super important task (i forgot)
 
+<br/>
+
 ## Special Thanks
 * sigma alpha wolf motivation youtubers 😈🐺: created skibidi videos used in the 404 page
 * the strokes: bad decisions is such a banger
