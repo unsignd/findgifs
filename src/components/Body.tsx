@@ -81,7 +81,7 @@ const LoadingWrapper = styled.div`
   align-items: center;
   justify-content: center;
 
-  padding: 20px;
+  padding: 40px 20px;
 `;
 
 const LoadingText = styled.p`
@@ -169,11 +169,12 @@ export function Body() {
       }
     >
       <Wrapper>
-        {!isReady ? (
+        {loadedContents === -1 ? undefined : (
           <LoadingWrapper>
             <LoadingText>Loading GIFs... Hold up! 🙂‍↔️</LoadingText>
           </LoadingWrapper>
-        ) : gifList.filter(
+        )}
+        {!isReady ? undefined : gifList.filter(
             (gif) =>
               gif.name.filter((name) => name.includes(searchQuery ?? ''))
                 .length !== 0
