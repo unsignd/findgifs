@@ -169,7 +169,11 @@ export function Body() {
       }
     >
       <Wrapper>
-        {!isReady ? undefined : gifList.filter(
+        {!isReady ? (
+          <LoadingWrapper>
+            <LoadingText>Loading GIFs... Hold up! 🙂‍↔️</LoadingText>
+          </LoadingWrapper>
+        ) : gifList.filter(
             (gif) =>
               gif.name.filter((name) => name.includes(searchQuery ?? ''))
                 .length !== 0
