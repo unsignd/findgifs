@@ -26,7 +26,7 @@ router.get('/search', async (req: Request, res: Response) => {
     let response = await axios.get('https://api.giphy.com/v1/gifs/search', {
       params: {
         q: query,
-        limit: 5,
+        limit: 10,
         api_key: apiKey,
       },
     });
