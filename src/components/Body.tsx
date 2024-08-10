@@ -142,94 +142,96 @@ export function Body() {
   }, [isReady, gifList, loadedContents, setLoadedContents]);
 
   return (
-    <InfiniteScroll
-      pageStart={0}
-      loadMore={async () => {
-        const data = [];
-
-        data.push(
-          ...(await api
-            .get(
-              `/load/${
-                pathname === '/submission' ? 'unverified' : 'verified'
-              }?skip=${(loadCount + 1) * 30}`
-            )
-            .then((res) => res.data.data)
-            .catch(() => []))
-        );
-
-        setGifList([...gifList, ...(await Promise.all(data)).flat()]);
-        setLoadCount(loadCount + 1);
-      }}
-      hasMore={gifSize ? gifSize - gifList.length > 0 : false}
-      loader={
+    <div>
+      {loadedContents === -1 ? undefined : (
         <LoadingWrapper>
           <LoadingText>Loading GIFs... Hold up! 🙂‍↔️</LoadingText>
         </LoadingWrapper>
-      }
-    >
-      <Wrapper>
-        {loadedContents === -1 ? undefined : (
+      )}
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={async () => {
+          const data = [];
+
+          data.push(
+            ...(await api
+              .get(
+                `/load/${
+                  pathname === '/submission' ? 'unverified' : 'verified'
+                }?skip=${(loadCount + 1) * 30}`
+              )
+              .then((res) => res.data.data)
+              .catch(() => []))
+          );
+
+          setGifList([...gifList, ...(await Promise.all(data)).flat()]);
+          setLoadCount(loadCount + 1);
+        }}
+        hasMore={gifSize ? gifSize - gifList.length > 0 : false}
+        loader={
           <LoadingWrapper>
             <LoadingText>Loading GIFs... Hold up! 🙂‍↔️</LoadingText>
           </LoadingWrapper>
-        )}
-        {!isReady ? undefined : gifList.filter(
-            (gif) =>
-              gif.name.filter((name) => name.includes(searchQuery ?? ''))
-                .length !== 0
-          ).length === 0 ? (
-          <NotFoundWrapper $isMobile={width <= 1202}>
-            <NotFoundGroup>
-              <NotFoundImage
-                src={require('../assets/404.png')}
-                draggable={false}
-              />
-              <NotFoundText>
-                {gifList.length === 0
-                  ? `No ${
-                      pathname === '/submission' ? 'submissions' : 'GIFs'
-                    } have been submitted yet.\nWhat if you give it a try? ⛏️😙`
-                  : 'No GIFs containing the search term were found.'}
-              </NotFoundText>
-            </NotFoundGroup>
-          </NotFoundWrapper>
-        ) : (
-          <InnerWrapper $isMobile={width <= 1202}>
-            {gifList
-              .filter(
-                (gif) =>
-                  gif.name.filter((name) => name.includes(searchQuery ?? ''))
-                    .length !== 0
-              )
-              .map((gif, index) =>
-                pathname === '/submission' ? (
-                  <SubmissionItem
-                    key={index}
-                    media={gif.url}
-                    text={
-                      gif.name.filter((name) =>
-                        name.includes(searchQuery ?? '')
-                      )[0]
-                    }
-                    upvote={gif.upvote}
-                    isUpvoted={gif.isUpvoted!}
-                  />
-                ) : (
-                  <Item
-                    key={index}
-                    media={gif.url}
-                    text={
-                      gif.name.filter((name) =>
-                        name.includes(searchQuery ?? '')
-                      )[0]
-                    }
-                  />
+        }
+      >
+        <Wrapper>
+          {!isReady ? undefined : gifList.filter(
+              (gif) =>
+                gif.name.filter((name) => name.includes(searchQuery ?? ''))
+                  .length !== 0
+            ).length === 0 ? (
+            <NotFoundWrapper $isMobile={width <= 1202}>
+              <NotFoundGroup>
+                <NotFoundImage
+                  src={require('../assets/404.png')}
+                  draggable={false}
+                />
+                <NotFoundText>
+                  {gifList.length === 0
+                    ? `No ${
+                        pathname === '/submission' ? 'submissions' : 'GIFs'
+                      } have been submitted yet.\nWhat if you give it a try? ⛏️😙`
+                    : 'No GIFs containing the search term were found.'}
+                </NotFoundText>
+              </NotFoundGroup>
+            </NotFoundWrapper>
+          ) : (
+            <InnerWrapper $isMobile={width <= 1202}>
+              {gifList
+                .filter(
+                  (gif) =>
+                    gif.name.filter((name) => name.includes(searchQuery ?? ''))
+                      .length !== 0
                 )
-              )}
-          </InnerWrapper>
-        )}
-      </Wrapper>
-    </InfiniteScroll>
+                .map((gif, index) =>
+                  pathname === '/submission' ? (
+                    <SubmissionItem
+                      key={index}
+                      media={gif.url}
+                      text={
+                        gif.name.filter((name) =>
+                          name.includes(searchQuery ?? '')
+                        )[0]
+                      }
+                      upvote={gif.upvote}
+                      isUpvoted={gif.isUpvoted!}
+                    />
+                  ) : (
+                    <Item
+                      key={index}
+                      media={gif.url}
+                      text={
+                        gif.name.filter((name) =>
+                          name.includes(searchQuery ?? '')
+                        )[0]
+                      }
+                    />
+                  )
+                )}
+            </InnerWrapper>
+          )}
+        </Wrapper>
+      </InfiniteScroll>
+    </div>
   );
 }
