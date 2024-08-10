@@ -151,6 +151,8 @@ export function Body() {
       <InfiniteScroll
         pageStart={0}
         loadMore={async () => {
+          setLoadCount(loadCount + 1);
+
           const data = [];
 
           data.push(
@@ -165,10 +167,11 @@ export function Body() {
           );
 
           setGifList([...gifList, ...(await Promise.all(data)).flat()]);
-          setLoadCount(loadCount + 1);
         }}
         hasMore={
-          gifSize ? (isReady ? gifSize - gifList.length > 0 : false) : false
+          gifSize
+            ? gifSize > gifList.length && (loadCount + 1) * 10 < gifSize
+            : false
         }
         loader={
           <LoadingWrapper>
