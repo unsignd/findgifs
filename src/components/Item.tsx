@@ -163,6 +163,7 @@ export function Item({
     <Wrapper $isLoaded={isLoaded}>
       <ItemImage
         src={media}
+        loading="lazy"
         onLoad={() => {
           if (loadedContents !== -1) {
             setLoadedContents(loadedContents + 1);

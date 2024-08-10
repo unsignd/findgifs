@@ -31,11 +31,6 @@ const ContentGroup = styled.div<{
   justify-content: space-between;
 `;
 
-const TextGroup = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
 const Text = styled.p`
   font-size: 14px;
 

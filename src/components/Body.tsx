@@ -143,7 +143,7 @@ export function Body() {
 
   return (
     <div>
-      {isReady || loadedContents === -1 ? undefined : (
+      {isReady ? undefined : (
         <LoadingWrapper>
           <LoadingText>Loading GIFs... Hold up! 🙂‍↔️</LoadingText>
         </LoadingWrapper>
@@ -167,7 +167,9 @@ export function Body() {
           setGifList([...gifList, ...(await Promise.all(data)).flat()]);
           setLoadCount(loadCount + 1);
         }}
-        hasMore={gifSize && !isReady ? gifSize - gifList.length > 0 : false}
+        hasMore={
+          gifSize ? (isReady ? gifSize - gifList.length > 0 : false) : false
+        }
         loader={
           <LoadingWrapper>
             <LoadingText>Loading GIFs... Hold up! 🙂‍↔️</LoadingText>
