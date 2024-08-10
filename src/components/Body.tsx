@@ -143,7 +143,7 @@ export function Body() {
 
   return (
     <div>
-      {loadedContents === -1 ? undefined : (
+      {isReady || loadedContents === -1 ? undefined : (
         <LoadingWrapper>
           <LoadingText>Loading GIFs... Hold up! 🙂‍↔️</LoadingText>
         </LoadingWrapper>
@@ -158,7 +158,7 @@ export function Body() {
               .get(
                 `/load/${
                   pathname === '/submission' ? 'unverified' : 'verified'
-                }?skip=${(loadCount + 1) * 30}`
+                }?skip=${(loadCount + 1) * 10}`
               )
               .then((res) => res.data.data)
               .catch(() => []))
@@ -167,7 +167,7 @@ export function Body() {
           setGifList([...gifList, ...(await Promise.all(data)).flat()]);
           setLoadCount(loadCount + 1);
         }}
-        hasMore={gifSize ? gifSize - gifList.length > 0 : false}
+        hasMore={gifSize && !isReady ? gifSize - gifList.length > 0 : false}
         loader={
           <LoadingWrapper>
             <LoadingText>Loading GIFs... Hold up! 🙂‍↔️</LoadingText>

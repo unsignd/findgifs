@@ -173,7 +173,7 @@ export function Item({
       />
       <ItemBottomGroup>
         <ItemTextGroup>
-          <ItemText $progress={progress}>{text}</ItemText>
+          <ItemText $progress={progress}>{text.toLowerCase()}</ItemText>
           <ItemCopyStack
             $color="var(--purple-300)"
             $backgroundColor="var(--purple-100)"

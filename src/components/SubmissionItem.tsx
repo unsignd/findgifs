@@ -145,7 +145,7 @@ export function SubmissionItem({
       />
       <ItemBottomGroup>
         <ItemTextGroup>
-          <ItemText>{text}</ItemText>
+          <ItemText>{text.toLowerCase()}</ItemText>
         </ItemTextGroup>
         <ItemButtonGroup>
           <ItemButton
