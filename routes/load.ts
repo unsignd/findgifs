@@ -49,7 +49,7 @@ router.get('/load/verified', async (req: Request, res: Response) => {
     { $sort: { count: -1, name: 1 } },
   ])
     .skip(skip)
-    .limit(30);
+    .limit(10);
 
   if (!documents || documents.length === 0) {
     res.status(404).send({
@@ -130,7 +130,7 @@ router.get('/load/unverified', async (req: Request, res: Response) => {
     { $sort: { count: -1, name: 1 } },
   ])
     .skip(skip)
-    .limit(30);
+    .limit(10);
 
   if (!documents || documents.length === 0) {
     res.status(404).send({
