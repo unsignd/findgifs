@@ -95,6 +95,7 @@ export function Body() {
   const { width } = useWindowDimensions();
 
   const [isReady, setIsReady] = useState<boolean>(false);
+  const [onGoingCount, setOnGoingCount] = useState<number>(0);
 
   const [gifList, setGifList] = useRecoilState(gifListState);
   const [gifSize, setGifSize] = useRecoilState(gifSizeState);
@@ -151,6 +152,12 @@ export function Body() {
       <InfiniteScroll
         pageStart={0}
         loadMore={async () => {
+          if (onGoingCount === loadCount + 1) {
+            return;
+          }
+
+          setOnGoingCount(onGoingCount + 1);
+
           const data = [];
 
           data.push(
@@ -167,11 +174,7 @@ export function Body() {
           setGifList([...gifList, ...(await Promise.all(data)).flat()]);
           setLoadCount(loadCount + 1);
         }}
-        hasMore={
-          isReady && gifSize
-            ? gifSize > gifList.length && loadCount * 10 < gifSize
-            : false
-        }
+        hasMore={isReady && gifSize ? (loadCount + 1) * 10 < gifSize : false}
         loader={
           <LoadingWrapper>
             <LoadingText>Loading GIFs... Hold up! 🙂‍↔️</LoadingText>
