@@ -269,7 +269,7 @@ export function Header() {
               </Button>
             </ButtonGroup>
             <Button $border onClick={() => setIsActive(true)}>
-              <p>Upload GIF</p>
+              <p>Upload GIFs</p>
             </Button>
           </ContentGroup>
         </InnerWrapper>
@@ -303,7 +303,7 @@ export function Header() {
               <ArchiveSVG />
             </IconButton>
             <Button $border onClick={() => setIsActive(true)}>
-              <p>Upload GIF</p>
+              <p>Upload GIFs</p>
             </Button>
           </ContentGroup>
         </InnerWrapper>
