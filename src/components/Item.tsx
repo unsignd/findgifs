@@ -213,7 +213,7 @@ export function Item({
                 setProgress(1);
 
                 api
-                  .put(`/update/upvote`, {
+                  .put(`/update`, {
                     url: media,
                   })
                   .then(() => setIsClicked(false))

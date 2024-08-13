@@ -39,8 +39,6 @@ const Text = styled.p`
 
 const Watermark = styled.img`
   height: 16px;
-
-  cursor: pointer;
 `;
 
 const LinkText = styled.span`

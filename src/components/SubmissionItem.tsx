@@ -89,7 +89,7 @@ const ItemButton = styled.button<{
 
   transition: background-color 250ms ease;
 
-  cursor: ${(props) => (props.$isUpvoted ? 'auto' : 'pointer')};
+  cursor: pointer;
 
   & svg path {
     fill: ${(props) =>
@@ -170,13 +170,13 @@ export function SubmissionItem({
           <ItemButton
             $isUpvoted={upvoted}
             onClick={() => {
-              if (upvoted || isClicked) return;
+              if (isClicked) return;
 
               setIsClicked(true);
-              setUpvoted(true);
+              setUpvoted(!upvoted);
 
               api
-                .put(`/update/upvote`, {
+                .put(`/update`, {
                   url: media,
                 })
                 .then(() => setIsClicked(false))
@@ -186,7 +186,13 @@ export function SubmissionItem({
             }}
           >
             <UpvoteSVG />
-            <p>{!isUpvoted && upvoted ? upvote + 1 : upvote}</p>
+            <p>
+              {!isUpvoted && upvoted
+                ? upvote + 1
+                : isUpvoted && !upvoted
+                ? upvote - 1
+                : upvote}
+            </p>
           </ItemButton>
         </ItemButtonGroup>
       </ItemBottomGroup>
