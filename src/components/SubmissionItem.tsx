@@ -109,11 +109,13 @@ const ItemButton = styled.button<{
 `;
 
 export function SubmissionItem({
+  index,
   media,
   text,
   upvote,
   isUpvoted,
 }: {
+  index: number;
   media: string;
   text: string;
   upvote: number;
@@ -127,10 +129,13 @@ export function SubmissionItem({
     useRecoilState(loadedContentState);
 
   useEffect(() => {
-    if (loadedContents === -1) {
+    if (
+      loadedContents[Math.floor(index / 5)].current >=
+      loadedContents[Math.floor(index / 5)].maximum
+    ) {
       setIsLoaded(true);
     }
-  }, [loadedContents]);
+  }, [index, loadedContents]);
 
   return (
     <Wrapper $isLoaded={isLoaded}>
@@ -138,8 +143,17 @@ export function SubmissionItem({
         src={media}
         loading="lazy"
         onLoad={() => {
-          if (loadedContents !== -1) {
-            setLoadedContents(loadedContents + 1);
+          if (
+            loadedContents[Math.floor(index / 5)].current <
+            loadedContents[Math.floor(index / 5)].maximum
+          ) {
+            const tempLoadedContents = [...loadedContents];
+            tempLoadedContents[Math.floor(index / 5)].current =
+              tempLoadedContents[Math.floor(index / 5)].current + 1;
+
+            setLoadedContents(tempLoadedContents);
+
+            console.log(tempLoadedContents);
           }
         }}
         $isLoaded={isLoaded}

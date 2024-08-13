@@ -26,9 +26,14 @@ const modalIsPromptedState = atom<boolean>({
   default: false,
 });
 
-const loadedContentState = atom<number>({
+const loadedContentState = atom<
+  {
+    current: number;
+    maximum: number;
+  }[]
+>({
   key: 'loadedContentState',
-  default: 0,
+  default: [],
 });
 
 const searchQueryState = atom<string | null>({

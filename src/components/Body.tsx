@@ -106,10 +106,12 @@ export function Body() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setGifList([]);
       setGifSize(undefined);
+      setGifList([]);
       setLoadCount(0);
-      setLoadedContents(0);
+      setLoadedContents([]);
+
+      const tempLoadedContents: typeof loadedContents = [];
 
       const gifSize = await api
         .get(`/size/${pathname === '/submission' ? 'unverified' : 'verified'}`)
@@ -117,7 +119,6 @@ export function Body() {
         .catch(() =>
           toast.error('An error occured while getting the size of GIFs.')
         );
-
       const gifs = await api
         .get(
           `/load/${
@@ -127,20 +128,25 @@ export function Body() {
         .then((res) => res.data.data)
         .catch(() => []);
 
+      for (let index = 0; index < Math.ceil(gifSize / 5); index++) {
+        tempLoadedContents[index] = {
+          current: 0,
+          maximum: Math.min(5, gifSize - index * 5),
+        };
+      }
+
+      console.log(gifSize);
+      console.log(tempLoadedContents);
+
       setGifSize(gifSize);
       setGifList(gifs);
+      setLoadedContents(tempLoadedContents);
       setIsReady(true);
     };
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (isReady && gifList.length !== 0 && loadedContents === gifList.length) {
-      setLoadedContents(-1);
-    }
-  }, [isReady, gifList, loadedContents, setLoadedContents]);
 
   return (
     <div>
@@ -214,6 +220,7 @@ export function Body() {
                   pathname === '/submission' ? (
                     <SubmissionItem
                       key={index}
+                      index={index}
                       media={gif.url}
                       text={
                         gif.name.filter((name) =>
@@ -226,6 +233,7 @@ export function Body() {
                   ) : (
                     <Item
                       key={index}
+                      index={index}
                       media={gif.url}
                       text={
                         gif.name.filter((name) =>
