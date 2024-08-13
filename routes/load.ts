@@ -49,7 +49,7 @@ router.get('/load/verified', async (req: Request, res: Response) => {
     { $sort: { count: -1, name: 1 } },
   ])
     .skip(skip)
-    .limit(10);
+    .limit(20);
 
   if (!documents || documents.length === 0) {
     res.status(404).send({
@@ -83,6 +83,8 @@ router.get('/load/unverified', async (req: Request, res: Response) => {
 
     return;
   }
+
+  await new Promise((resolve) => setTimeout(resolve, 1200));
 
   const currentTime = Math.floor(Date.now() / 1000);
   const oneMonthAgo = currentTime - 2592000;
@@ -130,7 +132,7 @@ router.get('/load/unverified', async (req: Request, res: Response) => {
     { $sort: { count: -1, name: 1 } },
   ])
     .skip(skip)
-    .limit(10);
+    .limit(20);
 
   if (!documents || documents.length === 0) {
     res.status(404).send({
