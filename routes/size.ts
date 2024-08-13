@@ -67,8 +67,6 @@ router.get('/size/unverified', async (_: Request, res: Response) => {
     ],
   }).lean();
 
-  console.log(documents.length);
-
   if (!documents || documents.length === 0) {
     res.send({
       data: 0,
