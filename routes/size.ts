@@ -37,8 +37,6 @@ router.get('/size', async (_: Request, res: Response) => {
 });
 
 router.get('/size/verified', async (_: Request, res: Response) => {
-  const currentTime = Math.floor(Date.now() / 1000);
-
   const documents = await Gif.find({
     isVerified: true,
   }).lean();
@@ -68,6 +66,8 @@ router.get('/size/unverified', async (_: Request, res: Response) => {
       { 'upvote.date': { $gt: oneWeekAgo } },
     ],
   }).lean();
+
+  console.log(documents.length);
 
   if (!documents || documents.length === 0) {
     res.send({

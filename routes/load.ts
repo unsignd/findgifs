@@ -95,24 +95,23 @@ router.get('/load/unverified', async (req: Request, res: Response) => {
       $match: {
         isVerified: false,
         $or: [
-          {
-            createdAt: { $gt: oneMonthAgo },
-          },
+          { createdAt: { $gt: oneMonthAgo } },
           { 'upvote.date': { $gt: oneWeekAgo } },
         ],
       },
     },
-    { $unwind: { path: '$upvote', preserveNullAndEmptyArrays: true } },
     {
-      $match: {
-        $or: [
-          { upvote: { $exists: false } },
-          {
-            'upvote.date': { $gt: oneWeekAgo },
+      $addFields: {
+        upvote: {
+          $filter: {
+            input: '$upvote',
+            as: 'upvote',
+            cond: { $gt: ['$$upvote.date', oneWeekAgo] },
           },
-        ],
+        },
       },
     },
+    { $unwind: { path: '$upvote', preserveNullAndEmptyArrays: true } },
     {
       $group: {
         _id: '$_id',
