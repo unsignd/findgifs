@@ -3,7 +3,7 @@ import { Gif } from '../models/gif';
 
 const router = express.Router();
 
-router.put('/update/upvote', async (req: Request, res: Response) => {
+router.put('/update', async (req: Request, res: Response) => {
   const url = req.body.url;
   const ip = req.ip ? req.ip.replaceAll('.', '') : undefined;
 
@@ -29,16 +29,32 @@ router.put('/update/upvote', async (req: Request, res: Response) => {
 
   const upvotes = document!.upvote?.filter((upvote) => upvote.ip === ip);
 
+  const currentTime = parseInt(new Date().getTime().toString().slice(0, -3));
+  const cooldownPeriod = 604800; // 7 days in seconds
+
   if (
     ip &&
     (upvotes.length === 0 ||
-      (upvotes[upvotes.length - 1].date ?? 0) + 604800 <=
-        parseInt(new Date().getTime().toString().slice(0, -3)))
+      (upvotes[upvotes.length - 1].date ?? 0) + cooldownPeriod <= currentTime)
   ) {
     document!.upvote.push({
       ip,
-      date: parseInt(new Date().getTime().toString().slice(0, -3)),
+      date: currentTime,
     });
+  } else if (
+    ip &&
+    !document.isVerified &&
+    upvotes.length !== 0 &&
+    (upvotes[upvotes.length - 1].date ?? 0) + cooldownPeriod > currentTime
+  ) {
+    // Delete the last upvote from the same IP
+    const lastUpvoteIndex = document!.upvote.findIndex(
+      (upvote) =>
+        upvote.ip === ip && upvote.date === upvotes[upvotes.length - 1].date
+    );
+    if (lastUpvoteIndex !== -1) {
+      document!.upvote.splice(lastUpvoteIndex, 1);
+    }
   }
 
   await document!.save();
