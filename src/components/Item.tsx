@@ -203,6 +203,7 @@ export function Item({
         </ItemTextGroup>
         <ItemButtonGroup>
           <ItemButton
+            title="Copy this GIF's name to Clipboard"
             onClick={() => {
               if (progress === 0) {
                 navigator.clipboard.writeText(text);

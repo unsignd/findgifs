@@ -299,7 +299,10 @@ export function Header() {
             />
           </ContentGroup>
           <ContentGroup>
-            <IconButton onClick={() => navigate('/submission')}>
+            <IconButton
+              title="View Submission list"
+              onClick={() => navigate('/submission')}
+            >
               <ArchiveSVG />
             </IconButton>
             <Button $border onClick={() => setIsActive(true)}>

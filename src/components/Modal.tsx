@@ -394,6 +394,7 @@ export function Modal() {
       <Header>
         <Heading>Contribute a GIF</Heading>
         <CancelButton
+          title="Close modal"
           onClick={(event) => {
             event.preventDefault();
 

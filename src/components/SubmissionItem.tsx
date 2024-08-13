@@ -164,10 +164,11 @@ export function SubmissionItem({
       />
       <ItemBottomGroup>
         <ItemTextGroup>
-          <ItemText>{text.toLowerCase()}</ItemText>
+          <ItemText title={text.toLowerCase()}>{text.toLowerCase()}</ItemText>
         </ItemTextGroup>
         <ItemButtonGroup>
           <ItemButton
+            title={upvoted ? 'Downvote this GIF' : 'Upvote this GIF'}
             $isUpvoted={upvoted}
             onClick={() => {
               if (isClicked) return;
