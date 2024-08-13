@@ -169,20 +169,24 @@ export function Item({
       <ItemImage
         src={media}
         loading="lazy"
-        onLoad={() => {
-          if (
-            loadedContents[Math.floor(index / 5)].current <
-            loadedContents[Math.floor(index / 5)].maximum
-          ) {
-            const tempLoadedContents = [...loadedContents];
-            tempLoadedContents[Math.floor(index / 5)].current =
-              tempLoadedContents[Math.floor(index / 5)].current + 1;
+        onLoad={() =>
+          setLoadedContents((prevContents) => {
+            const tempLoadedContents = [...prevContents];
+            const targetIndex = Math.floor(index / 5);
 
-            setLoadedContents(tempLoadedContents);
+            if (
+              tempLoadedContents[targetIndex].current <
+              tempLoadedContents[targetIndex].maximum
+            ) {
+              tempLoadedContents[targetIndex] = {
+                ...tempLoadedContents[targetIndex],
+                current: tempLoadedContents[targetIndex].current + 1,
+              };
+            }
 
-            console.log(tempLoadedContents);
-          }
-        }}
+            return tempLoadedContents;
+          })
+        }
         $isLoaded={isLoaded}
         ref={imageRef}
       />

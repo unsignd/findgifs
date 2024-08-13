@@ -135,9 +135,6 @@ export function Body() {
         };
       }
 
-      console.log(gifSize);
-      console.log(tempLoadedContents);
-
       setGifSize(gifSize);
       setGifList(gifs);
       setLoadedContents(tempLoadedContents);
@@ -171,7 +168,7 @@ export function Body() {
               .get(
                 `/load/${
                   pathname === '/submission' ? 'unverified' : 'verified'
-                }?skip=${(loadCount + 1) * 10}`
+                }?skip=${(loadCount + 1) * 20}`
               )
               .then((res) => res.data.data)
               .catch(() => []))
