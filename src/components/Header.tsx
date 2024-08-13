@@ -232,8 +232,8 @@ export function Header() {
               <SearchInput
                 placeholder={
                   pathname === '/submission'
-                    ? 'Filter all submissions...'
-                    : 'Filter all GIFs...'
+                    ? 'Search submissions...'
+                    : 'Search GIFs...'
                 }
                 onChange={(event) =>
                   setSearchQuery(
@@ -269,7 +269,7 @@ export function Header() {
               </Button>
             </ButtonGroup>
             <Button $border onClick={() => setIsActive(true)}>
-              <p>Upload GIFs</p>
+              <p>Share GIFs</p>
             </Button>
           </ContentGroup>
         </InnerWrapper>
@@ -303,7 +303,7 @@ export function Header() {
               <ArchiveSVG />
             </IconButton>
             <Button $border onClick={() => setIsActive(true)}>
-              <p>Upload GIFs</p>
+              <p>Share GIFs</p>
             </Button>
           </ContentGroup>
         </InnerWrapper>
@@ -312,8 +312,8 @@ export function Header() {
           <SearchInput
             placeholder={
               pathname === '/submission'
-                ? 'Filter all submissions...'
-                : 'Filter all GIFs...'
+                ? 'Search submissions...'
+                : 'Search GIFs...'
             }
             onChange={(event) =>
               setSearchQuery(

@@ -135,8 +135,6 @@ export function Body() {
         };
       }
 
-      console.log(gifSize);
-
       setGifSize(gifSize);
       setGifList(gifs);
       setLoadedContents(tempLoadedContents);
@@ -157,8 +155,6 @@ export function Body() {
       <InfiniteScroll
         pageStart={0}
         loadMore={async () => {
-          console.log(gifSize);
-
           if (onGoingCount === loadCount + 1) {
             return;
           }

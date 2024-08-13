@@ -125,11 +125,10 @@ export function Banner() {
     <Wrapper $isMobile={width <= 1202}>
       <TextGroup>
         <Subheading $isMobile={width <= 1202}>
-          Find {size} trending Instagram GIFs with one tap, all for free
+          Discover {size} trending Instagram GIFs with one tap
         </Subheading>
         <Heading $isMobile={width <= 1202}>
-          Easy-to-use Instagram GIF name finder,{'\n'}contributed by users all
-          around the world.
+          Easy-to-use Instagram GIF name finder,{'\n'}contributed by the world.
         </Heading>
       </TextGroup>
     </Wrapper>
