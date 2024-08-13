@@ -73,10 +73,7 @@ export function Footer() {
         ) : (
           <Text>© {new Date().getFullYear()} FindGIFs</Text>
         )}
-        <Watermark
-          src={require('../assets/watermark.png')}
-          onClick={() => window.open('https://giphy.com', '_blank')}
-        />
+        <Watermark src={require('../assets/watermark.png')} />
       </ContentGroup>
     </Wrapper>
   );

@@ -135,6 +135,8 @@ export function Body() {
         };
       }
 
+      console.log(gifSize);
+
       setGifSize(gifSize);
       setGifList(gifs);
       setLoadedContents(tempLoadedContents);
@@ -149,12 +151,14 @@ export function Body() {
     <div>
       {isReady ? undefined : (
         <LoadingWrapper>
-          <LoadingText>Loading GIFs... Hold up! 🙂‍↔️</LoadingText>
+          <LoadingText>Loading GIFs... Hold up! 🤫🧏</LoadingText>
         </LoadingWrapper>
       )}
       <InfiniteScroll
         pageStart={0}
         loadMore={async () => {
+          console.log(gifSize);
+
           if (onGoingCount === loadCount + 1) {
             return;
           }
@@ -177,10 +181,10 @@ export function Body() {
           setGifList([...gifList, ...(await Promise.all(data)).flat()]);
           setLoadCount(loadCount + 1);
         }}
-        hasMore={isReady && gifSize ? (loadCount + 1) * 10 < gifSize : false}
+        hasMore={isReady && gifSize ? (loadCount + 1) * 20 < gifSize : false}
         loader={
           <LoadingWrapper>
-            <LoadingText>Loading GIFs... Hold up! 🙂‍↔️</LoadingText>
+            <LoadingText>Loading GIFs... Hold up! 🤫🧏</LoadingText>
           </LoadingWrapper>
         }
       >
