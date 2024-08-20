@@ -26,16 +26,6 @@ const modalIsPromptedState = atom<boolean>({
   default: false,
 });
 
-const loadedContentState = atom<
-  {
-    current: number;
-    maximum: number;
-  }[]
->({
-  key: 'loadedContentState',
-  default: [],
-});
-
 const searchQueryState = atom<string | null>({
   key: 'searchQuery',
   default: null,
@@ -52,7 +42,6 @@ export {
   loadCountState,
   modalActiveState,
   modalIsPromptedState,
-  loadedContentState,
   searchQueryState,
   effectActiveState,
 };

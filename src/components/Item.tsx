@@ -1,19 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import { useState } from 'react';
+import styled, { keyframes } from 'styled-components';
 import { ReactComponent as ClipboardSVG } from '../assets/clipboard_20.svg';
 import { ReactComponent as ClipboardDoneSVG } from '../assets/clipboard_done_20.svg';
 // import { ReactComponent as UploaderSVG } from '../assets/tag_20.svg';
-import { useRecoilState } from 'recoil';
-import { loadedContentState } from '../modules/atoms';
 import { api } from '../configs/axios';
 import toast from 'react-hot-toast';
+import Skeleton from 'react-loading-skeleton';
 
-const Wrapper = styled.div<{
-  $isLoaded: boolean;
-}>`
-  transition: opacity 100ms ease;
+const wrapperAnimation = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
 
-  opacity: ${(props) => (props.$isLoaded ? 1 : 0)};
+const Wrapper = styled.div`
+  animation: ${wrapperAnimation} 250ms ease;
 `;
 
 const ItemImage = styled.img<{
@@ -25,9 +29,7 @@ const ItemImage = styled.img<{
 
   bottom: 0;
 
-  transition: opacity 250ms ease;
-
-  opacity: ${(props) => (props.$isLoaded ? 1 : 0)};
+  display: ${(props) => (props.$isLoaded ? 'block' : 'none')};
 `;
 
 const ItemBottomGroup = styled.div`
@@ -137,57 +139,36 @@ export function Item({
   index,
   media,
   text,
+  size,
 }: // uploader,
 {
   index: number;
   media: string;
   text: string;
+  size: {
+    width: number;
+    height: number;
+  };
   // uploader?: string;
 }) {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
-  const [loadedContents, setLoadedContents] =
-    useRecoilState(loadedContentState);
-
-  const imageRef: {
-    current: any;
-  } = useRef(null);
-
-  useEffect(() => {
-    if (
-      loadedContents[Math.floor(index / 5)].current >=
-      loadedContents[Math.floor(index / 5)].maximum
-    ) {
-      setIsLoaded(true);
-    }
-  }, [index, loadedContents]);
-
   return (
-    <Wrapper $isLoaded={isLoaded}>
+    <Wrapper>
+      {!isLoaded ? (
+        <Skeleton
+          width={'100%'}
+          style={{
+            aspectRatio: `${size.width} / ${size.height}`,
+          }}
+        />
+      ) : undefined}
       <ItemImage
         src={media}
-        onLoad={() =>
-          setLoadedContents((prevContents) => {
-            const tempLoadedContents = [...prevContents];
-            const targetIndex = Math.floor(index / 5);
-
-            if (
-              tempLoadedContents[targetIndex].current <
-              tempLoadedContents[targetIndex].maximum
-            ) {
-              tempLoadedContents[targetIndex] = {
-                ...tempLoadedContents[targetIndex],
-                current: tempLoadedContents[targetIndex].current + 1,
-              };
-            }
-
-            return tempLoadedContents;
-          })
-        }
+        onLoad={() => setIsLoaded(true)}
         $isLoaded={isLoaded}
-        ref={imageRef}
       />
       <ItemBottomGroup>
         <ItemTextGroup>

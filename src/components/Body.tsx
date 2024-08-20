@@ -3,7 +3,6 @@ import { Item } from './Item';
 import { useEffect, useState } from 'react';
 import {
   gifListState,
-  loadedContentState,
   loadCountState,
   searchQueryState,
   gifSizeState,
@@ -100,8 +99,6 @@ export function Body() {
   const [gifList, setGifList] = useRecoilState(gifListState);
   const [gifSize, setGifSize] = useRecoilState(gifSizeState);
   const [loadCount, setLoadCount] = useRecoilState(loadCountState);
-  const [loadedContents, setLoadedContents] =
-    useRecoilState(loadedContentState);
   const [searchQuery] = useRecoilState(searchQueryState);
 
   useEffect(() => {
@@ -109,9 +106,6 @@ export function Body() {
       setGifSize(undefined);
       setGifList([]);
       setLoadCount(0);
-      setLoadedContents([]);
-
-      const tempLoadedContents: typeof loadedContents = [];
 
       const gifSize = await api
         .get(`/size/${pathname === '/submission' ? 'unverified' : 'verified'}`)
@@ -129,16 +123,8 @@ export function Body() {
         .then((res) => res.data.data)
         .catch(() => []);
 
-      for (let index = 0; index < Math.ceil(gifSize / 5); index++) {
-        tempLoadedContents[index] = {
-          current: 0,
-          maximum: Math.min(5, gifSize - index * 5),
-        };
-      }
-
       setGifSize(gifSize);
       setGifList(gifs);
-      setLoadedContents(tempLoadedContents);
       setIsReady(true);
     };
 
@@ -225,6 +211,7 @@ export function Body() {
                           name.includes(searchQuery ?? '')
                         )[0]
                       }
+                      size={gif.size}
                       upvote={gif.upvote}
                       isUpvoted={gif.isUpvoted!}
                     />
@@ -238,6 +225,7 @@ export function Body() {
                           name.includes(searchQuery ?? '')
                         )[0]
                       }
+                      size={gif.size}
                     />
                   )
                 )}

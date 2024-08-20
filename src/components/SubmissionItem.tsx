@@ -1,14 +1,21 @@
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { useState } from 'react';
+import styled, { keyframes } from 'styled-components';
 import { ReactComponent as UpvoteSVG } from '../assets/upvote_20.svg';
-import { useRecoilState } from 'recoil';
-import { loadedContentState } from '../modules/atoms';
 import { api } from '../configs/axios';
 import toast from 'react-hot-toast';
 import Skeleton from 'react-loading-skeleton';
 
+const wrapperAnimation = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 const Wrapper = styled.div`
-  transition: opacity 100ms ease;
+  animation: ${wrapperAnimation} 250ms ease;
 `;
 
 const ItemImage = styled.img<{
@@ -20,9 +27,7 @@ const ItemImage = styled.img<{
 
   bottom: 0;
 
-  transition: opacity 250ms ease;
-
-  opacity: ${(props) => (props.$isLoaded ? 1 : 0)};
+  display: ${(props) => (props.$isLoaded ? 'block' : 'none')};
 `;
 
 const ItemBottomGroup = styled.div`
@@ -109,12 +114,17 @@ export function SubmissionItem({
   index,
   media,
   text,
+  size,
   upvote,
   isUpvoted,
 }: {
   index: number;
   media: string;
   text: string;
+  size: {
+    width: number;
+    height: number;
+  };
   upvote: number;
   isUpvoted: boolean;
 }) {
@@ -122,40 +132,19 @@ export function SubmissionItem({
   const [upvoted, setUpvoted] = useState<boolean>(isUpvoted);
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
-  const [loadedContents, setLoadedContents] =
-    useRecoilState(loadedContentState);
-
-  useEffect(() => {
-    if (
-      loadedContents[Math.floor(index / 5)].current >=
-      loadedContents[Math.floor(index / 5)].maximum
-    ) {
-      setIsLoaded(true);
-    }
-  }, [index, loadedContents]);
-
   return (
     <Wrapper>
+      {!isLoaded ? (
+        <Skeleton
+          width={'100%'}
+          style={{
+            aspectRatio: `${size.width} / ${size.height}`,
+          }}
+        />
+      ) : undefined}
       <ItemImage
         src={media}
-        onLoad={() =>
-          setLoadedContents((prevContents) => {
-            const tempLoadedContents = [...prevContents];
-            const targetIndex = Math.floor(index / 5);
-
-            if (
-              tempLoadedContents[targetIndex].current <
-              tempLoadedContents[targetIndex].maximum
-            ) {
-              tempLoadedContents[targetIndex] = {
-                ...tempLoadedContents[targetIndex],
-                current: tempLoadedContents[targetIndex].current + 1,
-              };
-            }
-
-            return tempLoadedContents;
-          })
-        }
+        onLoad={() => setIsLoaded(true)}
         $isLoaded={isLoaded}
       />
       <ItemBottomGroup>

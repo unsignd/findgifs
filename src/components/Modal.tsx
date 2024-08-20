@@ -10,7 +10,6 @@ import {
   gifListState,
   gifSizeState,
   loadCountState,
-  loadedContentState,
   modalActiveState,
   modalIsPromptedState,
 } from '../modules/atoms';
@@ -364,8 +363,6 @@ export function Modal() {
   const [, setLoadCount] = useRecoilState(loadCountState);
   const [, setIsActive] = useRecoilState(modalActiveState);
   const [isPrompted, setIsPrompted] = useRecoilState(modalIsPromptedState);
-  const [loadedContents, setLoadedContents] =
-    useRecoilState(loadedContentState);
 
   const searchRef: {
     current: any;
@@ -557,8 +554,6 @@ export function Modal() {
               })
               .then(() => {
                 const fetchData = async () => {
-                  const tempLoadedContents: typeof loadedContents = [];
-
                   const gifSize = await api
                     .get('/size/unverified')
                     .then((res) => res.data.data)
@@ -573,16 +568,8 @@ export function Modal() {
                     .then((res) => res.data.data)
                     .catch(() => []);
 
-                  for (let index = 0; index < Math.ceil(gifSize / 5); index++) {
-                    tempLoadedContents[index] = {
-                      current: 0,
-                      maximum: Math.min(5, gifSize - index * 5),
-                    };
-                  }
-
                   setGifSize(gifSize);
                   setGifList(gifs);
-                  setLoadedContents(tempLoadedContents);
                   setLoadCount(0);
                 };
 
