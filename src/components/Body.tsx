@@ -119,6 +119,7 @@ export function Body() {
         .catch(() =>
           toast.error('An error occured while getting the size of GIFs.')
         );
+
       const gifs = await api
         .get(
           `/load/${

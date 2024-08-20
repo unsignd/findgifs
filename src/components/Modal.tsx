@@ -10,6 +10,7 @@ import {
   gifListState,
   gifSizeState,
   loadCountState,
+  loadedContentState,
   modalActiveState,
   modalIsPromptedState,
 } from '../modules/atoms';
@@ -337,9 +338,23 @@ export function Modal() {
   const { pathname } = useLocation();
 
   const [searchQuery, setSearchQuery] = useState<string>();
-  const [gifs, setGifs] = useState<string[]>();
+  const [gifs, setGifs] = useState<
+    {
+      url: string;
+      size: {
+        width: number;
+        height: number;
+      };
+    }[]
+  >();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [selection, setSelection] = useState<string>();
+  const [selection, setSelection] = useState<{
+    url: string;
+    size: {
+      width: number;
+      height: number;
+    };
+  }>();
   const [resetStatus, reset] = useState<boolean>(true);
   const [randomNumber] = useState<number>(Math.floor(Math.random() * 4));
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -349,6 +364,8 @@ export function Modal() {
   const [, setLoadCount] = useRecoilState(loadCountState);
   const [, setIsActive] = useRecoilState(modalActiveState);
   const [isPrompted, setIsPrompted] = useRecoilState(modalIsPromptedState);
+  const [loadedContents, setLoadedContents] =
+    useRecoilState(loadedContentState);
 
   const searchRef: {
     current: any;
@@ -406,7 +423,7 @@ export function Modal() {
       </Header>
       <BannerGroup>
         <BannerText>
-          Upload hidden GIFs,{'\n'}contribute the community.
+          Upload hidden GIFs only you know,{'\n'}contribute the community.
         </BannerText>
       </BannerGroup>
       <SearchGroup>
@@ -508,7 +525,7 @@ export function Modal() {
                     <CheckSVG />
                   </CheckMarkWrapper>
                   <SelectionOverlay $visible={selection === gif} />
-                  <Image src={gif} />
+                  <Image src={gif.url} />
                 </ImageWrapper>
               ))}
         </ImageGroup>
@@ -536,10 +553,12 @@ export function Modal() {
             await api
               .post('/submit', {
                 name: searchQuery,
-                url: selection,
+                ...selection,
               })
               .then(() => {
                 const fetchData = async () => {
+                  const tempLoadedContents: typeof loadedContents = [];
+
                   const gifSize = await api
                     .get('/size/unverified')
                     .then((res) => res.data.data)
@@ -554,8 +573,16 @@ export function Modal() {
                     .then((res) => res.data.data)
                     .catch(() => []);
 
+                  for (let index = 0; index < Math.ceil(gifSize / 5); index++) {
+                    tempLoadedContents[index] = {
+                      current: 0,
+                      maximum: Math.min(5, gifSize - index * 5),
+                    };
+                  }
+
                   setGifSize(gifSize);
                   setGifList(gifs);
+                  setLoadedContents(tempLoadedContents);
                   setLoadCount(0);
                 };
 

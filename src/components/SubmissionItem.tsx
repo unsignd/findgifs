@@ -5,13 +5,10 @@ import { useRecoilState } from 'recoil';
 import { loadedContentState } from '../modules/atoms';
 import { api } from '../configs/axios';
 import toast from 'react-hot-toast';
+import Skeleton from 'react-loading-skeleton';
 
-const Wrapper = styled.div<{
-  $isLoaded: boolean;
-}>`
+const Wrapper = styled.div`
   transition: opacity 100ms ease;
-
-  opacity: ${(props) => (props.$isLoaded ? 1 : 0)};
 `;
 
 const ItemImage = styled.img<{
@@ -138,10 +135,9 @@ export function SubmissionItem({
   }, [index, loadedContents]);
 
   return (
-    <Wrapper $isLoaded={isLoaded}>
+    <Wrapper>
       <ItemImage
         src={media}
-        loading="lazy"
         onLoad={() =>
           setLoadedContents((prevContents) => {
             const tempLoadedContents = [...prevContents];

@@ -168,7 +168,6 @@ export function Item({
     <Wrapper $isLoaded={isLoaded}>
       <ItemImage
         src={media}
-        loading="lazy"
         onLoad={() =>
           setLoadedContents((prevContents) => {
             const tempLoadedContents = [...prevContents];
