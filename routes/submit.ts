@@ -6,9 +6,16 @@ const router = express.Router();
 router.post('/submit', async (req: Request, res: Response) => {
   const name = req.body.name;
   const url = req.body.url;
+  const { width, height } = req.body.size;
   const ip = req.ip ? req.ip.replaceAll('.', '') : undefined;
 
-  if (name === undefined || url === undefined || ip === undefined) {
+  if (
+    name === undefined ||
+    url === undefined ||
+    ip === undefined ||
+    width === undefined ||
+    height === undefined
+  ) {
     res.status(400).send({
       error: 'Your request is invalid.',
     });
@@ -47,6 +54,10 @@ router.post('/submit', async (req: Request, res: Response) => {
     await Gif.create({
       name: [name],
       url,
+      size: {
+        width,
+        height,
+      },
       createdAt: parseInt(new Date().getTime().toString().slice(0, -3)),
       createdBy: [
         {

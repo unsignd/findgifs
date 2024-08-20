@@ -33,12 +33,19 @@ router.get('/search', async (req: Request, res: Response) => {
 
     let gifs = response.data.data.map((gif: any) => {
       let url = gif.images.downsized_medium.url;
+      let width = gif.images.downsized_medium.width;
+      let height = gif.images.downsized_medium.height;
 
-      return (
-        url.slice(0, 8) +
-        'media.' +
-        url.slice(url.indexOf('giphy.com'), url.indexOf('?cid='))
-      );
+      return {
+        url:
+          url.slice(0, 8) +
+          'media.' +
+          url.slice(url.indexOf('giphy.com'), url.indexOf('?cid=')),
+        size: {
+          width,
+          height,
+        },
+      };
     });
 
     res.send({
