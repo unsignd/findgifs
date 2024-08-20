@@ -35,6 +35,7 @@ router.get('/load/verified', async (req: Request, res: Response) => {
         _id: '$_id',
         name: { $first: '$name' },
         url: { $first: '$url' },
+        size: { $first: '$size' },
         upvote: { $push: '$upvote.ip' },
       },
     },
@@ -42,6 +43,7 @@ router.get('/load/verified', async (req: Request, res: Response) => {
       $project: {
         name: 1,
         url: 1,
+        size: 1,
         upvote: 1,
         count: { $size: '$upvote' },
       },
@@ -63,6 +65,10 @@ router.get('/load/verified', async (req: Request, res: Response) => {
     return {
       name: document.name,
       url: document.url,
+      size: {
+        width: document.size.width,
+        height: document.size.height,
+      },
       upvote: document.count,
     };
   });
@@ -117,6 +123,7 @@ router.get('/load/unverified', async (req: Request, res: Response) => {
         _id: '$_id',
         name: { $first: '$name' },
         url: { $first: '$url' },
+        size: { $first: '$size' },
         upvote: { $push: '$upvote.ip' },
       },
     },
@@ -124,6 +131,7 @@ router.get('/load/unverified', async (req: Request, res: Response) => {
       $project: {
         name: 1,
         url: 1,
+        size: 1,
         upvote: 1,
         count: { $size: '$upvote' },
       },
@@ -149,6 +157,10 @@ router.get('/load/unverified', async (req: Request, res: Response) => {
     return {
       name: document.name,
       url: document.url,
+      size: {
+        width: document.size.width,
+        height: document.size.height,
+      },
       upvote: document.count,
       isUpvoted: isUpvoted,
     };
