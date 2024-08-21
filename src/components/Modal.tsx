@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { ReactComponent as XSvg } from '../assets/x_20.svg';
 import { ReactComponent as SearchSVG } from '../assets/search_20.svg';
 // import { ReactComponent as DropdownArrowSVG } from '../assets/dropdown_arrow_12.svg';
@@ -14,9 +14,17 @@ import {
   modalIsPromptedState,
 } from '../modules/atoms';
 import { useRecoilState } from 'recoil';
-import Skeleton from 'react-loading-skeleton';
 import { useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
+
+const skeletonAnimation = keyframes`
+  0% {
+    background-color: #e2e3eb;
+  }
+  100% {
+    background-color: #ebedf5;
+  }
+`;
 
 const Wrapper = styled.div`
   width: 500px;
@@ -171,6 +179,15 @@ const SelectGroup = styled.div<{
   transition: height 250ms ease;
 
   overflow: hidden;
+`;
+
+const ItemSkeleton = styled.div<{
+  $width: number;
+}>`
+  width: ${(props) => props.$width}px;
+  height: 100%;
+
+  animation: ${skeletonAnimation} 1s linear infinite alternate;
 `;
 
 const CategoryTitle = styled.p`
@@ -441,10 +458,10 @@ export function Modal() {
           $isValid={gifs !== undefined && gifs.length !== 0}
         >
           <SkeletonWrapper $visible={!isLoaded}>
-            <Skeleton width={100} height={'100%'} />
-            <Skeleton width={160} height={'100%'} />
-            <Skeleton width={200} height={'100%'} />
-            <Skeleton width={160} height={'100%'} />
+            <ItemSkeleton $width={100} />
+            <ItemSkeleton $width={160} />
+            <ItemSkeleton $width={200} />
+            <ItemSkeleton $width={160} />
           </SkeletonWrapper>
           {gifs === undefined
             ? undefined

@@ -4,8 +4,6 @@ import { Header } from './components/Header';
 import { Landing } from './pages/Landing';
 import { RecoilRoot } from 'recoil';
 import ReactModal from 'react-modal';
-import 'react-loading-skeleton/dist/skeleton.css';
-import { SkeletonTheme } from 'react-loading-skeleton';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import { Submission } from './pages/Submission';
 import { Footer } from './components/Footer';
@@ -60,40 +58,34 @@ const router = createBrowserRouter([
 
 root.render(
   <RecoilRoot>
-    <SkeletonTheme
-      borderRadius={0}
-      baseColor="#e2e3eb"
-      highlightColor="#ebedf5"
-    >
-      <RouterProvider router={router} />
-      <Toaster
-        toastOptions={{
+    <RouterProvider router={router} />
+    <Toaster
+      toastOptions={{
+        style: {
+          height: '42px',
+          maxWidth: 'none',
+
+          padding: '0 2px',
+
+          backgroundColor: 'var(--brightness-100)',
+          border: '1px solid var(--brightness-300)',
+          borderRadius: '6px',
+        },
+        success: {
           style: {
-            height: '42px',
-            maxWidth: 'none',
-
-            padding: '0 2px',
-
-            backgroundColor: 'var(--brightness-100)',
-            border: '1px solid var(--brightness-300)',
-            borderRadius: '6px',
+            color: 'var(--purple-300)',
+            backgroundColor: 'var(--purple-100)',
+            border: '1px solid var(--purple-200)',
           },
-          success: {
-            style: {
-              color: 'var(--purple-300)',
-              backgroundColor: 'var(--purple-100)',
-              border: '1px solid var(--purple-200)',
-            },
+        },
+        error: {
+          style: {
+            color: 'var(--red-300)',
+            backgroundColor: 'var(--red-100)',
+            border: '1px solid var(--red-200)',
           },
-          error: {
-            style: {
-              color: 'var(--red-300)',
-              backgroundColor: 'var(--red-100)',
-              border: '1px solid var(--red-200)',
-            },
-          },
-        }}
-      />
-    </SkeletonTheme>
+        },
+      }}
+    />
   </RecoilRoot>
 );

@@ -5,7 +5,6 @@ import { ReactComponent as ClipboardDoneSVG } from '../assets/clipboard_done_20.
 // import { ReactComponent as UploaderSVG } from '../assets/tag_20.svg';
 import { api } from '../configs/axios';
 import toast from 'react-hot-toast';
-import Skeleton from 'react-loading-skeleton';
 
 const wrapperAnimation = keyframes`
   0% {
@@ -16,8 +15,27 @@ const wrapperAnimation = keyframes`
   }
 `;
 
+const skeletonAnimation = keyframes`
+  0% {
+    background-color: #e2e3eb;
+  }
+  100% {
+    background-color: #ebedf5;
+  }
+`;
+
 const Wrapper = styled.div`
   animation: ${wrapperAnimation} 250ms ease;
+`;
+
+const ItemSkeleton = styled.div<{
+  $width: number;
+  $height: number;
+}>`
+  width: 100%;
+
+  aspect-ratio: ${(props) => props.$width / props.$height};
+  animation: ${skeletonAnimation} 1s linear infinite alternate;
 `;
 
 const ItemImage = styled.img<{
@@ -136,13 +154,11 @@ const ItemButton = styled.button`
 `;
 
 export function Item({
-  index,
   media,
   text,
   size,
 }: // uploader,
 {
-  index: number;
   media: string;
   text: string;
   size: {
@@ -158,12 +174,7 @@ export function Item({
   return (
     <Wrapper>
       {!isLoaded ? (
-        <Skeleton
-          width={'100%'}
-          style={{
-            aspectRatio: `${size.width} / ${size.height}`,
-          }}
-        />
+        <ItemSkeleton $width={size.width} $height={size.height} />
       ) : undefined}
       <ItemImage
         src={media}

@@ -204,7 +204,6 @@ export function Body() {
                   pathname === '/submission' ? (
                     <SubmissionItem
                       key={index}
-                      index={index}
                       media={gif.url}
                       text={
                         gif.name.filter((name) =>
@@ -218,7 +217,6 @@ export function Body() {
                   ) : (
                     <Item
                       key={index}
-                      index={index}
                       media={gif.url}
                       text={
                         gif.name.filter((name) =>
