@@ -133,7 +133,7 @@ export function Body() {
         .then((res) => {
           setPrevPathname((prevPathname) => {
             if (prevPathname === pathname) {
-              setGifSize(res.data.data);
+              setGifList(res.data.data);
             }
 
             return prevPathname;
