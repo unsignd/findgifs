@@ -107,14 +107,13 @@ export function Body() {
       setGifSize(undefined);
       setGifList([]);
       setLoadCount(0);
-
-      const prevPath = pathname;
+      setPrevPathname(pathname);
 
       await api
         .get(`/size/${pathname === '/submission' ? 'unverified' : 'verified'}`)
         .then((res) => {
           setPrevPathname((prevPathname) => {
-            if (prevPath === pathname) {
+            if (prevPathname === pathname) {
               setGifSize(res.data.data);
             }
 
@@ -133,7 +132,7 @@ export function Body() {
         )
         .then((res) => {
           setPrevPathname((prevPathname) => {
-            if (prevPath === pathname) {
+            if (prevPathname === pathname) {
               setGifSize(res.data.data);
             }
 
@@ -148,10 +147,6 @@ export function Body() {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    setPrevPathname(pathname);
-  }, [pathname]);
 
   return (
     <div>
