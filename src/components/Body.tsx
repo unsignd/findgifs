@@ -95,6 +95,7 @@ export function Body() {
 
   const [isReady, setIsReady] = useState<boolean>(false);
   const [onGoingCount, setOnGoingCount] = useState<number>(0);
+  const [, setPrevPathname] = useState<string>(pathname);
 
   const [gifList, setGifList] = useRecoilState(gifListState);
   const [gifSize, setGifSize] = useRecoilState(gifSizeState);
@@ -112,9 +113,13 @@ export function Body() {
       await api
         .get(`/size/${pathname === '/submission' ? 'unverified' : 'verified'}`)
         .then((res) => {
-          if (prevPath === pathname) {
-            setGifSize(res.data.data);
-          }
+          setPrevPathname((prevPathname) => {
+            if (prevPath === pathname) {
+              setGifSize(res.data.data);
+            }
+
+            return prevPathname;
+          });
         })
         .catch(() =>
           toast.error('An error occured while getting the size of GIFs.')
@@ -127,9 +132,13 @@ export function Body() {
           }?skip=0`
         )
         .then((res) => {
-          if (prevPath === pathname) {
-            setGifList(res.data.data);
-          }
+          setPrevPathname((prevPathname) => {
+            if (prevPath === pathname) {
+              setGifSize(res.data.data);
+            }
+
+            return prevPathname;
+          });
         })
         .catch(() => []);
 
@@ -139,6 +148,10 @@ export function Body() {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setPrevPathname(pathname);
+  }, [pathname]);
 
   return (
     <div>
