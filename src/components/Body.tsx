@@ -107,24 +107,32 @@ export function Body() {
       setGifList([]);
       setLoadCount(0);
 
-      const gifSize = await api
+      const prevPath = pathname;
+
+      await api
         .get(`/size/${pathname === '/submission' ? 'unverified' : 'verified'}`)
-        .then((res) => res.data.data)
+        .then((res) => {
+          if (prevPath === pathname) {
+            setGifSize(res.data.data);
+          }
+        })
         .catch(() =>
           toast.error('An error occured while getting the size of GIFs.')
         );
 
-      const gifs = await api
+      await api
         .get(
           `/load/${
             pathname === '/submission' ? 'unverified' : 'verified'
           }?skip=0`
         )
-        .then((res) => res.data.data)
+        .then((res) => {
+          if (prevPath === pathname) {
+            setGifList(res.data.data);
+          }
+        })
         .catch(() => []);
 
-      setGifSize(gifSize);
-      setGifList(gifs);
       setIsReady(true);
     };
 
