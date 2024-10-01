@@ -21,22 +21,25 @@ router.get('/load/verified', async (req: Request, res: Response) => {
     { $match: { isVerified: true } },
     { $unwind: { path: '$upvote', preserveNullAndEmptyArrays: true } },
     {
-      $match: {
-        $or: [
-          { upvote: { $exists: false } },
-          {
-            'upvote.date': { $gt: oneWeekAgo },
-          },
-        ],
-      },
-    },
-    {
       $group: {
         _id: '$_id',
         name: { $first: '$name' },
         url: { $first: '$url' },
         size: { $first: '$size' },
-        upvote: { $push: '$upvote.ip' },
+        upvotes: {
+          $push: {
+            $cond: [
+              {
+                $and: [
+                  { $ifNull: ['$upvote', false] },
+                  { $gt: ['$upvote.date', oneWeekAgo] },
+                ],
+              },
+              '$upvote.ip',
+              null,
+            ],
+          },
+        },
       },
     },
     {
@@ -44,8 +47,14 @@ router.get('/load/verified', async (req: Request, res: Response) => {
         name: 1,
         url: 1,
         size: 1,
-        upvote: 1,
-        count: { $size: '$upvote' },
+        upvotes: {
+          $filter: {
+            input: '$upvotes',
+            as: 'upvote',
+            cond: { $ne: ['$$upvote', null] }, // Remove null values (old or non-existent upvotes)
+          },
+        },
+        count: { $size: '$upvotes' },
       },
     },
     { $sort: { count: -1, name: 1 } },
