@@ -221,10 +221,7 @@ export function Header() {
           <ContentGroup>
             <LogoIcon
               onClick={() => {
-                setSearchQuery(null);
-                searchRef.current.value = '';
-
-                navigate('/');
+                window.location.href = '/';
               }}
             />
             <SearchBar>
@@ -250,10 +247,7 @@ export function Header() {
             <ButtonGroup>
               <Button
                 onClick={() => {
-                  setSearchQuery(null);
-                  searchRef.current.value = '';
-
-                  navigate('/submission');
+                  window.location.href = '/submission';
                 }}
               >
                 <p>Submission List</p>
@@ -291,17 +285,16 @@ export function Header() {
             <LogoIcon
               $isMobile
               onClick={() => {
-                setSearchQuery(null);
-                searchRef.current.value = '';
-
-                navigate('/');
+                window.location.href = '/';
               }}
             />
           </ContentGroup>
           <ContentGroup>
             <IconButton
               title="View Submission list"
-              onClick={() => navigate('/submission')}
+              onClick={() => {
+                window.location.href = '/submission';
+              }}
             >
               <ArchiveSVG />
             </IconButton>
