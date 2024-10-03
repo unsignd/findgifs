@@ -268,7 +268,7 @@ const CheckMarkWrapper = styled.div<{
   height: 40px;
 
   position: absolute;
-  top: calc(50% - 2px);
+  top: 54.5px;
   left: 50%;
   transform: translate(-50%, -50%);
 
