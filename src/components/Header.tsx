@@ -11,7 +11,7 @@ import {
   searchQueryState,
 } from '../modules/atoms';
 import { Modal } from './Modal';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import useWindowNavigation from '../hooks/useWindowNavigation';
 
@@ -196,8 +196,6 @@ export function Header() {
   const [isActive, setIsActive] = useRecoilState(modalActiveState);
   const [isPrompted] = useRecoilState(modalIsPromptedState);
   const [, setSearchQuery] = useRecoilState(searchQueryState);
-
-  const navigate = useNavigate();
 
   const searchRef: {
     current: any;

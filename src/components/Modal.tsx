@@ -308,7 +308,7 @@ const Image = styled.img`
 const SkeletonWrapper = styled.div<{
   $visible: boolean;
 }>`
-  height: calc(100% - 6px);
+  height: 111px;
 
   display: ${(props) => (props.$visible ? 'flex' : 'none')};
   gap: 10px;
