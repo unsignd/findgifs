@@ -290,9 +290,7 @@ const SelectionOverlay = styled.div<{
   $visible: boolean;
 }>`
   width: 100%;
-  height: calc(100% - 4px);
-
-  position: absolute;
+  height: 111px;
 
   background-color: var(--purple-300);
 
@@ -302,7 +300,9 @@ const SelectionOverlay = styled.div<{
 `;
 
 const Image = styled.img`
-  height: calc(100% - 4px);
+  height: 111px;
+
+  margin-top: -136px;
 `;
 
 const SkeletonWrapper = styled.div<{
