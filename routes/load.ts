@@ -21,23 +21,24 @@ router.get('/load/verified', async (req: Request, res: Response) => {
     { $match: { isVerified: true } },
     { $unwind: { path: '$upvote', preserveNullAndEmptyArrays: true } },
     {
+      $match: {
+        $or: [
+          { upvote: { $exists: false } },
+          {
+            'upvote.date': { $gt: oneWeekAgo },
+          },
+        ],
+      },
+    },
+    {
       $group: {
         _id: '$_id',
         name: { $first: '$name' },
         url: { $first: '$url' },
         size: { $first: '$size' },
-        upvotes: {
+        upvote: {
           $push: {
-            $cond: [
-              {
-                $and: [
-                  { $ifNull: ['$upvote', false] },
-                  { $gt: ['$upvote.date', oneWeekAgo] },
-                ],
-              },
-              '$upvote.ip',
-              null,
-            ],
+            $cond: [{ $gt: ['$upvote.date', oneWeekAgo] }, '$upvote', null],
           },
         },
       },
@@ -47,14 +48,23 @@ router.get('/load/verified', async (req: Request, res: Response) => {
         name: 1,
         url: 1,
         size: 1,
-        upvotes: {
+        // Filter out nulls created by older upvotes
+        upvote: {
           $filter: {
-            input: '$upvotes',
-            as: 'upvote',
-            cond: { $ne: ['$$upvote', null] }, // Remove null values (old or non-existent upvotes)
+            input: '$upvote',
+            as: 'u',
+            cond: { $ne: ['$$u', null] },
           },
         },
-        count: { $size: '$upvotes' },
+        count: {
+          $size: {
+            $filter: {
+              input: '$upvote',
+              as: 'u',
+              cond: { $ne: ['$$u', null] },
+            },
+          },
+        },
       },
     },
     { $sort: { count: -1, name: 1 } },
