@@ -14,6 +14,7 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import { useLocation } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import toast from 'react-hot-toast';
+import { GifUnit } from '../units/Gif';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -243,6 +244,7 @@ export function Body() {
                     />
                   )
                 )}
+              <GifUnit />
             </InnerWrapper>
           )}
         </Wrapper>
