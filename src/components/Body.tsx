@@ -238,9 +238,8 @@ export function Body() {
                       .length !== 0
                 )
                 .map((gif, index) =>
-                  gif === 0 ? (
-                    <GifUnit key={index} />
-                  ) : pathname === '/submission' ? (
+                  gif === 0 ? // <GifUnit key={index} />
+                  undefined : pathname === '/submission' ? (
                     <SubmissionItem
                       key={index}
                       media={gif.url}
