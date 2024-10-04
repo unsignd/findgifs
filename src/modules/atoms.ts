@@ -1,7 +1,8 @@
 import { atom } from 'recoil';
 import { gifType } from '../types';
 
-const gifListState = atom<gifType[]>({
+// gifType: GIF Object, 0: Advertisement
+const gifListState = atom<(gifType | 0)[]>({
   key: 'gifListState',
   default: [],
 });

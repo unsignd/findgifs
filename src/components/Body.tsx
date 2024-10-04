@@ -134,6 +134,14 @@ export function Body() {
         .then((res) => {
           setPrevPathname((prevPathname) => {
             if (prevPathname === pathname) {
+              if (pathname !== '/submission') {
+                res.data.data.splice(
+                  Math.round(Math.random() * res.data.data.length),
+                  0,
+                  0
+                );
+              }
+
               setGifList(res.data.data);
             }
 
@@ -174,7 +182,17 @@ export function Body() {
                   pathname === '/submission' ? 'unverified' : 'verified'
                 }?skip=${(loadCount + 1) * 20}`
               )
-              .then((res) => res.data.data)
+              .then((res) => {
+                if (pathname !== '/submission') {
+                  res.data.data.splice(
+                    Math.round(Math.random() * res.data.data.length),
+                    0,
+                    0
+                  );
+                }
+
+                return res.data.data;
+              })
               .catch(() => []))
           );
 
@@ -191,6 +209,7 @@ export function Body() {
         <Wrapper>
           {!isReady ? undefined : gifList.filter(
               (gif) =>
+                gif !== 0 &&
                 gif.name.filter((name) => name.includes(searchQuery ?? ''))
                   .length !== 0
             ).length === 0 ? (
@@ -214,11 +233,14 @@ export function Body() {
               {gifList
                 .filter(
                   (gif) =>
+                    gif === 0 ||
                     gif.name.filter((name) => name.includes(searchQuery ?? ''))
                       .length !== 0
                 )
                 .map((gif, index) =>
-                  pathname === '/submission' ? (
+                  gif === 0 ? (
+                    <GifUnit />
+                  ) : pathname === '/submission' ? (
                     <SubmissionItem
                       key={index}
                       media={gif.url}
@@ -244,7 +266,6 @@ export function Body() {
                     />
                   )
                 )}
-              <GifUnit />
             </InnerWrapper>
           )}
         </Wrapper>
