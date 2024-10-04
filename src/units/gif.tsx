@@ -24,10 +24,10 @@ export function GifUnit() {
       ></script>
       <Ad
         className="adsbygoogle"
+        data-ad-format="fluid"
+        data-ad-layout-key="+1m+s0-k-t+3t"
         data-ad-client={process.env.REACT_APP_ADSENSE_CID}
-        data-ad-slot="1259243448"
-        data-ad-format="auto"
-        data-full-width-responsive="true"
+        data-ad-slot="4882831674"
       ></Ad>
       <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </AdWrapper>
