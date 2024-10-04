@@ -134,15 +134,15 @@ export function Body() {
         .then((res) => {
           setPrevPathname((prevPathname) => {
             if (prevPathname === pathname) {
-              const data_1 = res.data.data.slice(0, 10);
-              const data_2 = res.data.data.slice(10, 20);
-
               if (pathname !== '/submission') {
-                data_1.splice(Math.round(Math.random() * 10), 0, 0);
-                data_2.splice(Math.round(Math.random() * 10), 0, 0);
+                res.data.data.splice(
+                  Math.round(Math.random() * res.data.data.length),
+                  0,
+                  0
+                );
               }
 
-              setGifList([...data_1, ...data_2]);
+              setGifList(res.data.data);
             }
 
             return prevPathname;
@@ -183,15 +183,15 @@ export function Body() {
                 }?skip=${(loadCount + 1) * 20}`
               )
               .then((res) => {
-                const data_1 = res.data.data.slice(0, 10);
-                const data_2 = res.data.data.slice(10, 20);
-
                 if (pathname !== '/submission') {
-                  data_1.splice(Math.round(Math.random() * 10), 0, 0);
-                  data_2.splice(Math.round(Math.random() * 10), 0, 0);
+                  res.data.data.splice(
+                    Math.round(Math.random() * res.data.data.length),
+                    0,
+                    0
+                  );
                 }
 
-                return [...data_1, ...data_2];
+                return res.data.data;
               })
               .catch(() => []))
           );
