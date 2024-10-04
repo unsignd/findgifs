@@ -239,7 +239,7 @@ export function Body() {
                 )
                 .map((gif, index) =>
                   gif === 0 ? (
-                    <GifUnit />
+                    <GifUnit key={index} />
                   ) : pathname === '/submission' ? (
                     <SubmissionItem
                       key={index}
