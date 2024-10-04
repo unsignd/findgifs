@@ -7,13 +7,17 @@ const Wrapper = styled.div<{
   $isMobile?: boolean;
 }>`
   width: calc(100% - ${(props) => (props.$isMobile ? 40 : 80)}px);
-  height: calc(100vh - 80px);
+  height: 100vh;
 
   max-width: 1400px;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 
   padding: 40px 0;
 `;
@@ -27,7 +31,7 @@ const NotFoundGroup = styled.div`
 
 const NotFoundText = styled.p`
   text-align: center;
-  white-space: pre;
+  white-space: pre-line;
 
   color: var(--brightness-400);
 
