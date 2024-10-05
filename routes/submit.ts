@@ -23,8 +23,16 @@ router.post('/submit', async (req: Request, res: Response) => {
     return;
   }
 
+  const currentTime = Math.floor(Date.now() / 1000);
+  const oneHourAgo = currentTime - 3600;
+
   const documents = await Gif.aggregate(
     [
+      {
+        $match: {
+          createdAt: { $gt: oneHourAgo },
+        },
+      },
       {
         $unwind: '$createdBy',
       },
@@ -38,7 +46,7 @@ router.post('/submit', async (req: Request, res: Response) => {
     { allowDiskUse: true }
   );
 
-  if (documents.length > 0 && documents[0].count > 30) {
+  if (documents.length > 0 && documents[0].count > 20) {
     res.status(429).send({
       error: 'Too many requests',
     });
