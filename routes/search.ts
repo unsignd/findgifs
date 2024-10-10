@@ -24,7 +24,7 @@ router.get('/search', async (req: Request, res: Response) => {
     return;
   }
 
-  for (let i = 0; i < apiKeyList.length; i++) {
+  for (let i = 0; i < apiKeyList.split(', ').length; i++) {
     try {
       let response = await axios.get('https://api.giphy.com/v1/gifs/search', {
         params: {
@@ -34,22 +34,28 @@ router.get('/search', async (req: Request, res: Response) => {
         },
       });
 
-      let gifs = response.data.data.map((gif: any) => {
-        let url = gif.images.downsized_medium.url;
-        let width = gif.images.downsized_medium.width;
-        let height = gif.images.downsized_medium.height;
+      let gifs = response.data.data
+        .map((gif: any) => {
+          let url = gif.images.downsized_medium.url;
+          let width = gif.images.downsized_medium.width;
+          let height = gif.images.downsized_medium.height;
 
-        return {
-          url:
-            url.slice(0, 8) +
-            'media.' +
-            url.slice(url.indexOf('giphy.com'), url.indexOf('?cid=')),
-          size: {
-            width,
-            height,
-          },
-        };
-      });
+          if (url && width && height) {
+            return {
+              url:
+                url.slice(0, 8) +
+                'media.' +
+                url.slice(url.indexOf('giphy.com'), url.indexOf('?cid=')),
+              size: {
+                width,
+                height,
+              },
+            };
+          } else {
+            return undefined;
+          }
+        })
+        .filter((gif: any) => gif);
 
       res.send({
         data: gifs,
@@ -57,7 +63,7 @@ router.get('/search', async (req: Request, res: Response) => {
 
       break;
     } catch (error) {
-      if (i === apiKeyList.length - 1) {
+      if (i === apiKeyList.split(', ').length - 1) {
         console.error('Fail to search GIFs: ', error);
 
         res.status(500).send({
