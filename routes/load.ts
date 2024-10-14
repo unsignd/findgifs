@@ -21,16 +21,6 @@ router.get('/load/verified', async (req: Request, res: Response) => {
     { $match: { isVerified: true } },
     { $unwind: { path: '$upvote', preserveNullAndEmptyArrays: true } },
     {
-      $match: {
-        $or: [
-          { upvote: { $exists: false } },
-          {
-            'upvote.date': { $gt: oneWeekAgo },
-          },
-        ],
-      },
-    },
-    {
       $group: {
         _id: '$_id',
         name: { $first: '$name' },
