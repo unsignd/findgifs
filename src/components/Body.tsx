@@ -210,8 +210,9 @@ export function Body() {
           {!isReady ? undefined : gifList.filter(
               (gif) =>
                 gif !== 0 &&
-                gif.name.filter((name) => name.includes(searchQuery ?? ''))
-                  .length !== 0
+                gif.name.filter((name) =>
+                  name.toLowerCase().includes(searchQuery?.toLowerCase() ?? '')
+                ).length !== 0
             ).length === 0 ? (
             <NotFoundWrapper $isMobile={width <= 1202}>
               <NotFoundGroup>
@@ -234,12 +235,14 @@ export function Body() {
                 .filter(
                   (gif) =>
                     gif === 0 ||
-                    gif.name.filter((name) => name.includes(searchQuery ?? ''))
-                      .length !== 0
+                    gif.name.filter((name) =>
+                      name
+                        .toLowerCase()
+                        .includes(searchQuery?.toLowerCase() ?? '')
+                    ).length !== 0
                 )
                 .map((gif, index) =>
-                  gif === 0 ? // <GifUnit key={index} />
-                  undefined : pathname === '/submission' ? (
+                  gif === 0 ? undefined : pathname === '/submission' ? ( // <GifUnit key={index} />
                     <SubmissionItem
                       key={index}
                       media={gif.url}

@@ -197,7 +197,7 @@ export function Item({
             title="Copy this GIF's name to Clipboard"
             onClick={() => {
               if (progress === 0) {
-                navigator.clipboard.writeText(text);
+                navigator.clipboard.writeText(text.toLowerCase());
 
                 if (isClicked) return;
 
