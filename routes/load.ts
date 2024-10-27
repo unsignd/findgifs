@@ -27,37 +27,17 @@ router.get('/load/verified', async (req: Request, res: Response) => {
         url: { $first: '$url' },
         size: { $first: '$size' },
         upvote: {
-          $push: {
-            $cond: [{ $gt: ['$upvote.date', oneWeekAgo] }, '$upvote', null],
+          $sum: {
+            $cond: [
+              { $gt: ['$upvote.date', oneWeekAgo] },
+              1, // 1 score for upvotes within one week
+              0.5, // 0.5 score for older upvotes
+            ],
           },
         },
       },
     },
-    {
-      $project: {
-        name: 1,
-        url: 1,
-        size: 1,
-        // Filter out nulls created by older upvotes
-        upvote: {
-          $filter: {
-            input: '$upvote',
-            as: 'u',
-            cond: { $ne: ['$$u', null] },
-          },
-        },
-        count: {
-          $size: {
-            $filter: {
-              input: '$upvote',
-              as: 'u',
-              cond: { $ne: ['$$u', null] },
-            },
-          },
-        },
-      },
-    },
-    { $sort: { count: -1, name: 1 } },
+    { $sort: { upvote: -1, name: 1 } }, // Sort by score (upvote) and name
   ])
     .skip(skip)
     .limit(20);
