@@ -248,7 +248,7 @@ export function Body() {
                       media={gif.url}
                       text={
                         gif.name.filter((name) =>
-                          name.includes(searchQuery ?? '')
+                          name.includes(searchQuery?.toLowerCase() ?? '')
                         )[0]
                       }
                       size={gif.size}
@@ -261,7 +261,7 @@ export function Body() {
                       media={gif.url}
                       text={
                         gif.name.filter((name) =>
-                          name.includes(searchQuery ?? '')
+                          name.includes(searchQuery?.toLowerCase() ?? '')
                         )[0]
                       }
                       size={gif.size}
