@@ -27,13 +27,7 @@ router.get('/load/verified', async (req: Request, res: Response) => {
         url: { $first: '$url' },
         size: { $first: '$size' },
         upvote: {
-          $sum: {
-            $cond: [
-              { $gt: ['$upvote.date', oneWeekAgo] },
-              1, // 1 score for upvotes within one week
-              0.5, // 0.5 score for older upvotes
-            ],
-          },
+          $sum: { $divide: [1, { $subtract: [currentTime, '$upvote.date'] }] },
         },
       },
     },
