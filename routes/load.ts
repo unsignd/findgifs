@@ -15,7 +15,6 @@ router.get('/load/verified', async (req: Request, res: Response) => {
   }
 
   const currentTime = Math.floor(Date.now() / 1000);
-  const oneWeekAgo = currentTime - 604800;
 
   const documents = await Gif.aggregate([
     { $match: { isVerified: true } },
@@ -27,7 +26,12 @@ router.get('/load/verified', async (req: Request, res: Response) => {
         url: { $first: '$url' },
         size: { $first: '$size' },
         upvote: {
-          $sum: { $divide: [1, { $subtract: [currentTime, '$upvote.date'] }] },
+          $sum: {
+            $add: [
+              0.5, // Default value
+              { $divide: [0.5, { $subtract: [currentTime, '$upvote.date'] }] }, // 0.5 / time
+            ],
+          },
         },
       },
     },
