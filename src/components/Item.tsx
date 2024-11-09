@@ -55,7 +55,7 @@ const ItemImage = styled.img<{
 
   display: ${(props) => (props.$isLoaded ? 'block' : 'none')};
 
-  transform: scale(1.15);
+  transform: scale(${(props) => (props.$isNSFW ? 1.15 : 1)});
 
   filter: blur(${(props) => (props.$isNSFW ? 10 : 0)}px);
 

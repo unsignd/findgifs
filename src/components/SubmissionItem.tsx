@@ -2,7 +2,6 @@ import { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { ReactComponent as UpvoteSVG } from '../assets/upvote_20.svg';
 import { api } from '../configs/axios';
-import toast from 'react-hot-toast';
 
 const wrapperAnimation = keyframes`
   0% {
