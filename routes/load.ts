@@ -33,6 +33,7 @@ router.get('/load/verified', async (req: Request, res: Response) => {
             ],
           },
         },
+        isNSFW: { $first: '$isNSFW' },
       },
     },
     { $sort: { upvote: -1, name: 1 } }, // Sort by score (upvote) and name
@@ -57,6 +58,7 @@ router.get('/load/verified', async (req: Request, res: Response) => {
         height: document.size.height,
       },
       upvote: document.count,
+      isNSFW: document.isNSFW,
     };
   });
 

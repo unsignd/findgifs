@@ -48,7 +48,7 @@ router.post('/submit', async (req: Request, res: Response) => {
 
   if (documents.length > 0 && documents[0].count > 20) {
     res.status(429).send({
-      error: 'Too many requests',
+      error: 'Too many requests.',
     });
 
     return;
@@ -75,6 +75,7 @@ router.post('/submit', async (req: Request, res: Response) => {
       ],
       upvote: [],
       isVerified: false,
+      isNSFW: false,
     });
   } else if (
     document.createdAt! + 2592000 <=

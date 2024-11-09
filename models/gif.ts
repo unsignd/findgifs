@@ -21,6 +21,7 @@ const gifSchema = new Schema({
     },
   ],
   isVerified: Boolean,
+  isNSFW: Boolean,
 });
 
 export const Gif = model('gif', gifSchema);
