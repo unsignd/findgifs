@@ -37,16 +37,34 @@ const ItemSkeleton = styled.div<{
   animation: ${skeletonAnimation} 1s linear infinite alternate;
 `;
 
-const ItemImage = styled.img<{
-  $isLoaded: boolean;
-}>`
+const ItemImageContainer = styled.div`
   width: 100%;
 
   position: relative;
 
   bottom: 0;
 
+  overflow: hidden;
+`;
+
+const ItemImage = styled.img<{
+  $isLoaded: boolean;
+  $isNSFW: boolean;
+}>`
+  width: 100%;
+
   display: ${(props) => (props.$isLoaded ? 'block' : 'none')};
+
+  transform: scale(1.15);
+
+  filter: blur(${(props) => (props.$isNSFW ? 10 : 0)}px);
+
+  transition: transform 250ms ease, filter 250ms ease;
+
+  &:hover {
+    transform: scale(1);
+    filter: blur(0);
+  }
 `;
 
 const ItemBottomGroup = styled.div`
@@ -156,15 +174,15 @@ export function Item({
   media,
   text,
   size,
-}: // uploader,
-{
+  isNSFW,
+}: {
   media: string;
   text: string;
   size: {
     width: number;
     height: number;
   };
-  // uploader?: string;
+  isNSFW: boolean;
 }) {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
@@ -175,11 +193,14 @@ export function Item({
       {!isLoaded ? (
         <ItemSkeleton $width={size.width} $height={size.height} />
       ) : undefined}
-      <ItemImage
-        src={media}
-        onLoad={() => setIsLoaded(true)}
-        $isLoaded={isLoaded}
-      />
+      <ItemImageContainer>
+        <ItemImage
+          src={media}
+          onLoad={() => setIsLoaded(true)}
+          $isLoaded={isLoaded}
+          $isNSFW={isNSFW}
+        />
+      </ItemImageContainer>
       <ItemBottomGroup>
         <ItemTextGroup>
           <ItemText $progress={progress}>{text.toLowerCase()}</ItemText>

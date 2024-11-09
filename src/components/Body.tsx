@@ -269,6 +269,7 @@ export function Body() {
                         )[0]
                       }
                       size={gif.size}
+                      isNSFW={gif.isNSFW ?? false}
                     />
                   )
                 )}

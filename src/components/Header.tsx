@@ -11,7 +11,7 @@ import {
   searchQueryState,
 } from '../modules/atoms';
 import { Modal } from './Modal';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import useWindowNavigation from '../hooks/useWindowNavigation';
 
@@ -167,6 +167,7 @@ export function Header() {
   const { pathname } = useLocation();
   const { width } = useWindowDimensions();
   const { scrolledAmount } = useWindowNavigation();
+  const navigate = useNavigate();
 
   const [modalStyles, setModalStyles] = useState({
     overlay: {
@@ -217,11 +218,7 @@ export function Header() {
       <Wrapper>
         <InnerWrapper>
           <ContentGroup>
-            <LogoIcon
-              onClick={() => {
-                window.location.href = '/';
-              }}
-            />
+            <LogoIcon onClick={() => navigate('/')} />
             <SearchBar>
               <SearchIcon />
               <SearchInput
@@ -243,11 +240,7 @@ export function Header() {
           </ContentGroup>
           <ContentGroup>
             <ButtonGroup>
-              <Button
-                onClick={() => {
-                  window.location.href = '/submission';
-                }}
-              >
+              <Button onClick={() => navigate('/submission')}>
                 <p>Submission List</p>
               </Button>
               <Button>
@@ -280,19 +273,12 @@ export function Header() {
       <Wrapper $isMobile $scrolledAmount={scrolledAmount}>
         <InnerWrapper $isMobile>
           <ContentGroup>
-            <LogoIcon
-              $isMobile
-              onClick={() => {
-                window.location.href = '/';
-              }}
-            />
+            <LogoIcon $isMobile onClick={() => navigate('/')} />
           </ContentGroup>
           <ContentGroup>
             <IconButton
               title="View Submission list"
-              onClick={() => {
-                window.location.href = '/submission';
-              }}
+              onClick={() => navigate('/submission')}
             >
               <ArchiveSVG />
             </IconButton>

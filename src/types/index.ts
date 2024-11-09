@@ -7,5 +7,5 @@ export type gifType = {
   };
   upvote: number;
   isUpvoted?: boolean;
-  isNSWF?: boolean;
+  isNSFW?: boolean;
 };
