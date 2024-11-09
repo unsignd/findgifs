@@ -4,7 +4,6 @@ import { ReactComponent as ClipboardSVG } from '../assets/clipboard_20.svg';
 import { ReactComponent as ClipboardDoneSVG } from '../assets/clipboard_done_20.svg';
 // import { ReactComponent as UploaderSVG } from '../assets/tag_20.svg';
 import { api } from '../configs/axios';
-import toast from 'react-hot-toast';
 
 const wrapperAnimation = keyframes`
   0% {
@@ -209,11 +208,7 @@ export function Item({
                     url: media,
                   })
                   .then(() => setIsClicked(false))
-                  .catch(() =>
-                    toast.error(
-                      "An error occured while updating GIF's priority."
-                    )
-                  );
+                  .catch(() => {});
 
                 setTimeout(() => {
                   setProgress(2);

@@ -177,9 +177,7 @@ export function SubmissionItem({
                   url: media,
                 })
                 .then(() => setIsClicked(false))
-                .catch(() =>
-                  toast.error("An error occured while updating GIF's priority.")
-                );
+                .catch(() => {});
             }}
           >
             <UpvoteSVG />
