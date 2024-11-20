@@ -69,9 +69,9 @@ export function Error() {
           draggable="false"
         />
         <NotFoundText>
-          Hey dude u took the wrong way
-          {'\n'}u can <Link to="/">go back</Link> or watch the freaky alpha wolf
-          video above
+          You just took a wrong way
+          {'\n'}
+          <Link to="/">go back</Link> or watch the freaky alpha wolf video above
         </NotFoundText>
       </NotFoundGroup>
     </Wrapper>
