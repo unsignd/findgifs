@@ -7,4 +7,4 @@ Disallow: /*.md$
 # Allow indexing of the rest of the site
 Allow: /
 
-Sitemap: https://findgifs.com/sitemap.xml
+Sitemap: https://findgifs.shinyou.ng/sitemap.xml
