@@ -14,7 +14,7 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import { useLocation } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import toast from 'react-hot-toast';
-import { GifUnit } from '../units/gif';
+import { CardUnit } from '../units/card';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -242,7 +242,9 @@ export function Body() {
                     ).length !== 0
                 )
                 .map((gif, index) =>
-                  gif === 0 ? undefined : pathname === '/submission' ? ( // <GifUnit key={index} />
+                  gif === 0 ? (
+                    <CardUnit key={index} />
+                  ) : pathname === '/submission' ? (
                     <SubmissionItem
                       key={index}
                       media={gif.url}
