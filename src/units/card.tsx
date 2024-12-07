@@ -34,8 +34,8 @@ export function CardUnit() {
         className="adsbygoogle"
         style={{
           display: 'inline-block',
-          width: 160,
-          height: 600,
+          width: '100%',
+          height: 'calc(100% - 60px)',
         }}
         data-ad-client={process.env.REACT_APP_ADSENSE_CID}
         data-ad-slot="4390596796"
