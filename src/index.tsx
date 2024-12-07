@@ -52,29 +52,6 @@ const router = createBrowserRouter([
         path: 'submission',
         element: <Submission />,
       },
-      {
-        path: 'test',
-        element: (
-          <>
-            <script
-              async
-              src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5188419011494703"
-              crossOrigin="anonymous"
-            ></script>
-            <ins
-              className="adsbygoogle"
-              style={{
-                display: 'block',
-              }}
-              data-ad-client="ca-pub-5188419011494703"
-              data-ad-slot="4390596796"
-              data-ad-format="auto"
-              data-full-width-responsive="true"
-            ></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-          </>
-        ),
-      },
     ],
   },
 ]);

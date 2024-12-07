@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 const AdWrapper = styled.div`
@@ -13,13 +14,15 @@ const Ad = styled.ins`
 `;
 
 export function CardUnit() {
+  useEffect(() => {
+    try {
+      //@ts-ignore
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    } catch {}
+  });
+
   return (
     <AdWrapper>
-      <script
-        async
-        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.REACT_APP_ADSENSE_CID}`}
-        crossOrigin="anonymous"
-      ></script>
       <Ad
         className="adsbygoogle"
         data-ad-format="fluid"
@@ -27,7 +30,6 @@ export function CardUnit() {
         data-ad-client={process.env.REACT_APP_ADSENSE_CID}
         data-ad-slot="4390596796"
       ></Ad>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </AdWrapper>
   );
 }
