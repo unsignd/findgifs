@@ -3,6 +3,7 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import { useRecoilState } from 'recoil';
 import { effectActiveState } from '../modules/atoms';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -71,7 +72,14 @@ export function Footer() {
         ) : (
           <Text>© {new Date().getFullYear()} FindGIFs</Text>
         )}
-        <Watermark src={require('../assets/watermark.png')} />
+        <LinkText
+          onClick={() =>
+            window.open('https://github.com/unsignd/findgifs', '_blank') ||
+            window.location.replace('https://github.com/unsignd/findgifs')
+          }
+        >
+          We ❤️ Open-source
+        </LinkText>
       </ContentGroup>
     </Wrapper>
   );
