@@ -15,7 +15,7 @@ export function CardUnit() {
       style={{
         display: 'inline-block',
         width: '100%',
-        height: 'calc(100% - 60px)',
+        height: '100%',
         minHeight: 300,
       }}
       data-ad-client={process.env.REACT_APP_ADSENSE_CID}
