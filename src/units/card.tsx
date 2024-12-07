@@ -23,13 +23,25 @@ export function CardUnit() {
 
   return (
     <AdWrapper>
-      <Ad
+      {/* <Ad
         className="adsbygoogle"
         data-ad-format="fluid"
         data-ad-layout-key="+1m+s0-k-t+3t"
         data-ad-client={process.env.REACT_APP_ADSENSE_CID}
         data-ad-slot="4390596796"
-      ></Ad>
+      ></Ad> */}
+      <ins
+        className="adsbygoogle"
+        style={{
+          display: 'inline-block',
+          width: 160,
+          height: 600,
+        }}
+        data-ad-client={process.env.REACT_APP_ADSENSE_CID}
+        data-ad-slot="4390596796"
+        data-full-width-responsive="true"
+        data-ad-format="vertical"
+      ></ins>
     </AdWrapper>
   );
 }
