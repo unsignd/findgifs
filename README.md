@@ -14,18 +14,12 @@
 
 ## Contributor
 
-- [@unsignd](https://github.com/unsignd): me, developed the overall project 😙
-- [@zeroonedeveloper](https://github.com/zeroonedeveloper): configured backend docker setting
-- [@paring-chan](https://github.com/paring-chan): configured backend docker setting
-- [@minibox24](https://github.com/minibox24): configured backend docker setting
-- [@issac4892](https://github.com/issac4892): helped backend setup
-- [@choshinyoung](https://github.com/choshinyoung): did a super super super important task (i forgot)
+- [@unsignd](https://github.com/unsignd)
 
-<br/>
+## Speicial Thanks
 
-## Special Thanks
-
-- [giphy](https://giphy.com)
-- alpha wolf youtubers 😈🐺
-- the strokes
-- julian casablancas
+- [@zeroonedeveloper](https://github.com/zeroonedeveloper)
+- [@paring-chan](https://github.com/paring-chan)
+- [@minibox24](https://github.com/minibox24)
+- [@issac4892](https://github.com/issac4892)
+- [@choshinyoung](https://github.com/choshinyoung)
