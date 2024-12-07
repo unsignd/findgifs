@@ -14,20 +14,23 @@ const Ad = styled.ins`
 
 export function CardUnit() {
   return (
-    <AdWrapper>
+    <>
       <script
         async
-        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.REACT_APP_ADSENSE_CID}`}
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5188419011494703"
         crossOrigin="anonymous"
       ></script>
-      <Ad
+      <ins
         className="adsbygoogle"
-        data-ad-format="fluid"
-        data-ad-layout-key="+1m+s0-k-t+3t"
-        data-ad-client={process.env.REACT_APP_ADSENSE_CID}
+        style={{
+          display: 'block',
+        }}
+        data-ad-client="ca-pub-5188419011494703"
         data-ad-slot="4390596796"
-      ></Ad>
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
       <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </AdWrapper>
+    </>
   );
 }
