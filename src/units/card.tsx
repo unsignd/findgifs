@@ -40,7 +40,7 @@ export function CardUnit() {
         data-ad-client={process.env.REACT_APP_ADSENSE_CID}
         data-ad-slot="4390596796"
         data-full-width-responsive="true"
-        data-ad-format="vertical"
+        data-ad-format="auto"
       ></ins>
     </AdWrapper>
   );
