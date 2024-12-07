@@ -9,12 +9,14 @@
 <br />
 
 `FindGIFs` is an easy-to-use Instagram GIF name finder, contributed by users all around the world.
-<br/>
-<br/>
+<br />
+<br />
 
 ## Contributor
 
 - [@unsignd](https://github.com/unsignd)
+
+<br />
 
 ## Speicial Thanks
 
