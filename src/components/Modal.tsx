@@ -3,6 +3,7 @@ import { ReactComponent as XSvg } from '../assets/x_20.svg';
 import { ReactComponent as SearchSVG } from '../assets/search_20.svg';
 // import { ReactComponent as DropdownArrowSVG } from '../assets/dropdown_arrow_12.svg';
 import { ReactComponent as CheckSVG } from '../assets/check_20.svg';
+import { ReactComponent as WarningSVG } from '../assets/warning_40.svg';
 // import { ReactComponent as TagSVG } from '../assets/tag_20.svg';
 import { useEffect, useRef, useState } from 'react';
 import { api } from '../configs/axios';
@@ -226,7 +227,7 @@ const NotFoundWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 2px;
 `;
 
 const NotFoundImageGroup = styled.div`
@@ -237,11 +238,6 @@ const NotFoundImageGroup = styled.div`
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-`;
-
-const NotFoundImage = styled.img`
-  width: 70px;
-  height: 70px;
 `;
 
 const NotFoundText = styled.p`
@@ -372,7 +368,6 @@ export function Modal() {
     };
   }>();
   const [resetStatus, reset] = useState<boolean>(true);
-  const [randomNumber] = useState<number>(Math.floor(Math.random() * 4));
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const [, setGifList] = useRecoilState(gifListState);
@@ -463,85 +458,30 @@ export function Modal() {
             <ItemSkeleton $width={200} />
             <ItemSkeleton $width={160} />
           </SkeletonWrapper>
-          {gifs === undefined
-            ? undefined
-            : gifs.length === 0
-            ? {
-                0: (
-                  <NotFoundWrapper>
-                    <NotFoundImageGroup>
-                      <NotFoundImage
-                        src={
-                          'https://upload.wikimedia.org/wikipedia/en/a/a1/Descendents_-_Milo_Goes_to_College_cover.jpg'
-                        }
-                        draggable="false"
-                      />
-                    </NotFoundImageGroup>
-                    <NotFoundText>
-                      "Where did you go wrong this time?"
-                    </NotFoundText>
-                  </NotFoundWrapper>
-                ),
-                1: (
-                  <NotFoundWrapper>
-                    <NotFoundImageGroup>
-                      <NotFoundImage
-                        src={
-                          'https://upload.wikimedia.org/wikipedia/en/b/b0/Green_Day_-_Nimrod_cover.jpg'
-                        }
-                        draggable="false"
-                      />
-                    </NotFoundImageGroup>
-                    <NotFoundText>
-                      "I've got some scattered pictures lying on my bedroom
-                      floor"
-                    </NotFoundText>
-                  </NotFoundWrapper>
-                ),
-                2: (
-                  <NotFoundWrapper>
-                    <NotFoundImageGroup>
-                      <NotFoundImage
-                        src={
-                          'https://upload.wikimedia.org/wikipedia/en/e/e5/In_Utero_%28Nirvana%29_album_cover.jpg'
-                        }
-                        draggable="false"
-                      />
-                    </NotFoundImageGroup>
-                    <NotFoundText>
-                      "The day is gone, but I'm having fun"
-                    </NotFoundText>
-                  </NotFoundWrapper>
-                ),
-                3: (
-                  <NotFoundWrapper>
-                    <NotFoundImageGroup>
-                      <NotFoundImage
-                        src={
-                          'https://upload.wikimedia.org/wikipedia/en/5/55/Radioheadthebends.png'
-                        }
-                        draggable="false"
-                      />
-                    </NotFoundImageGroup>
-                    <NotFoundText>"I just don't know anymore"</NotFoundText>
-                  </NotFoundWrapper>
-                ),
-              }[randomNumber]
-            : gifs.map((gif, index) => (
-                <ImageWrapper
-                  key={index}
-                  $visible={isLoaded}
-                  onClick={() => {
-                    setSelection(selection === gif ? undefined : gif);
-                  }}
-                >
-                  <CheckMarkWrapper $visible={selection === gif}>
-                    <CheckSVG />
-                  </CheckMarkWrapper>
-                  <SelectionOverlay $visible={selection === gif} />
-                  <Image src={gif.url} />
-                </ImageWrapper>
-              ))}
+          {gifs === undefined ? undefined : gifs.length === 0 ? (
+            <NotFoundWrapper>
+              <NotFoundImageGroup>
+                <WarningSVG />
+              </NotFoundImageGroup>
+              <NotFoundText>Couldn't find GIFs with the query.</NotFoundText>
+            </NotFoundWrapper>
+          ) : (
+            gifs.map((gif, index) => (
+              <ImageWrapper
+                key={index}
+                $visible={isLoaded}
+                onClick={() => {
+                  setSelection(selection === gif ? undefined : gif);
+                }}
+              >
+                <CheckMarkWrapper $visible={selection === gif}>
+                  <CheckSVG />
+                </CheckMarkWrapper>
+                <SelectionOverlay $visible={selection === gif} />
+                <Image src={gif.url} />
+              </ImageWrapper>
+            ))
+          )}
         </ImageGroup>
       </SelectGroup>
       {/* <TagGroup>
