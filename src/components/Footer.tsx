@@ -67,7 +67,7 @@ export function Footer() {
       <ContentGroup $isMobile={width <= 1202}>
         {isFreaky ? (
           <LinkText onClick={() => setEffectActive(!effectActive)}>
-            {effectActive ? 'Be Normal (lame)' : 'Go Freaky 😝'}
+            {effectActive ? 'Stay normal (lame)' : 'Go freaky 😝'}
           </LinkText>
         ) : (
           <Text>© {new Date().getFullYear()} FindGIFs</Text>
