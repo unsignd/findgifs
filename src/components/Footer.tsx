@@ -37,10 +37,6 @@ const Text = styled.p`
   color: var(--brightness-400);
 `;
 
-const Watermark = styled.img`
-  height: 16px;
-`;
-
 const LinkText = styled.span`
   font-size: 14px;
 
