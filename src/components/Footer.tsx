@@ -3,7 +3,6 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import { useRecoilState } from 'recoil';
 import { effectActiveState } from '../modules/atoms';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
   width: 100%;

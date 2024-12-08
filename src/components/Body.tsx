@@ -160,123 +160,127 @@ export function Body() {
   return (
     <>
       {isReady ? (
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={async () => {
-            if (onGoingCount === loadCount + 1) {
-              return;
-            }
+        <>
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={async () => {
+              if (onGoingCount === loadCount + 1) {
+                return;
+              }
 
-            setOnGoingCount(onGoingCount + 1);
+              setOnGoingCount(onGoingCount + 1);
 
-            const data = [];
+              const data = [];
 
-            data.push(
-              ...(await api
-                .get(
-                  `/load/${
-                    pathname === '/submission' ? 'unverified' : 'verified'
-                  }?skip=${(loadCount + 1) * 20}`
-                )
-                .then((res) => {
-                  if (pathname !== '/submission') {
-                    res.data.data.splice(
-                      Math.round(Math.random() * res.data.data.length),
-                      0,
-                      0
-                    );
-                  }
-
-                  return res.data.data;
-                })
-                .catch(() => []))
-            );
-
-            setGifList([...gifList, ...(await Promise.all(data)).flat()]);
-            setLoadCount(loadCount + 1);
-          }}
-          hasMore={isReady && gifSize ? (loadCount + 1) * 20 < gifSize : false}
-          loader={
-            <LoadingWrapper>
-              <LoadingText>Loading GIFs... Hold up! 🤫🧏</LoadingText>
-            </LoadingWrapper>
-          }
-        >
-          <Wrapper>
-            {!isReady ? undefined : gifList.filter(
-                (gif) =>
-                  gif !== 0 &&
-                  gif.name.filter((name) =>
-                    name
-                      .toLowerCase()
-                      .includes(searchQuery?.toLowerCase() ?? '')
-                  ).length !== 0
-              ).length === 0 ? (
-              <NotFoundWrapper $isMobile={width <= 1202}>
-                <NotFoundGroup>
-                  <NotFoundImage
-                    src={require('../assets/404.png')}
-                    draggable={false}
-                  />
-                  <NotFoundText>
-                    {gifList.length === 0
-                      ? `No ${
-                          pathname === '/submission' ? 'submissions' : 'GIFs'
-                        } have been submitted yet.\nWhat if you give it a try? ⛏️😙`
-                      : 'No GIFs containing the search term were found.'}
-                  </NotFoundText>
-                </NotFoundGroup>
-              </NotFoundWrapper>
-            ) : (
-              <InnerWrapper $isMobile={width <= 1202}>
-                {gifList
-                  .filter(
-                    (gif) =>
-                      gif === 0 ||
-                      gif.name.filter((name) =>
-                        name
-                          .toLowerCase()
-                          .includes(searchQuery?.toLowerCase() ?? '')
-                      ).length !== 0
+              data.push(
+                ...(await api
+                  .get(
+                    `/load/${
+                      pathname === '/submission' ? 'unverified' : 'verified'
+                    }?skip=${(loadCount + 1) * 20}`
                   )
-                  .map((gif, index) =>
-                    gif === 0 ? (
-                      <CardUnit key={index} />
-                    ) : pathname === '/submission' ? (
-                      <SubmissionItem
-                        key={index}
-                        media={gif.url}
-                        text={
-                          gif.name.filter((name) =>
-                            name
-                              .toLowerCase()
-                              .includes(searchQuery?.toLowerCase() ?? '')
-                          )[0]
-                        }
-                        size={gif.size}
-                        upvote={gif.upvote}
-                        isUpvoted={gif.isUpvoted!}
-                      />
-                    ) : (
-                      <Item
-                        key={index}
-                        media={gif.url}
-                        text={
-                          gif.name.filter((name) =>
-                            name
-                              .toLowerCase()
-                              .includes(searchQuery?.toLowerCase() ?? '')
-                          )[0]
-                        }
-                        size={gif.size}
-                        isNSFW={gif.isNSFW ?? false}
-                      />
+                  .then((res) => {
+                    if (pathname !== '/submission') {
+                      res.data.data.splice(
+                        Math.round(Math.random() * res.data.data.length),
+                        0,
+                        0
+                      );
+                    }
+
+                    return res.data.data;
+                  })
+                  .catch(() => []))
+              );
+
+              setGifList([...gifList, ...(await Promise.all(data)).flat()]);
+              setLoadCount(loadCount + 1);
+            }}
+            hasMore={
+              isReady && gifSize ? (loadCount + 1) * 20 < gifSize : false
+            }
+            loader={
+              <LoadingWrapper>
+                <LoadingText>Loading GIFs... Hold up! 🤫🧏</LoadingText>
+              </LoadingWrapper>
+            }
+          >
+            <Wrapper>
+              {!isReady ? undefined : gifList.filter(
+                  (gif) =>
+                    gif !== 0 &&
+                    gif.name.filter((name) =>
+                      name
+                        .toLowerCase()
+                        .includes(searchQuery?.toLowerCase() ?? '')
+                    ).length !== 0
+                ).length === 0 ? (
+                <NotFoundWrapper $isMobile={width <= 1202}>
+                  <NotFoundGroup>
+                    <NotFoundImage
+                      src={require('../assets/404.png')}
+                      draggable={false}
+                    />
+                    <NotFoundText>
+                      {gifList.length === 0
+                        ? `No ${
+                            pathname === '/submission' ? 'submissions' : 'GIFs'
+                          } have been submitted yet.\nWhat if you give it a try? ⛏️😙`
+                        : 'No GIFs containing the search term were found.'}
+                    </NotFoundText>
+                  </NotFoundGroup>
+                </NotFoundWrapper>
+              ) : (
+                <InnerWrapper $isMobile={width <= 1202}>
+                  {gifList
+                    .filter(
+                      (gif) =>
+                        gif === 0 ||
+                        gif.name.filter((name) =>
+                          name
+                            .toLowerCase()
+                            .includes(searchQuery?.toLowerCase() ?? '')
+                        ).length !== 0
                     )
-                  )}
-              </InnerWrapper>
-            )}
-          </Wrapper>
-        </InfiniteScroll>
+                    .map((gif, index) =>
+                      gif === 0 ? (
+                        <CardUnit key={index} />
+                      ) : pathname === '/submission' ? (
+                        <SubmissionItem
+                          key={index}
+                          media={gif.url}
+                          text={
+                            gif.name.filter((name) =>
+                              name
+                                .toLowerCase()
+                                .includes(searchQuery?.toLowerCase() ?? '')
+                            )[0]
+                          }
+                          size={gif.size}
+                          upvote={gif.upvote}
+                          isUpvoted={gif.isUpvoted!}
+                        />
+                      ) : (
+                        <Item
+                          key={index}
+                          media={gif.url}
+                          text={
+                            gif.name.filter((name) =>
+                              name
+                                .toLowerCase()
+                                .includes(searchQuery?.toLowerCase() ?? '')
+                            )[0]
+                          }
+                          size={gif.size}
+                          isNSFW={gif.isNSFW ?? false}
+                        />
+                      )
+                    )}
+                </InnerWrapper>
+              )}
+            </Wrapper>
+          </InfiniteScroll>
+        </>
       ) : (
         <LoadingWrapper>
           <LoadingText>Loading GIFs... Hold up! 🤫🧏</LoadingText>
