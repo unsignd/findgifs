@@ -1,4 +1,14 @@
 import { useEffect } from 'react';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  width: 100%;
+  height: calc(100% - 60px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 export function CardUnit() {
   useEffect(() => {
@@ -14,7 +24,7 @@ export function CardUnit() {
       style={{
         display: 'inline-block',
         width: '100%',
-        height: 'calc(100% - 60px)',
+        height: '100%',
         minHeight: 300,
       }}
       data-ad-client={process.env.REACT_APP_ADSENSE_CID}
