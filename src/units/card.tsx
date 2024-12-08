@@ -19,16 +19,17 @@ export function CardUnit() {
   });
 
   return (
-    <ins
-      className="adsbygoogle"
-      style={{
-        display: 'inline-block',
-        width: '100%',
-        height: '100%',
-        minHeight: 300,
-      }}
-      data-ad-client={process.env.REACT_APP_ADSENSE_CID}
-      data-ad-slot="4390596796"
-    ></ins>
+    <Container>
+      <ins
+        className="adsbygoogle"
+        style={{
+          display: 'inline-block',
+          width: '100%',
+          height: '100%',
+        }}
+        data-ad-client={process.env.REACT_APP_ADSENSE_CID}
+        data-ad-slot="4390596796"
+      ></ins>
+    </Container>
   );
 }
