@@ -229,7 +229,7 @@ export function Body() {
                         ).length !== 0
                     )
                     .map((gif, index) =>
-                      index % 10 === ((time * index) % 10) % 10
+                      index % 10 === (time * (index % 10)) % 10
                         ? [gif, 0]
                         : [gif]
                     )
