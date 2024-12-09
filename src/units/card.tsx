@@ -16,6 +16,9 @@ export function CardUnit() {
     if (unitRef.current) {
       //@ts-ignore
       const adStatus = unitRef.current.getAttribute('data-ad-status');
+
+      console.log(adStatus);
+
       if (adStatus === 'filled') {
         // Correctly check for the filled status
         setIsLoaded(true);
