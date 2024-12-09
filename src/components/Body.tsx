@@ -133,9 +133,7 @@ export function Body() {
             pathname === '/submission' ? 'unverified' : 'verified'
           }?skip=0`
         )
-        .then((res) => {
-          setGifList(res.data.data);
-        })
+        .then((res) => setGifList(res.data.data))
         .catch(() => []);
 
       setIsReady(true);
@@ -167,17 +165,7 @@ export function Body() {
                       pathname === '/submission' ? 'unverified' : 'verified'
                     }?skip=${(loadCount + 1) * 20}`
                   )
-                  .then((res) => {
-                    if (pathname !== '/submission') {
-                      res.data.data.splice(
-                        Math.round(Math.random() * res.data.data.length),
-                        0,
-                        0
-                      );
-                    }
-
-                    return res.data.data;
-                  })
+                  .then((res) => res.data.data)
                   .catch(() => []))
               );
 
