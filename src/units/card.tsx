@@ -17,8 +17,6 @@ export function CardUnit() {
       //@ts-ignore
       const adStatus = unitRef.current.getAttribute('data-ad-status');
 
-      console.log(adStatus);
-
       if (adStatus === 'filled') {
         // Correctly check for the filled status
         setIsLoaded(true);
@@ -31,7 +29,8 @@ export function CardUnit() {
       ref={unitRef}
       className="adsbygoogle"
       style={{
-        display: isLoaded ? 'inline-block' : 'none',
+        display: 'inline-block',
+        visibility: isLoaded ? 'visible' : 'hidden',
         width: '100%',
         height: 'calc(100% - 60px)',
         minHeight: 300,
