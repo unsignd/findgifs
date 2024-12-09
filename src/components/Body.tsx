@@ -98,7 +98,7 @@ export function Body() {
   const [isReady, setIsReady] = useState<boolean>(false);
   const [onGoingCount, setOnGoingCount] = useState<number>(0);
   const [, setPrevPathname] = useState<string>(pathname);
-  const [time] = useState<number>(new Date().getTime());
+  const [basedNumber] = useState<number>(new Date().getTime() % 10);
 
   const [gifList, setGifList] = useRecoilState(gifListState);
   const [gifSize, setGifSize] = useRecoilState(gifSizeState);
@@ -217,7 +217,8 @@ export function Body() {
                         ).length !== 0
                     )
                     .map((gif, index) =>
-                      index % 10 === (time * (Math.floor(index / 10) + 1)) % 10
+                      index % 10 ===
+                      basedNumber ** (Math.floor(index / 10) + 1) % 10
                         ? [gif, 0]
                         : [gif]
                     )
