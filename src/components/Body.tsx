@@ -15,6 +15,7 @@ import { useLocation } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import toast from 'react-hot-toast';
 import { CardUnit } from '../units/card';
+import { gifType } from '../types';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -97,6 +98,7 @@ export function Body() {
   const [isReady, setIsReady] = useState<boolean>(false);
   const [onGoingCount, setOnGoingCount] = useState<number>(0);
   const [, setPrevPathname] = useState<string>(pathname);
+  const [time] = useState<number>(new Date().getTime());
 
   const [gifList, setGifList] = useRecoilState(gifListState);
   const [gifSize, setGifSize] = useRecoilState(gifSizeState);
@@ -132,21 +134,7 @@ export function Body() {
           }?skip=0`
         )
         .then((res) => {
-          setPrevPathname((prevPathname) => {
-            if (prevPathname === pathname) {
-              if (pathname !== '/submission') {
-                res.data.data.splice(
-                  Math.round(Math.random() * res.data.data.length),
-                  0,
-                  0
-                );
-              }
-
-              setGifList(res.data.data);
-            }
-
-            return prevPathname;
-          });
+          setGifList(res.data.data);
         })
         .catch(() => []);
 
@@ -208,7 +196,6 @@ export function Body() {
             <Wrapper>
               {!isReady ? undefined : gifList.filter(
                   (gif) =>
-                    gif !== 0 &&
                     gif.name.filter((name) =>
                       name
                         .toLowerCase()
@@ -235,7 +222,6 @@ export function Body() {
                   {gifList
                     .filter(
                       (gif) =>
-                        gif === 0 ||
                         gif.name.filter((name) =>
                           name
                             .toLowerCase()
@@ -243,39 +229,51 @@ export function Body() {
                         ).length !== 0
                     )
                     .map((gif, index) =>
-                      gif === 0 ? (
-                        <CardUnit key={index} />
-                      ) : pathname === '/submission' ? (
-                        <SubmissionItem
-                          key={index}
-                          media={gif.url}
-                          text={
-                            gif.name.filter((name) =>
-                              name
-                                .toLowerCase()
-                                .includes(searchQuery?.toLowerCase() ?? '')
-                            )[0]
-                          }
-                          size={gif.size}
-                          upvote={gif.upvote}
-                          isUpvoted={gif.isUpvoted!}
-                        />
-                      ) : (
-                        <Item
-                          key={index}
-                          media={gif.url}
-                          text={
-                            gif.name.filter((name) =>
-                              name
-                                .toLowerCase()
-                                .includes(searchQuery?.toLowerCase() ?? '')
-                            )[0]
-                          }
-                          size={gif.size}
-                          isNSFW={gif.isNSFW ?? false}
-                        />
-                      )
-                    )}
+                      index % 10 === ((time * index) % 10) % 10
+                        ? [gif, 0]
+                        : [gif]
+                    )
+                    .map((gifArray, index) => {
+                      const gif = gifArray[0] as gifType;
+
+                      return (
+                        <>
+                          {gifArray.length === 2 ? (
+                            <CardUnit key={index} />
+                          ) : undefined}
+                          {pathname === '/submission' ? (
+                            <SubmissionItem
+                              key={index}
+                              media={gif.url}
+                              text={
+                                gif.name.filter((name) =>
+                                  name
+                                    .toLowerCase()
+                                    .includes(searchQuery?.toLowerCase() ?? '')
+                                )[0]
+                              }
+                              size={gif.size}
+                              upvote={gif.upvote}
+                              isUpvoted={gif.isUpvoted!}
+                            />
+                          ) : (
+                            <Item
+                              key={index}
+                              media={gif.url}
+                              text={
+                                gif.name.filter((name) =>
+                                  name
+                                    .toLowerCase()
+                                    .includes(searchQuery?.toLowerCase() ?? '')
+                                )[0]
+                              }
+                              size={gif.size}
+                              isNSFW={gif.isNSFW ?? false}
+                            />
+                          )}
+                        </>
+                      );
+                    })}
                 </InnerWrapper>
               )}
             </Wrapper>
