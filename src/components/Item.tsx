@@ -196,6 +196,11 @@ export function Item({
       <ItemImageContainer>
         <ItemImage
           src={media}
+          alt={`${text.replace(
+            /\w\S*/g,
+            (text) =>
+              text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+          )} GIF`}
           onLoad={() => setIsLoaded(true)}
           $isLoaded={isLoaded}
           $isNSFW={isNSFW}

@@ -194,6 +194,7 @@ export function Body() {
                   <NotFoundGroup>
                     <NotFoundImage
                       src={require('../assets/404.png')}
+                      alt="Not found"
                       draggable={false}
                     />
                     <NotFoundText>
