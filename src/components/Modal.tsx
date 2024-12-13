@@ -17,6 +17,7 @@ import {
 import { useRecoilState } from 'recoil';
 import { useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 
 const skeletonAnimation = keyframes`
   0% {
@@ -96,8 +97,10 @@ const BannerGroup = styled.div`
   border-bottom: 1px solid var(--brightness-200);
 `;
 
-const BannerText = styled.p`
-  font-size: 22px;
+const BannerText = styled.p<{
+  $isMobile?: boolean;
+}>`
+  font-size: ${(props) => (props.$isMobile ? 18 : 22)}px;
   font-weight: 500;
   text-align: center;
   letter-spacing: -0.32px;
@@ -348,6 +351,7 @@ const SubmitButton = styled.button<{
 
 export function Modal() {
   const { pathname } = useLocation();
+  const { width } = useWindowDimensions();
 
   const [searchQuery, setSearchQuery] = useState<string>();
   const [gifs, setGifs] = useState<
@@ -431,7 +435,7 @@ export function Modal() {
         </CancelButton>
       </Header>
       <BannerGroup>
-        <BannerText>
+        <BannerText $isMobile={width < 1202}>
           Upload hidden GIFs only you know,{'\n'}contribute the community.
         </BannerText>
       </BannerGroup>
