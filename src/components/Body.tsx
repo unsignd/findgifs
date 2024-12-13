@@ -184,10 +184,12 @@ export function Body() {
             <Wrapper>
               {!isReady ? undefined : gifList.filter(
                   (gif) =>
-                    gif.name.filter((name) =>
-                      name
-                        .toLowerCase()
-                        .includes(searchQuery?.toLowerCase() ?? '')
+                    gif.name.filter(
+                      (name) =>
+                        name
+                          .toLowerCase()
+                          .includes(searchQuery?.toLowerCase() ?? '') &&
+                        !gif.isNSFW // TEMP NSFW FILTERING
                     ).length !== 0
                 ).length === 0 ? (
                 <NotFoundWrapper $isMobile={width <= 1202}>
@@ -215,7 +217,7 @@ export function Body() {
                           name
                             .toLowerCase()
                             .includes(searchQuery?.toLowerCase() ?? '')
-                        ).length !== 0
+                        ).length !== 0 && !gif.isNSFW // TEMP NSFW FILTERING
                     )
                     .map((gif, index) =>
                       index % 10 ===
@@ -228,7 +230,8 @@ export function Body() {
 
                       return (
                         <>
-                          {gifArray.length === 2 ? (
+                          {gifArray.length === 2 &&
+                          pathname !== '/submission' ? (
                             <CardUnit key={index} />
                           ) : undefined}
                           {pathname === '/submission' ? (
