@@ -54,7 +54,7 @@ export function CardUnit() {
         className="adsbygoogle"
         data-ad-client={process.env.REACT_APP_ADSENSE_CID}
         data-ad-slot="4390596796"
-        data-full-width-responsive="true"
+        // data-full-width-responsive="true"
         data-ad-format="rectangle"
       />
       <div
