@@ -14,7 +14,7 @@ const Ad = styled.ins<{
   position: relative;
   left: 50%;
 
-  padding: 40px 0;
+  margin-top: 40px;
 
   transform: translateX(-50%);
   visibility: ${(props) => (props.$isLoaded ? 'visible' : 'hidden')};
