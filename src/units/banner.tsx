@@ -6,6 +6,9 @@ const Ad = styled.ins<{
 }>`
   width: calc(100% - 80px);
 
+  max-height: 180px;
+  max-width: 1400px;
+
   display: block;
 
   position: relative;
