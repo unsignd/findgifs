@@ -4,8 +4,10 @@ import styled from 'styled-components';
 const Ad = styled.ins<{
   $isLoaded: boolean;
 }>`
-  width: 1400px;
+  width: calc(100% - 80px);
   height: 140px;
+
+  max-width: 1400px;
 
   display: block;
 

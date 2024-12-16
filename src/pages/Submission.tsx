@@ -3,9 +3,9 @@ import { Body } from '../components/Body';
 
 export function Submission() {
   return (
-    <div>
+    <>
       <SubmissionBanner />
       <Body />
-    </div>
+    </>
   );
 }
