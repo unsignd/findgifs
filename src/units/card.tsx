@@ -10,16 +10,39 @@ const Wrapper = styled.div<{
   display: flex;
   flex-direction: column;
 
-  background-color: red;
+  display: ${(props) => (props.$isLoaded ? 'flex' : 'none')};
+`;
 
-  visibility: ${(props) => (props.$isLoaded ? 'visible' : 'hidden')};
+const AdGroup = styled.div`
+  width: 100%;
+  height: calc(100% - 60px);
+
+  position: relative;
 `;
 
 const Ad = styled.ins`
   width: 100%;
-  height: calc(100% - 60px);
+  height: 100%;
 
   display: inline-block;
+
+  position: absolute;
+`;
+
+const AlternativeAd = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: inline-block;
+
+  position: absolute;
+
+  background-color: red;
+`;
+
+const ItemBottomGroup = styled.div`
+  width: 100%;
+  height: 60px;
 `;
 
 export function CardUnit() {
@@ -48,15 +71,18 @@ export function CardUnit() {
 
   return (
     <Wrapper $isLoaded={isLoaded}>
-      <Ad
-        ref={unitRef}
-        className="adsbygoogle"
-        data-ad-client={process.env.REACT_APP_ADSENSE_CID}
-        data-ad-slot="4390596796"
-        // data-full-width-responsive="true"
-        data-ad-format="rectangle"
-      />
-      <div
+      <AdGroup>
+        <AlternativeAd />
+        {/* <Ad
+          ref={unitRef}
+          className="adsbygoogle"
+          data-ad-client={process.env.REACT_APP_ADSENSE_CID}
+          data-ad-slot="4390596796"
+          // data-full-width-responsive="true"
+          data-ad-format="rectangle"
+        /> */}
+      </AdGroup>
+      <ItemBottomGroup
         style={{
           width: '100%',
           height: 60,
