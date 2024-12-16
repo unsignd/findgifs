@@ -4,13 +4,13 @@ import styled from 'styled-components';
 const Wrapper = styled.div<{
   $isLoaded: boolean;
 }>`
-  width: 100%;
+  width: ${(props) => (props.$isLoaded ? '100%' : 0)};
   height: 100%;
 
   display: flex;
   flex-direction: column;
 
-  display: ${(props) => (props.$isLoaded ? 'flex' : 'none')};
+  overflow: hidden;
 `;
 
 const AdGroup = styled.div`
