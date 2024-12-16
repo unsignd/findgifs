@@ -17,7 +17,7 @@ const AdGroup = styled.div`
   width: 100%;
   height: calc(100% - 60px);
 
-  position: relative;
+  position: absolute;
 `;
 
 const Ad = styled.ins`
