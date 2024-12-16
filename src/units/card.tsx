@@ -1,23 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{
+  $isLoaded: boolean;
+}>`
   width: 100%;
   height: 100%;
 
   display: flex;
   flex-direction: column;
+
+  background-color: red;
+
+  visibility: ${(props) => (props.$isLoaded ? 'visible' : 'hidden')};
 `;
 
-const Ad = styled.ins<{
-  $isLoaded: boolean;
-}>`
+const Ad = styled.ins`
   width: 100%;
   height: calc(100% - 60px);
 
   display: inline-block;
-
-  visibility: ${(props) => (props.$isLoaded ? 'visible' : 'hidden')};
 `;
 
 export function CardUnit() {
@@ -45,9 +47,8 @@ export function CardUnit() {
   }, [unitRef]);
 
   return (
-    <Wrapper>
+    <Wrapper $isLoaded={isLoaded}>
       <Ad
-        $isLoaded={isLoaded}
         ref={unitRef}
         className="adsbygoogle"
         data-ad-client={process.env.REACT_APP_ADSENSE_CID}
