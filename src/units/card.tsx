@@ -13,9 +13,7 @@ const Ad = styled.ins<{
   $isLoaded: boolean;
 }>`
   width: 100%;
-
-  max-height: calc(100% - 60px);
-  min-height: 300px;
+  height: calc(100% - 60px);
 
   display: inline-block;
 
