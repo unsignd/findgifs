@@ -13,13 +13,6 @@ const Wrapper = styled.div<{
   overflow: hidden;
 `;
 
-const AdGroup = styled.div`
-  width: 100%;
-  height: calc(100% - 60px);
-
-  position: absolute;
-`;
-
 const Ad = styled.ins`
   width: 100%;
   height: 100%;
@@ -27,17 +20,6 @@ const Ad = styled.ins`
   display: inline-block;
 
   position: absolute;
-`;
-
-const AlternativeAd = styled.div`
-  width: 100%;
-  height: 100%;
-
-  display: inline-block;
-
-  position: absolute;
-
-  background-color: red;
 `;
 
 const ItemBottomGroup = styled.div`
@@ -71,17 +53,14 @@ export function CardUnit() {
 
   return (
     <Wrapper $isLoaded={isLoaded}>
-      <AdGroup>
-        <AlternativeAd />
-        {/* <Ad
-          ref={unitRef}
-          className="adsbygoogle"
-          data-ad-client={process.env.REACT_APP_ADSENSE_CID}
-          data-ad-slot="4390596796"
-          // data-full-width-responsive="true"
-          data-ad-format="rectangle"
-        /> */}
-      </AdGroup>
+      <Ad
+        ref={unitRef}
+        className="adsbygoogle"
+        data-ad-client={process.env.REACT_APP_ADSENSE_CID}
+        data-ad-slot="4390596796"
+        // data-full-width-responsive="true"
+        data-ad-format="rectangle"
+      />
       <ItemBottomGroup
         style={{
           width: '100%',

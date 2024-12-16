@@ -42,6 +42,10 @@ const InnerWrapper = styled.div<{
   padding: 40px 0;
 `;
 
+const ItemWrapper = styled.div`
+  position: relative;
+`;
+
 const NotFoundWrapper = styled.div<{
   $isMobile?: boolean;
 }>`
@@ -229,7 +233,7 @@ export function Body() {
                       const gif = gifArray[0] as gifType;
 
                       return (
-                        <>
+                        <ItemWrapper>
                           {gifArray.length === 2 &&
                           pathname !== '/submission' ? (
                             <CardUnit key={index} />
@@ -264,7 +268,7 @@ export function Body() {
                               isNSFW={gif.isNSFW ?? false}
                             />
                           )}
-                        </>
+                        </ItemWrapper>
                       );
                     })}
                 </InnerWrapper>
