@@ -43,6 +43,9 @@ const InnerWrapper = styled.div<{
 `;
 
 const ItemWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+
   position: relative;
 `;
 
