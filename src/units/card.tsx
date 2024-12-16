@@ -4,22 +4,22 @@ import styled from 'styled-components';
 const Wrapper = styled.div<{
   $isLoaded: boolean;
 }>`
-  width: ${(props) => (props.$isLoaded ? '100%' : 0)};
+  width: 100%;
   height: 100%;
 
   display: flex;
   flex-direction: column;
 
-  overflow: hidden;
+  background-color: red;
+
+  visibility: ${(props) => (props.$isLoaded ? 'visible' : 'hidden')};
 `;
 
 const Ad = styled.ins`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 60px);
 
   display: inline-block;
-
-  position: absolute;
 `;
 
 const ItemBottomGroup = styled.div`

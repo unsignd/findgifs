@@ -42,13 +42,6 @@ const InnerWrapper = styled.div<{
   padding: 40px 0;
 `;
 
-const ItemWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-
-  position: relative;
-`;
-
 const NotFoundWrapper = styled.div<{
   $isMobile?: boolean;
 }>`
@@ -239,9 +232,7 @@ export function Body() {
                         <>
                           {gifArray.length === 2 &&
                           pathname !== '/submission' ? (
-                            <ItemWrapper>
-                              <CardUnit key={index} />
-                            </ItemWrapper>
+                            <CardUnit key={index} />
                           ) : undefined}
                           {pathname === '/submission' ? (
                             <SubmissionItem
