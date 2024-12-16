@@ -4,10 +4,8 @@ import styled from 'styled-components';
 const Ad = styled.ins<{
   $isLoaded: boolean;
 }>`
-  width: calc(100% - 80px);
-
-  max-height: 180px;
-  max-width: 1400px;
+  width: 1400px;
+  height: 140px;
 
   display: block;
 
@@ -50,7 +48,6 @@ export function BannerUnit() {
       data-ad-client={process.env.REACT_APP_ADSENSE_CID}
       data-ad-slot="2834752792"
       data-full-width-responsive="horizontal"
-      data-ad-format="rectangle"
     />
   );
 }
