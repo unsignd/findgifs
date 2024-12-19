@@ -37,6 +37,11 @@ const effectActiveState = atom<boolean>({
   default: false,
 });
 
+const nsfwSettingState = atom<boolean>({
+  key: 'nsfwSettingState',
+  default: false,
+});
+
 export {
   gifListState,
   gifSizeState,
@@ -45,4 +50,5 @@ export {
   modalIsPromptedState,
   searchQueryState,
   effectActiveState,
+  nsfwSettingState,
 };

@@ -2,12 +2,17 @@ import styled from 'styled-components';
 import { ReactComponent as LogoSVG } from '../assets/logo_24.svg';
 import { ReactComponent as SearchSVG } from '../assets/search_20.svg';
 import { ReactComponent as ArchiveSVG } from '../assets/archive_18.svg';
+import { ReactComponent as HamburgerSVG } from '../assets/hamburger_20.svg';
+import { ReactComponent as LinkSVG } from '../assets/link_20.svg';
+import { ReactComponent as SlashSVG } from '../assets/slash_20.svg';
 import { useEffect, useRef, useState } from 'react';
 import ReactModal from 'react-modal';
 import { useRecoilState } from 'recoil';
+import { Popover } from 'react-tiny-popover';
 import {
   modalActiveState,
   modalIsPromptedState,
+  nsfwSettingState,
   searchQueryState,
 } from '../modules/atoms';
 import { Modal } from './Modal';
@@ -67,17 +72,22 @@ const LogoIcon = styled(LogoSVG)<{
   }
 `;
 
-const ContentGroup = styled.div`
+const ContentGroup = styled.div<{
+  $gap?: number;
+}>`
   height: 100%;
 
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: ${(props) => props.$gap ?? 40}px;
 `;
 
-const ButtonGroup = styled.div`
+const ButtonGroup = styled.div<{
+  $gap?: number;
+}>`
   display: flex;
   flex-direction: row;
+  gap: ${(props) => props.$gap ?? 0}px;
 `;
 
 const SearchBar = styled.div<{
@@ -146,7 +156,9 @@ const Button = styled.button<{
   }
 `;
 
-const IconButton = styled.button`
+const IconButton = styled.button<{
+  $isMobile?: boolean;
+}>`
   width: 40px;
   height: 40px;
 
@@ -154,13 +166,102 @@ const IconButton = styled.button`
   align-items: center;
   justify-content: center;
 
-  margin-right: -30px;
+  margin-right: ${(props) => (props.$isMobile ? -30 : 0)}px;
 
   background-color: var(--brightness-100);
   border: 1px solid var(--brightness-300);
   border-radius: 20px;
 
   cursor: pointer;
+`;
+
+const HamburgerIcon = styled(HamburgerSVG)`
+  color: var(--brightness-400);
+`;
+
+const PopoverContainer = styled.div`
+  width: 260px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  padding: 6px;
+
+  background-color: var(--brightness-100);
+  border: 1px solid var(--brightness-300);
+  border-radius: 12px;
+`;
+
+const PopoverItem = styled.div<{
+  $hover?: boolean;
+}>`
+  width: 100%;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 6px 12px;
+
+  border-radius: 6px;
+
+  transition: background-color 100ms ease;
+  cursor: ${(props) => (props.$hover ? 'pointer' : 'auto')};
+
+  &:hover {
+    background-color: ${(props) => props.$hover && 'var(--brightness-200)'};
+  }
+`;
+
+const SwitchContainer = styled.div<{
+  $isActive: boolean;
+}>`
+  width: 36px;
+  height: 24px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 1px;
+
+  background-color: var(
+    ${(props) => (props.$isActive ? '--brightness-500' : '--brightness-200')}
+  );
+  border: 1px solid
+    var(
+      ${(props) => (props.$isActive ? '--brightness-500' : '--brightness-300')}
+    );
+  border-radius: 12px;
+
+  transition: background-color 250ms ease, border 250ms ease;
+  cursor: pointer;
+`;
+
+const SwitchInnerDot = styled.div<{
+  $isActive: boolean;
+}>`
+  width: 20px;
+  height: 20px;
+
+  position: relative;
+  left: ${(props) => (props.$isActive ? 'calc(100% - 20px)' : 0)};
+
+  background-color: var(--brightness-100);
+  border-radius: 10px;
+
+  transition: left 250ms ease;
+`;
+
+const LinkIcon = styled(LinkSVG)`
+  width: 20px;
+  height: 20px;
+`;
+
+const SlashIcon = styled(SlashSVG)`
+  width: 20px;
+  height: 20px;
 `;
 
 export function Header() {
@@ -193,10 +294,12 @@ export function Header() {
       transition: 'height 250ms ease',
     },
   });
+  const [isPopoverOpene, setIsPopoverOpen] = useState<boolean>(false);
 
   const [isActive, setIsActive] = useRecoilState(modalActiveState);
   const [isPrompted] = useRecoilState(modalIsPromptedState);
   const [, setSearchQuery] = useRecoilState(searchQueryState);
+  const [nsfwSetting, setNsfwSetting] = useRecoilState(nsfwSettingState);
 
   const searchRef: {
     current: any;
@@ -239,23 +342,69 @@ export function Header() {
             </SearchBar>
           </ContentGroup>
           <ContentGroup>
-            <ButtonGroup>
-              <Button onClick={() => navigate('/submission')}>
-                <p>Submission List</p>
+            <ButtonGroup $gap={10}>
+              <Button $border onClick={() => setIsActive(true)}>
+                <p>Share GIFs</p>
               </Button>
-              <Button>
-                <a
-                  href="https://instagram.com/_findgifs"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <p>Official Instagram</p>
-                </a>
-              </Button>
+              <Popover
+                isOpen={isPopoverOpene}
+                positions={['bottom']}
+                align="end"
+                padding={10}
+                onClickOutside={() => setIsPopoverOpen(false)}
+                content={
+                  <PopoverContainer>
+                    <PopoverItem
+                      $hover
+                      onClick={() => {
+                        navigate(
+                          pathname === '/submission' ? '/' : '/submission'
+                        );
+
+                        setIsPopoverOpen(false);
+                      }}
+                    >
+                      <p>
+                        {pathname === '/submission'
+                          ? 'Verified List'
+                          : 'Submission List'}
+                      </p>
+                      <SlashIcon />
+                    </PopoverItem>
+                    <PopoverItem
+                      $hover
+                      onClick={() => {
+                        window.open('https://instagram.com/_findgifs');
+
+                        setIsPopoverOpen(false);
+                      }}
+                    >
+                      <p>Official Instagram</p>
+                      <LinkIcon />
+                    </PopoverItem>
+                    <PopoverItem>
+                      <p>Show NSFW GIFs</p>
+                      <SwitchContainer
+                        $isActive={nsfwSetting}
+                        onClick={() => {
+                          localStorage.setItem(
+                            'nsfw',
+                            JSON.stringify(!nsfwSetting)
+                          );
+                          setNsfwSetting(!nsfwSetting);
+                        }}
+                      >
+                        <SwitchInnerDot $isActive={nsfwSetting} />
+                      </SwitchContainer>
+                    </PopoverItem>
+                  </PopoverContainer>
+                }
+              >
+                <IconButton onClick={() => setIsPopoverOpen(!isPopoverOpene)}>
+                  <HamburgerIcon />
+                </IconButton>
+              </Popover>
             </ButtonGroup>
-            <Button $border onClick={() => setIsActive(true)}>
-              <p>Share GIFs</p>
-            </Button>
           </ContentGroup>
         </InnerWrapper>
         <ReactModal
@@ -275,16 +424,74 @@ export function Header() {
           <ContentGroup>
             <LogoIcon $isMobile onClick={() => navigate('/')} />
           </ContentGroup>
-          <ContentGroup>
-            <IconButton
+          <ContentGroup $gap={10}>
+            {/* <IconButton
               title="View Submission list"
               onClick={() => navigate('/submission')}
             >
               <ArchiveSVG />
-            </IconButton>
+            </IconButton> */}
             <Button $border onClick={() => setIsActive(true)}>
               <p>Share GIFs</p>
             </Button>
+            <Popover
+              isOpen={isPopoverOpene}
+              positions={['bottom']}
+              align="end"
+              padding={10}
+              onClickOutside={() => setIsPopoverOpen(false)}
+              content={
+                <PopoverContainer>
+                  <PopoverItem
+                    $hover
+                    onClick={() => {
+                      navigate(
+                        pathname === '/submission' ? '/' : '/submission'
+                      );
+
+                      setIsPopoverOpen(false);
+                    }}
+                  >
+                    <p>
+                      {pathname === '/submission'
+                        ? 'Verified List'
+                        : 'Submission List'}
+                    </p>
+                    <SlashIcon />
+                  </PopoverItem>
+                  <PopoverItem
+                    $hover
+                    onClick={() => {
+                      window.open('https://instagram.com/_findgifs');
+
+                      setIsPopoverOpen(false);
+                    }}
+                  >
+                    <p>Official Instagram</p>
+                    <LinkIcon />
+                  </PopoverItem>
+                  <PopoverItem>
+                    <p>Show NSFW GIFs</p>
+                    <SwitchContainer
+                      $isActive={nsfwSetting}
+                      onClick={() => {
+                        localStorage.setItem(
+                          'nsfw',
+                          JSON.stringify(!nsfwSetting)
+                        );
+                        setNsfwSetting(!nsfwSetting);
+                      }}
+                    >
+                      <SwitchInnerDot $isActive={nsfwSetting} />
+                    </SwitchContainer>
+                  </PopoverItem>
+                </PopoverContainer>
+              }
+            >
+              <IconButton onClick={() => setIsPopoverOpen(!isPopoverOpene)}>
+                <HamburgerIcon />
+              </IconButton>
+            </Popover>
           </ContentGroup>
         </InnerWrapper>
         <SearchBar $isMobile>

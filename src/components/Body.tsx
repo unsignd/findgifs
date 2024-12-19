@@ -6,6 +6,7 @@ import {
   loadCountState,
   searchQueryState,
   gifSizeState,
+  nsfwSettingState,
 } from '../modules/atoms';
 import { useRecoilState } from 'recoil';
 import { api } from '../configs/axios';
@@ -104,6 +105,11 @@ export function Body() {
   const [gifSize, setGifSize] = useRecoilState(gifSizeState);
   const [loadCount, setLoadCount] = useRecoilState(loadCountState);
   const [searchQuery] = useRecoilState(searchQueryState);
+  const [nsfwSetting, setNsfwSetting] = useRecoilState(nsfwSettingState);
+
+  useEffect(() => {
+    setNsfwSetting(JSON.parse(localStorage.getItem('nsfw') ?? 'false'));
+  }, [setNsfwSetting]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -189,7 +195,7 @@ export function Body() {
                         name
                           .toLowerCase()
                           .includes(searchQuery?.toLowerCase() ?? '') &&
-                        !gif.isNSFW // TEMP NSFW FILTERING
+                        (nsfwSetting || !gif.isNSFW)
                     ).length !== 0
                 ).length === 0 ? (
                 <NotFoundWrapper $isMobile={width <= 1202}>
@@ -217,7 +223,8 @@ export function Body() {
                           name
                             .toLowerCase()
                             .includes(searchQuery?.toLowerCase() ?? '')
-                        ).length !== 0 && !gif.isNSFW // TEMP NSFW FILTERING
+                        ).length !== 0 &&
+                        (nsfwSetting || !gif.isNSFW)
                     )
                     .map((gif, index) =>
                       index % 10 ===

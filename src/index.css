@@ -24,13 +24,17 @@
   margin: 0;
   padding: 0;
 
-  box-sizing: border-box;
+  box-sizing: border-box !important;
+  -moz-box-sizing: border-box !important;
+  -webkit-box-sizing: border-box !important;
 
   font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
   font-weight: 400;
   font-size: 16px;
   letter-spacing: -0.16px;
   line-height: 1.4;
+
+  color: #09090a;
 }
 
 html,
@@ -81,4 +85,8 @@ react-loading-skeleton {
 
 .go685806154 {
   display: none !important;
+}
+
+.react-tiny-popover-container {
+  z-index: 1;
 }

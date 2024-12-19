@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { nsfwSettingState } from '../modules/atoms';
 
 const Ad = styled.ins<{
   $isLoaded: boolean;
+  $isNSFW: boolean;
 }>`
   width: calc(100% - 80px);
   height: 140px;
 
   max-width: 1400px;
 
-  display: block;
+  display: ${(props) => (props.$isNSFW ? 'none' : 'block')};
 
   position: relative;
   left: 50%;
@@ -24,6 +27,8 @@ export function BannerUnit() {
   const unitRef = useRef(null);
 
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
+  const [nsfwSetting] = useRecoilState(nsfwSettingState);
 
   useEffect(() => {
     try {
@@ -47,6 +52,7 @@ export function BannerUnit() {
   return (
     <Ad
       $isLoaded={isLoaded}
+      $isNSFW={nsfwSetting}
       ref={unitRef}
       className="adsbygoogle"
       data-ad-client={process.env.REACT_APP_ADSENSE_CID}

@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { nsfwSettingState } from '../modules/atoms';
+import { useRecoilState } from 'recoil';
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{
+  $isNSFW: boolean;
+}>`
   width: 100%;
   height: 100%;
-  display: flex;
+  display: ${(props) => (props.$isNSFW ? 'none' : 'flex')};
   flex-direction: column;
 `;
 
@@ -23,6 +27,8 @@ export function CardUnit() {
   const unitRef = useRef(null);
 
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
+  const [nsfwSetting] = useRecoilState(nsfwSettingState);
 
   useEffect(() => {
     try {
@@ -44,7 +50,7 @@ export function CardUnit() {
   }, [unitRef]);
 
   return (
-    <Wrapper>
+    <Wrapper $isNSFW={nsfwSetting}>
       <Ad
         $isLoaded={isLoaded}
         ref={unitRef}
