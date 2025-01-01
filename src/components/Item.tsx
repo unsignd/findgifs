@@ -170,6 +170,10 @@ const ItemButton = styled.button`
   }
 `;
 
+const ItemCopyStackText = styled.p`
+  color: var(--purple-100);
+`;
+
 export function Item({
   media,
   text,
@@ -214,7 +218,7 @@ export function Item({
             $backgroundColor="var(--purple-100)"
             $progress={progress}
           >
-            <p>Copied to Clipboard!</p>
+            <ItemCopyStackText>Copied to Clipboard!</ItemCopyStackText>
           </ItemCopyStack>
         </ItemTextGroup>
         <ItemButtonGroup>
